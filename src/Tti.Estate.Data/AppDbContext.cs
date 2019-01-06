@@ -11,38 +11,163 @@ namespace Tti.Estate.Data
         {
         }
 
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Property> Properties { get; set; }
+
+        public DbSet<PropertyPhoto> PropertyPhotos { get; set; }
 
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Contact>(ConfigureContact);
+            builder.Entity<Comment>(ConfigureComment);
             builder.Entity<Customer>(ConfigureCustomer);
             builder.Entity<Property>(ConfigureProperty);
+            builder.Entity<PropertyPhoto>(ConfigurePropertyPhoto);
+            builder.Entity<Region>(ConfigureRegion);
+            builder.Entity<Street>(ConfigureStreet);
+            builder.Entity<Transaction>(ConfigureTransaction);
             builder.Entity<User>(ConfigureUser);
+        }
+
+        private void ConfigureContact(EntityTypeBuilder<Contact> builder)
+        {
+            builder.ToTable("Contact");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.FirstName).IsUnicode();
+            builder.Property(x => x.LastName).IsUnicode();
+            builder.Property(x => x.Telephone).IsUnicode();
+            builder.Property(x => x.Email).IsUnicode();
+
+            builder.HasOne(x => x.Property).WithMany(x => x.Contacts);
+            builder.HasOne(x => x.Customer).WithMany(x => x.Contacts);
+        }
+
+        private void ConfigureComment(EntityTypeBuilder<Comment> builder)
+        {
+            builder.ToTable("Comment");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Text).IsUnicode().IsRequired();
+            builder.Property(x => x.Created).ValueGeneratedOnAdd();
+
+            builder.HasOne(x => x.Property).WithMany(x => x.Comments);
+            builder.HasOne(x => x.Customer).WithMany(x => x.Comments);
+            builder.HasOne(x => x.Transaction).WithMany(x => x.Comments);
         }
 
         private void ConfigureCustomer(EntityTypeBuilder<Customer> builder)
         {
             builder.ToTable("Customer");
+
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).ValueGeneratedOnAdd().IsRequired();
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Description).IsUnicode();
+            builder.Property(x => x.Created).ValueGeneratedOnAdd();
+            builder.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate();
+
+            builder.HasOne(x => x.User).WithOne().IsRequired();
         }
 
         private void ConfigureProperty(EntityTypeBuilder<Property> builder)
         {
             builder.ToTable("Property");
+
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).ValueGeneratedOnAdd().IsRequired();
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Type);
+            builder.Property(x => x.TransactionType);
+            builder.Property(x => x.Status);
+            builder.Property(x => x.Price);
+            builder.Property(x => x.PriceType);
+            builder.Property(x => x.HouseNumber).HasMaxLength(20).IsUnicode();
+            builder.Property(x => x.FlatNumber).HasMaxLength(10).IsUnicode();
+            builder.Property(x => x.Area);
+            builder.Property(x => x.LandArea);
+            builder.Property(x => x.Floor);
+            builder.Property(x => x.FloorCount);
+            builder.Property(x => x.IsVip).HasDefaultValue(false);
+            builder.Property(x => x.Created).ValueGeneratedOnAdd();
+            builder.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate();
+
+            builder.HasOne(x => x.User).WithOne().IsRequired();
+            builder.HasOne(x => x.Region).WithOne().IsRequired();
+            builder.HasOne(x => x.Street).WithOne().IsRequired();
+        }
+
+        private void ConfigurePropertyPhoto(EntityTypeBuilder<PropertyPhoto> builder)
+        {
+            builder.ToTable("PropertyPhoto");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+        }
+
+        private void ConfigureRegion(EntityTypeBuilder<Region> builder)
+        {
+            builder.ToTable("Region");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Name).IsUnicode().IsRequired();
+
+            builder.HasOne(x => x.Parent).WithMany(x => x.Childrens);
+        }
+
+        private void ConfigureStreet(EntityTypeBuilder<Street> builder)
+        {
+            builder.ToTable("Street");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Name).IsUnicode().IsRequired();
+
+            builder.HasOne(x => x.Region).WithOne();
+        }
+
+        private void ConfigureTransaction(EntityTypeBuilder<Transaction> builder)
+        {
+            builder.ToTable("Transaction");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.Date);
+            builder.Property(x => x.Description).IsUnicode();
+
+            builder.HasOne(x => x.User).WithOne();
+            builder.HasOne(x => x.Property).WithOne();
+            builder.HasOne(x => x.Customer).WithOne();
         }
 
         private void ConfigureUser(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("User");
+
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).ValueGeneratedOnAdd().IsRequired();
+
+            builder.Property(x => x.Role).IsRequired();
+            builder.Property(x => x.Status).IsRequired();
+            builder.Property(x => x.UserName).IsUnicode().IsRequired();
+            builder.Property(x => x.FirstName).IsUnicode().IsRequired();
+            builder.Property(x => x.LastName).IsUnicode().IsRequired();
+            builder.Property(x => x.Telephone).IsUnicode();
         }
     }
 }

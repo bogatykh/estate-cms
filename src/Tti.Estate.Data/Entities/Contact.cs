@@ -1,17 +1,17 @@
 ﻿namespace Tti.Estate.Data.Entities
 {
-    public class User : BaseEntity
+    public class Contact : BaseEntity
     {
-        public UserRole Role { get; set; }
+        public Property Property { get; set; }
 
-        public UserStatus Status { get; set; }
-
-        public string UserName { get; set; }
+        public Customer Customer { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
         public string Telephone { get; set; }
+
+        public string Email { get; set; }
     }
 }

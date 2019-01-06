@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data.Repositories
 {
-    public class CustomerRepository : BaseRepository
+    public class CustomerRepository : BaseRepository<Customer>
     {
         public CustomerRepository(AppDbContext dbContext)
             : base(dbContext)
