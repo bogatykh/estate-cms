@@ -1,0 +1,4 @@
+language: csharp
+solution: Tti.Estate.sln
+install:
+  - nuget restore Tti.Estate.sln
