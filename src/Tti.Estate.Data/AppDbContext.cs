@@ -21,6 +21,12 @@ namespace Tti.Estate.Data
 
         public DbSet<PropertyPhoto> PropertyPhotos { get; set; }
 
+        public DbSet<Region> Regions { get; set; }
+
+        public DbSet<Street> Streets { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
