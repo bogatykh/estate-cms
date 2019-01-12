@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Tti.Estate.Web.Controllers
 {
-    public class CustomerController : Controller
+    public class TransactionController : Controller
     {
-        [HttpGet]
         public IActionResult Index()
         {
             return View();

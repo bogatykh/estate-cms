@@ -4,16 +4,16 @@
 @if (User.Identity.IsAuthenticated)
 {
         <li class="nav-item">
-            <span class="nav-text text-dark">Hello @User.Identity.Name!</span>
+            <span class="navbar-text text-dark">@User.Identity.GetPersonName()</span>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Sign out</a>
+            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">@Localizer["SignOut"]</a>
         </li>
 }
 else
 {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Sign in</a>
+            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">@Localizer["SignIn"]</a>
         </li>
 }
 </ul>
