@@ -7,15 +7,19 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" asp-append-version="true" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Title"]</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -26,19 +30,19 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Property" asp-action="Index">@Localizer["Properties"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="Property" asp-action="Index">@Localizer["Properties"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">@Localizer["Customers"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="Customer" asp-action="Index">@Localizer["Customers"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Index">@Localizer["Transactions"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="Transaction" asp-action="Index">@Localizer["Transactions"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">@Localizer["Users"]</a>
+                            <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">@Localizer["Users"]</a>
                         </li>
                     </ul>
                 </div>
@@ -61,6 +65,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+        <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+        <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -70,8 +76,22 @@
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
         </script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/datatables/js/jquery.dataTables.js" asp-append-version="true"></script>
+        <script src="~/lib/datatables/js/dataTables.bootstrap4.js" asp-append-version="true"></script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $.extend($.fn.dataTable.defaults, {
+            processing: true,
+            deferRender: true,
+            searching: false,
+            orderMulti: false,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json'
+            }
+        });
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

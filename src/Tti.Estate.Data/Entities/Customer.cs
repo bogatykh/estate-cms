@@ -10,6 +10,8 @@ namespace Tti.Estate.Data.Entities
             Created = Modified = DateTime.UtcNow;
         }
 
+        public long UserId { get; set; }
+
         public User User { get; set; }
 
         public string Description { get; set; }

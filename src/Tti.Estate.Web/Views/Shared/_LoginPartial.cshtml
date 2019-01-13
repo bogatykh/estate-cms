@@ -1,19 +1,24 @@
 @using System.Security.Principal
 
 <ul class="navbar-nav">
-@if (User.Identity.IsAuthenticated)
-{
+    @if (User.Identity.IsAuthenticated)
+    {
         <li class="nav-item">
-            <span class="navbar-text text-dark">@User.Identity.GetPersonName()</span>
+            <span class="navbar-text">@User.Identity.GetPersonName()</span>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">@Localizer["SignOut"]</a>
+            <a class="nav-link" asp-area="AzureAD" asp-controller="Account" asp-action="SignOut" title="@Localizer["SignOut"]">
+                <i class="fa fa-sign-out"></i>
+            </a>
         </li>
-}
-else
-{
+    }
+    else
+    {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">@Localizer["SignIn"]</a>
+            <a class="nav-link" asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">
+                <i class="fa fa-sign-in"></i>
+                @Localizer["SignIn"]
+            </a>
         </li>
-}
+    }
 </ul>

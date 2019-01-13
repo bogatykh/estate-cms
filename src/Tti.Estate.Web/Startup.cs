@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
+using Tti.Estate.Business;
 using Tti.Estate.Data;
 
 namespace Tti.Estate.Web
@@ -34,6 +36,8 @@ namespace Tti.Estate.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAutoMapper();
+
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
 
@@ -51,6 +55,9 @@ namespace Tti.Estate.Web
 
             services.AddDbContext<AppDbContext>(c =>
                 c.UseInMemoryDatabase("Estate"));
+
+            services.AddRepositories();
+            services.AddBusiness();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +73,8 @@ namespace Tti.Estate.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithRedirects("~/Home/Error");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

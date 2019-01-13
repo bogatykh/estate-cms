@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Tti.Estate.Business.Services
 {
-    public class PropertyService
+    internal class PropertyService : IPropertyService
     {
     }
 }

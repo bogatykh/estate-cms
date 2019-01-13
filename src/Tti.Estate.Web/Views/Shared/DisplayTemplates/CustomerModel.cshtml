@@ -1,0 +1,17 @@
+﻿@model CustomerModel
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserId)</label>
+    <div class="col-sm-9">
+        <p class="form-control-plaintext">
+            @Html.DisplayFor(x => x.UserId)
+        </p>
+    </div>
+</div>
+<fieldset>
+    <legend>@Html.DisplayNameFor(x => x.Description)</legend>
+    <div class="form-group">
+        <p class="form-control-plaintext">
+            @Html.DisplayFor(x => x.Description)
+        </p>
+    </div>
+</fieldset>

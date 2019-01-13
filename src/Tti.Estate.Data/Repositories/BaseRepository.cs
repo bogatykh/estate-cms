@@ -1,16 +1,27 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data.Repositories
 {
-    public abstract class BaseRepository<TEntity>
+    internal abstract class BaseRepository<TEntity>
         where TEntity : BaseEntity
     {
-        private readonly AppDbContext _dbContext;
+        protected AppDbContext DbContext { get; }
 
         protected BaseRepository(AppDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+
+        protected async Task<PagedResult<TEntity>> GetPagedAsync(IQueryable<TEntity> query)
+        {
+            return new PagedResult<TEntity>(
+                totalItems: await query.CountAsync(),
+                items: await query.ToListAsync()
+            );
         }
     }
 }

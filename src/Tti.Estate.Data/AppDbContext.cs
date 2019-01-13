@@ -84,7 +84,7 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Created).ValueGeneratedOnAdd();
             builder.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate();
 
-            builder.HasOne(x => x.User).WithOne().IsRequired();
+            builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
         }
 
         private void ConfigureProperty(EntityTypeBuilder<Property> builder)
@@ -109,9 +109,9 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Created).ValueGeneratedOnAdd();
             builder.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate();
 
-            builder.HasOne(x => x.User).WithOne().IsRequired();
-            builder.HasOne(x => x.Region).WithOne().IsRequired();
-            builder.HasOne(x => x.Street).WithOne().IsRequired();
+            builder.HasOne(x => x.User).WithMany().IsRequired();
+            builder.HasOne(x => x.Region).WithMany().IsRequired();
+            builder.HasOne(x => x.Street).WithMany().IsRequired();
         }
 
         private void ConfigurePropertyPhoto(EntityTypeBuilder<PropertyPhoto> builder)
@@ -144,7 +144,7 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Name).IsUnicode().IsRequired();
 
-            builder.HasOne(x => x.Region).WithOne();
+            builder.HasOne(x => x.Region).WithMany();
         }
 
         private void ConfigureTransaction(EntityTypeBuilder<Transaction> builder)
@@ -157,9 +157,9 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Date);
             builder.Property(x => x.Description).IsUnicode();
 
-            builder.HasOne(x => x.User).WithOne();
-            builder.HasOne(x => x.Property).WithOne();
-            builder.HasOne(x => x.Customer).WithOne();
+            builder.HasOne(x => x.User).WithMany();
+            builder.HasOne(x => x.Property).WithMany();
+            builder.HasOne(x => x.Customer).WithMany();
         }
 
         private void ConfigureUser(EntityTypeBuilder<User> builder)

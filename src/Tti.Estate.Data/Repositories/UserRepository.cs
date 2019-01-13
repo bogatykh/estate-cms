@@ -5,7 +5,7 @@ using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data.Repositories
 {
-    public class UserRepository : BaseRepository<User>
+    internal class UserRepository : BaseRepository<User>, IUserRepository
     {
         public UserRepository(AppDbContext dbContext)
             : base(dbContext)

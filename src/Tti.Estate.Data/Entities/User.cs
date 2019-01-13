@@ -1,4 +1,6 @@
-﻿namespace Tti.Estate.Data.Entities
+﻿using System.Collections.Generic;
+
+namespace Tti.Estate.Data.Entities
 {
     public class User : BaseEntity
     {
