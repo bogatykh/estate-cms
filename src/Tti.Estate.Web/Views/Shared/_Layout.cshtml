@@ -11,9 +11,21 @@
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-azvvU9xKluwHFJ0Cpgtf0CYzK7zgtOznnzxV4924X1w=" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css"
+              asp-fallback-href="~/lib/datatables/css/dataTables.bootstrap4.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-F+DaKAClQut87heMIC6oThARMuWne8+WzxIDT7jXuPA=" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+              asp-fallback-href="~/lib/font-awesome/css/font-awesome.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -33,16 +45,28 @@
                             <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Property" asp-action="Index">@Localizer["Properties"]</a>
+                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Property" asp-action="Index">
+                                <i class="fa fa-home"></i>
+                                @Localizer["Properties"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Customer" asp-action="Index">@Localizer["Customers"]</a>
+                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Customer" asp-action="Index">
+                                <i class="fa fa-briefcase"></i>
+                                @Localizer["Customers"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Transaction" asp-action="Index">@Localizer["Transactions"]</a>
+                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Transaction" asp-action="Index">
+                                <i class="fa fa-dollar"></i>
+                                @Localizer["Transactions"]
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="User" asp-action="Index">@Localizer["Users"]</a>
+                            <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="User" asp-action="Index">
+                                <i class="fa fa-users"></i>
+                                @Localizer["Users"]
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -75,9 +99,24 @@
                 crossorigin="anonymous"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
         </script>
-        <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
-        <script src="~/lib/datatables/js/jquery.dataTables.js" asp-append-version="true"></script>
-        <script src="~/lib/datatables/js/dataTables.bootstrap4.js" asp-append-version="true"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/twitter-bootstrap/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-63ld7aiYP6UxBifJWEzz87ldJyVnETUABZAYs5Qcsmc=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"
+                asp-fallback-src="~/lib/datatables/js/jquery.dataTables.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.dataTable"
+                crossorigin="anonymous"
+                integrity="sha256-t5ZQTZsbQi8NxszC10CseKjJ5QeMw5NINtOXQrESGSU=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+                asp-fallback-src="~/lib/datatables/js/dataTables.bootstrap4.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.dataTable && window.jQuery.fn.dataTable.ext.renderer.bootstrap"
+                crossorigin="anonymous"
+                integrity="sha256-hJ44ymhBmRPJKIaKRf3DSX5uiFEZ9xB/qx8cNbJvIMU=">
+        </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
