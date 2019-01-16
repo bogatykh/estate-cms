@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
+using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -11,11 +14,13 @@ namespace Tti.Estate.Web.Controllers
     public class CustomerController : Controller
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerRepository customerRepository, IMapper mapper)
+        public CustomerController(ICustomerRepository customerRepository, IUserRepository userRepository, IMapper mapper)
         {
             _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -26,9 +31,13 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            CustomerModel model = new CustomerModel();
+
+            await PrepareModelAsync(model);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -42,6 +51,8 @@ namespace Tti.Estate.Web.Controllers
 
                 return RedirectToAction("Details", new { id = customer.Id });
             }
+
+            await PrepareModelAsync(model);
 
             return View(model);
         }
@@ -73,6 +84,8 @@ namespace Tti.Estate.Web.Controllers
 
             var model = _mapper.Map<CustomerEditModel>(customer);
 
+            await PrepareModelAsync(model);
+
             return View(model);
         }
 
@@ -87,6 +100,8 @@ namespace Tti.Estate.Web.Controllers
 
                 return RedirectToAction("Details", new { id = customer.Id });
             }
+
+            await PrepareModelAsync(model);
 
             return View(model);
         }
@@ -104,6 +119,16 @@ namespace Tti.Estate.Web.Controllers
             await _customerRepository.DeleteAsync(customer);
 
             return RedirectToAction("Index");
+        }
+
+        private async Task PrepareModelAsync(CustomerModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            model.Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)));
         }
 
         [HttpGet]

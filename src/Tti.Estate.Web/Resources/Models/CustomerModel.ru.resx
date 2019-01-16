@@ -126,6 +126,9 @@
   <data name="Modified" xml:space="preserve">
     <value>Модификация</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>Поле "{0}" обязательно для заполнения.</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>Сотрудник</value>
   </data>

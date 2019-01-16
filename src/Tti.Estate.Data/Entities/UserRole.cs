@@ -2,7 +2,7 @@
 {
     public enum UserRole
     {
-        Agent,
+        Agent = 0,
         Manager
     }
 }

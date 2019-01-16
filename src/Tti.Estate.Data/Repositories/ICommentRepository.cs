@@ -2,7 +2,7 @@
 
 namespace Tti.Estate.Data.Repositories
 {
-    public interface IPropertyRepository : IRepository<Property>
+    public interface ICommentRepository : IRepository<Comment>
     {
     }
 }

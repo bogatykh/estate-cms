@@ -49,10 +49,10 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.FirstName).IsUnicode();
-            builder.Property(x => x.LastName).IsUnicode();
-            builder.Property(x => x.Telephone).IsUnicode();
-            builder.Property(x => x.Email).IsUnicode();
+            builder.Property(x => x.FirstName).IsUnicode().HasMaxLength(50);
+            builder.Property(x => x.LastName).IsUnicode().HasMaxLength(50);
+            builder.Property(x => x.Telephone).HasMaxLength(50);
+            builder.Property(x => x.Email).IsUnicode().HasMaxLength(50);
 
             builder.HasOne(x => x.Property).WithMany(x => x.Contacts);
             builder.HasOne(x => x.Customer).WithMany(x => x.Contacts);
@@ -99,8 +99,8 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Status);
             builder.Property(x => x.Price);
             builder.Property(x => x.PriceType);
-            builder.Property(x => x.HouseNumber).HasMaxLength(20).IsUnicode();
-            builder.Property(x => x.FlatNumber).HasMaxLength(10).IsUnicode();
+            builder.Property(x => x.HouseNumber).IsUnicode().HasMaxLength(20);
+            builder.Property(x => x.FlatNumber).IsUnicode().HasMaxLength(10);
             builder.Property(x => x.Area);
             builder.Property(x => x.LandArea);
             builder.Property(x => x.Floor);
@@ -121,6 +121,7 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.IsMain).HasDefaultValue(false);
         }
 
         private void ConfigureRegion(EntityTypeBuilder<Region> builder)
@@ -130,7 +131,7 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Name).IsUnicode().IsRequired();
+            builder.Property(x => x.Name).IsUnicode().IsRequired().HasMaxLength(50);
 
             builder.HasOne(x => x.Parent).WithMany(x => x.Childrens);
         }
@@ -142,7 +143,7 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Name).IsUnicode().IsRequired();
+            builder.Property(x => x.Name).IsUnicode().IsRequired().HasMaxLength(50);
 
             builder.HasOne(x => x.Region).WithMany();
         }
@@ -170,10 +171,10 @@ namespace Tti.Estate.Data
 
             builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.Status).IsRequired();
-            builder.Property(x => x.UserName).IsUnicode().IsRequired();
-            builder.Property(x => x.FirstName).IsUnicode().IsRequired();
-            builder.Property(x => x.LastName).IsUnicode().IsRequired();
-            builder.Property(x => x.Telephone).IsUnicode();
+            builder.Property(x => x.UserName).IsUnicode().IsRequired().HasMaxLength(256);
+            builder.Property(x => x.FirstName).IsUnicode().IsRequired().HasMaxLength(50);
+            builder.Property(x => x.LastName).IsUnicode().IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Telephone).HasMaxLength(50);
         }
     }
 }

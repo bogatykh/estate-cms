@@ -12,6 +12,7 @@ namespace Tti.Estate.Web
                 ForMember(x => x.User, x => x.MapFrom(y => y.User.LastName));
 
             CreateMap<Customer, CustomerModel>().
+                ForMember(x => x.Users, x => x.Ignore()).
                 ReverseMap();
 
             CreateMap<Customer, CustomerEditModel>().

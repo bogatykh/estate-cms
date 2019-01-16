@@ -1,0 +1,22 @@
+﻿@model UserDetailsModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+<form method="post">
+    @Html.DisplayForModel()
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Status)</label>
+        <div class="col-sm-9">
+            <p class="form-control-plaintext">
+                @Html.DisplayFor(x => x.Status)
+            </p>
+        </div>
+    </div>
+    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
+        @Localizer["Edit"]
+    </a>
+    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-danger">
+        <i class="fa fa-trash-o"></i>
+        @Localizer["Delete"]
+    </button>
+</form>
