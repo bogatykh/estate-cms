@@ -16,7 +16,7 @@
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Date)</label>
     <div class="col-sm-9">
-        <input asp-for="Date" type="text" class="form-control" data-provide="datepicker" />
+        <input asp-for="Date" type="text" class="form-control" data-provide="datepicker" data-date-end-date="0d" />
         <span asp-validation-for="Date"></span>
     </div>
 </div>
