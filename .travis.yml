@@ -1,4 +1,7 @@
 language: csharp
+mono: none
+dist: xenial
+dotnet: 2.2
 solution: Tti.Estate.sln
 install:
   - nuget restore Tti.Estate.sln
