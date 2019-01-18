@@ -123,9 +123,6 @@
   <data name="Id" xml:space="preserve">
     <value>Код</value>
   </data>
-  <data name="Modified" xml:space="preserve">
-    <value>Модификация</value>
-  </data>
   <data name="Required" xml:space="preserve">
     <value>Поле "{0}" обязательно для заполнения.</value>
   </data>

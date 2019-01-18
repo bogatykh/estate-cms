@@ -1,3 +1,32 @@
 ﻿@{
     ViewData["Title"] = Localizer["Title"];
 }
+<table id="dataTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>@Localizer["Id"]</th>
+            <th>@Localizer["User"]</th>
+            <th>@Localizer["Modified"]</th>
+        </tr>
+    </thead>
+</table>
+<a asp-action="Create" class="btn btn-primary">
+    @Localizer["Create"]
+</a>
+@section Scripts {
+    <script>
+        $(function () {
+            $('#dataTable').dataTable({
+                serverSide: true,
+                searching: true,
+                ajax: '@Url.Action("GetData")',
+                columns: [
+                    { data: 'id' },
+                    { data: 'user' },
+                    { data: 'modified' }
+                ],
+                order: [[ 2, 'desc' ]]
+            });
+        });
+    </script>
+}

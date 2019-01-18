@@ -94,7 +94,7 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Type);
+            builder.Property(x => x.PropertyType);
             builder.Property(x => x.TransactionType);
             builder.Property(x => x.Status);
             builder.Property(x => x.Price);
@@ -106,6 +106,7 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Floor);
             builder.Property(x => x.FloorCount);
             builder.Property(x => x.IsVip).HasDefaultValue(false);
+            builder.Property(x => x.Description).IsUnicode();
             builder.Property(x => x.Created).ValueGeneratedOnAdd();
             builder.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate();
 

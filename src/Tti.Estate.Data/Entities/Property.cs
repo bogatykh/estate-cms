@@ -10,9 +10,11 @@ namespace Tti.Estate.Data.Entities
             Created = Modified = DateTime.UtcNow;
         }
 
+        public long UserId { get; set; }
+
         public User User { get; set; }
 
-        public PropertyType Type { get; set; }
+        public PropertyType PropertyType { get; set; }
 
         public TransactionType TransactionType { get; set; }
 
@@ -39,6 +41,8 @@ namespace Tti.Estate.Data.Entities
         public byte? Floor { get; set; }
 
         public bool IsVip { get; set; }
+
+        public string Description { get; set; }
 
         public DateTime Created { get; set; }
 

@@ -1,0 +1,15 @@
+﻿@model PropertyModel
+@{
+    ViewData["Title"] = Localizer["Title"];
+}
+<form method="post">
+    @Html.EditorForModel()
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-save"></i>
+        @Localizer["Save"]
+    </button>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

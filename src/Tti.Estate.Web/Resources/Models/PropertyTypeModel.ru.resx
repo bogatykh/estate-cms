@@ -117,25 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Amount" xml:space="preserve">
-    <value>Сумма</value>
+  <data name="Commercial" xml:space="preserve">
+    <value>Коммерческое помещение</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>Дата</value>
+  <data name="Flat" xml:space="preserve">
+    <value>Квартира</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Описание</value>
+  <data name="House" xml:space="preserve">
+    <value>Дом</value>
   </data>
-  <data name="Id" xml:space="preserve">
-    <value>Код</value>
-  </data>
-  <data name="Required" xml:space="preserve">
-    <value>Поле "{0}" обязательно для заполнения.</value>
-  </data>
-  <data name="TransactionType" xml:space="preserve">
-    <value>Операция</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>Сотрудник</value>
+  <data name="Land" xml:space="preserve">
+    <value>Земля</value>
   </data>
 </root>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Tti.Estate.Data.Entities
+﻿namespace Tti.Estate.Data.Entities
 {
     public enum PropertyType
     {
+        Flat = 0,
+        House,
+        Land,
+        Commercial
     }
 }
