@@ -1,4 +1,10 @@
 language: csharp
-solution: Tti.Estate.sln
-install:
-  - nuget restore Tti.Estate.sln
+mono: none
+dist: xenial
+dotnet: 2.2
+script:
+    - dotnet restore
+    - dotnet build
+global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+    - DOTNET_CLI_TELEMETRY_OPTOUT=1
