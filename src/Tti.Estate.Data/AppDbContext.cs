@@ -68,9 +68,9 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Text).IsUnicode().IsRequired();
             builder.Property(x => x.Created).ValueGeneratedOnAdd();
 
-            builder.HasOne(x => x.Property).WithMany(x => x.Comments);
-            builder.HasOne(x => x.Customer).WithMany(x => x.Comments);
-            builder.HasOne(x => x.Transaction).WithMany(x => x.Comments);
+            builder.HasOne(x => x.Property).WithMany(x => x.Comments).HasForeignKey(x => x.PropertyId).IsRequired();
+            builder.HasOne(x => x.Customer).WithMany(x => x.Comments).HasForeignKey(x => x.CustomerId).IsRequired();
+            builder.HasOne(x => x.Transaction).WithMany(x => x.Comments).HasForeignKey(x => x.TransactionId).IsRequired();
         }
 
         private void ConfigureCustomer(EntityTypeBuilder<Customer> builder)

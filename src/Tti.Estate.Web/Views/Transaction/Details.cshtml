@@ -12,6 +12,7 @@
         </div>
     </div>
     @Html.DisplayForModel()
+    <partial name="_CommentsPartial" />
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
         @Localizer["Edit"]
     </a>
@@ -20,3 +21,6 @@
         @Localizer["Delete"]
     </button>
 </form>
+@section Scripts {
+    <partial name="_CommentsScriptsPartial" model="new CommentListRequestModel() { TransactionId = Model.Id }" />
+}

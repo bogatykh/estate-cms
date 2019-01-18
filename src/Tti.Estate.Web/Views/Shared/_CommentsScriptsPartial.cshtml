@@ -1,0 +1,21 @@
+@model CommentListRequestModel
+<script>
+        $(function () {
+            $('#commentsDataTable').dataTable({
+                serverSide: true,
+                ordering: false,
+                paging: false,
+                info: false,
+                ajax: {
+                    url: '@Url.Action("GetData", "Comment", Model)',
+                    dataSrc: ''
+                },
+                columns: [
+                    { data: 'text' },
+                    { data: 'user' },
+                    { data: 'modified' }
+                ],
+                order: [[ 2, 'desc' ]]
+            });
+        });
+</script>
