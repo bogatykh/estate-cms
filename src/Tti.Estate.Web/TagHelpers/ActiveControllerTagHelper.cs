@@ -7,7 +7,7 @@ using System.Text.Encodings.Web;
 
 namespace Tti.Estate.Web.TagHelpers
 {
-    [HtmlTargetElement(Attributes = ClassAttributeName)]
+    [HtmlTargetElement("a", Attributes = ClassAttributeName)]
     public class ActiveControllerTagHelper : TagHelper
     {
         private const string ClassAttributeName = "asp-active-class";
