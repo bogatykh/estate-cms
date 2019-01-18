@@ -2,7 +2,7 @@
 {
     public enum TransactionType
     {
-        Trade,
+        Trade = 0,
         Rent
     }
 }

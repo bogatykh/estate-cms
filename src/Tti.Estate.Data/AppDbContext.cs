@@ -155,10 +155,15 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.TransactionType);
+            builder.Property(x => x.Status);
             builder.Property(x => x.Date);
+            builder.Property(x => x.Amount);
+            builder.Property(x => x.CompanyPercent);
+            builder.Property(x => x.UserPercent);
             builder.Property(x => x.Description).IsUnicode();
 
-            builder.HasOne(x => x.User).WithMany();
+            builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
             builder.HasOne(x => x.Property).WithMany();
             builder.HasOne(x => x.Customer).WithMany();
         }

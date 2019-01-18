@@ -13,8 +13,10 @@ namespace Tti.Estate.Data
                 throw new ArgumentNullException(nameof(services));
             }
 
+            services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
