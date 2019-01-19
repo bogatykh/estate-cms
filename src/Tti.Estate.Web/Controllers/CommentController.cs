@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
+using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -52,7 +53,9 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<CommentListItemModel>> GetData(CommentListRequestModel requestModel)
         {
-            var data = await _commentRepository.ListAsync();
+            var spec = _mapper.Map<CommentFilterSpecification>(requestModel);
+
+            var data = await _commentRepository.ListAsync(spec);
 
             return _mapper.Map<IEnumerable<CommentListItemModel>>(data);
         }

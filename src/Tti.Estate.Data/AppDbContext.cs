@@ -54,8 +54,8 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Telephone).HasMaxLength(50);
             builder.Property(x => x.Email).IsUnicode().HasMaxLength(50);
 
-            builder.HasOne(x => x.Property).WithMany(x => x.Contacts);
-            builder.HasOne(x => x.Customer).WithMany(x => x.Contacts);
+            builder.HasOne(x => x.Property).WithMany(x => x.Contacts).HasForeignKey(x => x.PropertyId).IsRequired();
+            builder.HasOne(x => x.Customer).WithMany(x => x.Contacts).HasForeignKey(x => x.CustomerId).IsRequired();
         }
 
         private void ConfigureComment(EntityTypeBuilder<Comment> builder)

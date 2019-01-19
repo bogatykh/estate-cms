@@ -4,6 +4,7 @@
 }
 <form method="post">
     @Html.DisplayForModel()
+    <partial name="_ContactsPartial" />
     <partial name="_CommentsPartial" />
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
         @Localizer["Edit"]
@@ -14,5 +15,6 @@
     </button>
 </form>
 @section Scripts {
+    <partial name="_ContactsScriptsPartial" model="new ContactListRequestModel() { CustomerId = Model.Id }" />
     <partial name="_CommentsScriptsPartial" model="new CommentListRequestModel() { CustomerId = Model.Id }" />
 }

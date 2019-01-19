@@ -2,8 +2,10 @@
 {
     public class Contact : BaseEntity
     {
+        public long PropertyId { get; set; }
         public Property Property { get; set; }
 
+        public long CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         public string FirstName { get; set; }
