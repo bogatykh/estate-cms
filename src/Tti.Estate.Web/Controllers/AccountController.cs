@@ -49,7 +49,11 @@ namespace Tti.Estate.Web.Controllers
 
                     await HttpContext.SignInAsync(
                       CookieAuthenticationDefaults.AuthenticationScheme,
-                      new ClaimsPrincipal(identity));
+                      new ClaimsPrincipal(identity),
+                      new AuthenticationProperties()
+                      {
+                          IsPersistent = model.RememberMe
+                      });
 
                     return LocalRedirect(returnUrl);
                 }
