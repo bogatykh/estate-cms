@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Tti.Estate.Business.Services;
@@ -13,10 +14,12 @@ namespace Tti.Estate.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IStringLocalizer _localizer;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IStringLocalizer<AccountController> localizer)
         {
             _userService = userService;
+            _localizer = localizer;
         }
 
         [AllowAnonymous]
@@ -50,9 +53,9 @@ namespace Tti.Estate.Web.Controllers
 
                     return LocalRedirect(returnUrl);
                 }
+
+                ModelState.AddModelError("", _localizer.GetString("LoginFailed"));
             }
-            
-            //ModelState.AddModelError("ERROR_INVALID_USERNAME_OR_PASSWORD", _localizer.GetString("ERROR_INVALID_USERNAME_OR_PASSWORD"));
 
             return View(model);
         }

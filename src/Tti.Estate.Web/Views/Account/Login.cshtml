@@ -28,6 +28,7 @@
         <input asp-for="UserName" class="form-control" placeholder="@Html.DisplayNameFor(x => x.UserName)" autofocus>
         <label asp-for="Password" class="sr-only">@Html.DisplayNameFor(x => x.Password)</label>
         <input asp-for="Password" class="form-control" placeholder="@Html.DisplayNameFor(x => x.Password)">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger text-left"></div>
         <div class="checkbox mb-3">
             <label>
                 <input asp-for="RememberMe" /> @Html.DisplayNameFor(x => x.RememberMe)

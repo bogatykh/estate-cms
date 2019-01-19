@@ -4,11 +4,11 @@ namespace Tti.Estate.Web.Models
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "UserNameRequired")]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "PasswordRequired")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
