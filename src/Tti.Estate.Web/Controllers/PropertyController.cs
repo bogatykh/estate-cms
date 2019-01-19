@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
+using Tti.Estate.Infrastructure.Extensions;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -34,7 +35,10 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            PropertyModel model = new PropertyModel();
+            PropertyModel model = new PropertyModel()
+            {
+                UserId = User.GetUserId()
+            };
 
             await PrepareModelAsync(model);
 

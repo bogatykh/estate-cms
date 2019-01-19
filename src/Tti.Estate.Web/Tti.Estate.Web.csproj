@@ -12,7 +12,6 @@
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
   </ItemGroup>
@@ -21,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Tti.Estate.Business\Tti.Estate.Business.csproj" />
     <ProjectReference Include="..\Tti.Estate.Data\Tti.Estate.Data.csproj" />
+    <ProjectReference Include="..\Tti.Estate.Infrastructure\Tti.Estate.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

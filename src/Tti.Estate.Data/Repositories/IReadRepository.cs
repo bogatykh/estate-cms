@@ -10,6 +10,8 @@ namespace Tti.Estate.Data.Repositories
     {
         Task<TEntity> GetAsync(long id);
 
+        Task<TEntity> SingleAsync(ISpecification<TEntity> specification);
+
         Task<IEnumerable<TEntity>> ListAsync();
 
         Task<IEnumerable<TEntity>> ListAsync(ISpecification<TEntity> specification);

@@ -29,6 +29,11 @@ namespace Tti.Estate.Data.Repositories
             return await DbContext.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<TEntity> SingleAsync(ISpecification<TEntity> specification)
+        {
+            return await ApplySpecification(specification).SingleOrDefaultAsync();
+        }
+
         public async Task UpdateAsync(TEntity entity)
         {
             DbContext.Set<TEntity>().Update(entity);

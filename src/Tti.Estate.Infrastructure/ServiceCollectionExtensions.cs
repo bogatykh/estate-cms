@@ -2,19 +2,18 @@
 using System;
 using Tti.Estate.Business.Services;
 
-namespace Tti.Estate.Business
+namespace Tti.Estate.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddBusiness(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
-
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IPropertyService, PropertyService>();
+            
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

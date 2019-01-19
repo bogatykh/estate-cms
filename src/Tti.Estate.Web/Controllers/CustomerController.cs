@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
+using Tti.Estate.Infrastructure.Extensions;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -33,7 +34,10 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            CustomerModel model = new CustomerModel();
+            CustomerModel model = new CustomerModel()
+            {
+                UserId = User.GetUserId()
+            };
 
             await PrepareModelAsync(model);
 

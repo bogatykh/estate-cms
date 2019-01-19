@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using Tti.Estate.Business;
 using Tti.Estate.Data;
+using Tti.Estate.Data.Entities;
+using Tti.Estate.Infrastructure;
 
 namespace Tti.Estate.Web
 {
@@ -36,10 +38,10 @@ namespace Tti.Estate.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddAutoMapper();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
 
-            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
-                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+            services.AddAutoMapper();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -56,7 +58,10 @@ namespace Tti.Estate.Web
             services.AddDbContext<AppDbContext>(c =>
                 c.UseInMemoryDatabase("Estate"));
 
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
             services.AddRepositories();
+            services.AddInfrastructure();
             services.AddBusiness();
         }
 
