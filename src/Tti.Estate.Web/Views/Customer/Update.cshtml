@@ -4,6 +4,8 @@
 }
 <div asp-validation-summary="All"></div>
 <form method="post">
+    <input asp-for="RowVersion" type="hidden" />
+
     @Html.EditorForModel()
 
     <button type="submit" class="btn btn-primary">
