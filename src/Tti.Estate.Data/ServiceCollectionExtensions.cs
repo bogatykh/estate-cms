@@ -17,6 +17,7 @@ namespace Tti.Estate.Data
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
+            services.AddScoped<IPropertyPhotoRepository, PropertyPhotoRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 

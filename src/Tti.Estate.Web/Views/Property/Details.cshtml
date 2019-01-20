@@ -17,6 +17,9 @@
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
         @Localizer["Edit"]
     </a>
+    <a asp-controller="PropertyPhoto" asp-action="Index" asp-route-propertyId="@Model.Id" class="btn btn-outline-secondary">
+        @Localizer["Photos"]
+    </a>
     <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-danger">
         <i class="fa fa-trash-o"></i>
         @Localizer["Delete"]
