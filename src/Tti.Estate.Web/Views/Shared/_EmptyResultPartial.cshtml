@@ -1,0 +1,7 @@
+@model PagedResultModel
+@if (Model != null && Model.TotalItems == 0)
+{
+    <div class="alert alert-light">
+        @Localizer["NoData"]
+    </div>
+}

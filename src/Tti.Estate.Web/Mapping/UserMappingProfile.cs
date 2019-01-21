@@ -25,7 +25,7 @@ namespace Tti.Estate.Web.Mapping
                 IncludeBase<UserEditModel, User>();
 
             CreateMap<User, SelectListItem>().
-                ForMember(x => x.Text, x => x.MapFrom(y => y.UserName)).
+                ForMember(x => x.Text, x => x.MapFrom(y => y.LastName)).
                 ForMember(x => x.Value, x => x.MapFrom(y => y.Id)).
                 ForAllOtherMembers(x => x.Ignore());
         }

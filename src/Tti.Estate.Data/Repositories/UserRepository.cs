@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using Tti.Estate.Data.Entities;
+﻿using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data.Repositories
 {
@@ -9,13 +7,6 @@ namespace Tti.Estate.Data.Repositories
         public UserRepository(AppDbContext dbContext)
             : base(dbContext)
         {
-        }
-
-        public async Task<IPagedResult<User>> SearchAsync()
-        {
-            var query = DbContext.Users.AsNoTracking();
-
-            return await GetPagedAsync(query);
         }
     }
 }

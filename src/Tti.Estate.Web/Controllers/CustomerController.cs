@@ -26,9 +26,25 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 20)
         {
-            return View();
+            var spec = new CustomerFilterPaginatedSpecification(pageIndex * pageSize, pageSize);
+
+            var items = await _customerRepository.ListAsync(spec);
+            var totalItems = await _customerRepository.CountAsync(spec);
+
+            var model = new CustomerListModel()
+            {
+                Customers = new PagedResultModel<CustomerListItemModel>()
+                {
+                    Items = _mapper.Map<IEnumerable<CustomerListItemModel>>(items),
+                    PageIndex = pageIndex,
+                    TotalItems = totalItems,
+                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
+                }
+            };
+
+            return View(model);
         }
 
         [HttpGet]
@@ -133,18 +149,6 @@ namespace Tti.Estate.Web.Controllers
             }
 
             model.Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)));
-        }
-
-        [HttpGet]
-        public async Task<DataTableModel<CustomerListItemModel>> GetData(DataTableRequestModel requestModel)
-        {
-            var data = await _customerRepository.SearchAsync();
-
-            var model = _mapper.Map<DataTableModel<CustomerListItemModel>>(data);
-
-            model.DrawCounter = requestModel.DrawCounter;
-
-            return model;
         }
     }
 }

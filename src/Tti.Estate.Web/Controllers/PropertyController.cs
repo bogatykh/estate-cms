@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
@@ -27,9 +26,28 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(PropertyListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
-            return View();
+            var spec = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
+                userId: criteria.UserId);
+
+            var items = await _propertyRepository.ListAsync(spec);
+            var totalItems = await _propertyRepository.CountAsync(spec);
+
+            var model = new PropertyListModel()
+            {
+                Criteria = criteria,
+                Properties = new PagedResultModel<PropertyListItemModel>()
+                {
+                    Items = _mapper.Map<IEnumerable<PropertyListItemModel>>(items),
+                    PageIndex = pageIndex,
+                    TotalItems = totalItems,
+                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
+                },
+                Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
+            };
+
+            return View(model);
         }
 
         [HttpGet]
@@ -134,18 +152,6 @@ namespace Tti.Estate.Web.Controllers
             }
 
             model.Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)));
-        }
-
-        [HttpGet]
-        public async Task<DataTableModel<PropertyListItemModel>> GetData(DataTableRequestModel requestModel)
-        {
-            var data = await _propertyRepository.SearchAsync();
-
-            var model = _mapper.Map<DataTableModel<PropertyListItemModel>>(data);
-
-            model.DrawCounter = requestModel.DrawCounter;
-
-            return model;
         }
     }
 }

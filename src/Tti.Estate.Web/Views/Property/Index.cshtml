@@ -1,32 +1,45 @@
-﻿@{
+﻿@model PropertyListModel
+@{
     ViewData["Title"] = Localizer["Title"];
 }
-<table id="dataTable" class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>@Localizer["Id"]</th>
-            <th>@Localizer["User"]</th>
-            <th>@Localizer["Modified"]</th>
-        </tr>
-    </thead>
-</table>
-<a asp-action="Create" class="btn btn-primary">
-    @Localizer["Create"]
-</a>
-@section Scripts {
-    <script>
-        $(function () {
-            $('#dataTable').dataTable({
-                serverSide: true,
-                searching: true,
-                ajax: '@Url.Action("GetData")',
-                columns: [
-                    { data: 'id' },
-                    { data: 'user' },
-                    { data: 'modified' }
-                ],
-                order: [[ 2, 'desc' ]]
-            });
-        });
-    </script>
-}
+<div class="row">
+    <div class="col-sm-3">
+        <form method="get">
+            <div class="card">
+                <div class="card-header">
+                    @Localizer["Criteria"]
+                </div>
+                <div class="card-body">
+                    <label asp-for="Criteria.UserId"></label>
+                    <select asp-for="Criteria.UserId" asp-items="Model.Users" class="form-control">
+                        <option></option>
+                    </select>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-secondary">@Localizer["Search"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-9">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Id"]</th>
+                        <th>@Localizer["User"]</th>
+                        <th>@Localizer["Modified"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.DisplayFor(x => x.Properties.Items)
+                </tbody>
+            </table>
+        </div>
+        <partial name="_PaginationPartial" model="Model.Properties" />
+        <partial name="_EmptyResultPartial" model="Model.Properties" />
+        <a asp-action="Create" class="btn btn-primary">
+            @Localizer["Create"]
+        </a>
+    </div>
+</div>

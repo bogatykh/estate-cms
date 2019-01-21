@@ -1,0 +1,11 @@
+﻿@model UserListItemModel
+<tr>
+    <td>
+        <a asp-controller="User" asp-action="Details" asp-route-id="@Model.Id">
+            @Html.DisplayFor(x => x.UserName)
+        </a>
+    </td>
+    <td>@Html.DisplayFor(x => x.FirstName)</td>
+    <td>@Html.DisplayFor(x => x.LastName)</td>
+    <td>@Html.DisplayFor(x => x.Telephone)</td>
+</tr>

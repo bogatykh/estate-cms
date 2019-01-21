@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
+using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -20,9 +22,25 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 20)
         {
-            return View();
+            var spec = new UserFilterPaginatedSpecification(pageIndex * pageSize, pageSize);
+
+            var items = await _userRepository.ListAsync(spec);
+            var totalItems = await _userRepository.CountAsync(spec);
+
+            var model = new UserListModel()
+            {
+                Users = new PagedResultModel<UserListItemModel>()
+                {
+                    Items = _mapper.Map<IEnumerable<UserListItemModel>>(items),
+                    PageIndex = pageIndex,
+                    TotalItems = totalItems,
+                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
+                }
+            };
+
+            return View(model);
         }
 
         [HttpGet]
@@ -104,18 +122,6 @@ namespace Tti.Estate.Web.Controllers
             await _userRepository.DeleteAsync(customer);
 
             return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public async Task<DataTableModel<UserListItemModel>> GetData(DataTableRequestModel requestModel)
-        {
-            var data = await _userRepository.SearchAsync();
-
-            var model = _mapper.Map<DataTableModel<UserListItemModel>>(data);
-
-            model.DrawCounter = requestModel.DrawCounter;
-
-            return model;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data.Specifications
@@ -13,6 +14,16 @@ namespace Tti.Estate.Data.Specifications
             if (specification.Criteria != null)
             {
                 query = query.Where(specification.Criteria);
+            }
+
+            query = specification.Includes.
+                Aggregate(query, (src, include) => src.Include(include));
+
+            if (specification.IsPagingEnabled)
+            {
+                query = query.
+                    Skip(specification.Skip).
+                    Take(specification.Take);
             }
 
             return query;

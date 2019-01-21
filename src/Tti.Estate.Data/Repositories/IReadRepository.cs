@@ -15,5 +15,7 @@ namespace Tti.Estate.Data.Repositories
         Task<IEnumerable<TEntity>> ListAsync();
 
         Task<IEnumerable<TEntity>> ListAsync(ISpecification<TEntity> specification);
+
+        Task<int> CountAsync(ISpecification<TEntity> specification);
     }
 }

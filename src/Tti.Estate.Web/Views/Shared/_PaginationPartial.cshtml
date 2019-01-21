@@ -1,0 +1,22 @@
+﻿@model PagedResultModel
+@{
+    var routeData = new Dictionary<string, string>();
+    foreach (var queryValue in Url.ActionContext.HttpContext.Request.Query)
+    {
+        if (!routeData.ContainsKey(queryValue.Key))
+        {
+            routeData.Add(queryValue.Key, queryValue.Value);
+        }
+    }
+}
+@if (Model != null && Model.TotalPages > 1)
+{
+    <ul class="pagination">
+        <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
+            <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="@(Model.PageIndex - 1)">@Localizer["Previous"]</a>
+        </li>
+        <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
+            <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="@(Model.PageIndex + 1)">@Localizer["Next"]</a>
+        </li>
+    </ul>
+}

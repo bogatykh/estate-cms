@@ -7,6 +7,7 @@ namespace Tti.Estate.Data.Specifications
         public CommentFilterSpecification(long? customerId = null, long? propertyId = null, long? transactionId = null)
             : base(x => x.CustomerId == customerId && x.PropertyId == propertyId && x.TransactionId == transactionId)
         {
+            AddInclude(x => x.User);
         }
     }
 }

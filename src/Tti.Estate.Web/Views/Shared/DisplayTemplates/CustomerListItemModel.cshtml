@@ -1,0 +1,10 @@
+﻿@model CustomerListItemModel
+<tr>
+    <td>
+        <a asp-controller="Customer" asp-action="Details" asp-route-id="@Model.Id">
+            @Html.DisplayFor(x => x.Id)
+        </a>
+    </td>
+    <td>@Html.DisplayFor(x => x.User)</td>
+    <td>@Html.DisplayFor(x => x.Modified)</td>
+</tr>

@@ -56,17 +56,14 @@ namespace Tti.Estate.Data.Repositories
             return await ApplySpecification(specification).ToListAsync();
         }
 
+        public async Task<int> CountAsync(ISpecification<TEntity> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
+        }
+
         private IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification)
         {
             return SpecificationEvaluator<TEntity>.GetQuery(DbContext.Set<TEntity>().AsQueryable(), specification);
-        }
-
-        protected async Task<PagedResult<TEntity>> GetPagedAsync(IQueryable<TEntity> query)
-        {
-            return new PagedResult<TEntity>(
-                totalItems: await query.CountAsync(),
-                items: await query.ToListAsync()
-            );
         }
     }
 }

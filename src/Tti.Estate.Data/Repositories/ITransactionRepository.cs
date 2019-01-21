@@ -5,6 +5,5 @@ namespace Tti.Estate.Data.Repositories
 {
     public interface ITransactionRepository : IRepository<Transaction>
     {
-        Task<IPagedResult<Transaction>> SearchAsync();
     }
 }
