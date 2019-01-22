@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Tti.Estate.Business.Services;
+using Tti.Estate.Data;
 
 namespace Tti.Estate.Web
 {
@@ -17,6 +18,9 @@ namespace Tti.Estate.Web
 
                 var userService = services.GetRequiredService<IUserService>();
                 AppUserSeed.SeedAsync(userService).Wait();
+
+                var dbContext = services.GetRequiredService<AppDbContext>();
+                AppDbContextSeed.SeedRandomDataAsync(dbContext).Wait();
             }
 
             host.Run();
