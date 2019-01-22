@@ -81,7 +81,10 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            <h1>@ViewData["Title"]</h1>
+            <h1>
+                @ViewData["Title"]
+                @RenderSection("Badge", required: false)
+            </h1>
             @RenderBody()
         </main>
     </div>

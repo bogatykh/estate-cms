@@ -3,14 +3,6 @@
     ViewData["Title"] = Localizer["Title"];
 }
 <form method="post">
-    <div class="form-group row">
-        <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Status)</label>
-        <div class="col-sm-9">
-            <p class="form-control-plaintext">
-                @Html.DisplayFor(x => x.Status)
-            </p>
-        </div>
-    </div>
     @Html.DisplayForModel()
     <partial name="_ContactsPartial" />
     <partial name="_CommentsPartial" />
@@ -25,6 +17,27 @@
         @Localizer["Delete"]
     </button>
 </form>
+@section Badge {
+@{ 
+    string badgeClass;
+    switch(Model.Status)
+    {
+        case PropertyStatusModel.Active:
+            badgeClass = "badge-success";
+            break;
+        case PropertyStatusModel.Reserved:
+            badgeClass = "badge-warning";
+            break;
+        case PropertyStatusModel.Realized:
+            badgeClass = "badge-danger";
+            break;
+        default:
+            badgeClass = "badge-secondary";
+            break;
+    }
+}
+    <span class="badge @badgeClass">@Html.DisplayFor(x => x.Status)</span>
+}
 @section Scripts {
     <partial name="_ContactsScriptsPartial" model="new ContactListRequestModel() { PropertyId = Model.Id }" />
     <partial name="_CommentsScriptsPartial" model="new CommentListRequestModel() { PropertyId = Model.Id }" />
