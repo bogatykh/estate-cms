@@ -21,6 +21,14 @@
     {
       "library": "bootstrap-datepicker@1.8.0",
       "destination": "wwwroot/lib/bootstrap-datepicker/"
+    },
+    {
+      "library": "globalize@1.4.0",
+      "destination": "wwwroot/lib/globalize/"
+    },
+    {
+      "library": "cldrjs@0.5.1",
+      "destination": "wwwroot/lib/cldrjs/"
     }
   ]
 }
