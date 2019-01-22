@@ -5,7 +5,7 @@ using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
 
-namespace Tti.Estate.Business.Services
+namespace Tti.Estate.Infrastructure.Services
 {
     internal class UserService : IUserService
     {

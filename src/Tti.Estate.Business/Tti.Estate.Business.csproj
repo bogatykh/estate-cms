@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tti.Estate.Data\Tti.Estate.Data.csproj" />
+    <ProjectReference Include="..\Tti.Estate.Infrastructure\Tti.Estate.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

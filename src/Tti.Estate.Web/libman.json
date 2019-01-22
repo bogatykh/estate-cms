@@ -29,6 +29,10 @@
     {
       "library": "cldrjs@0.5.1",
       "destination": "wwwroot/lib/cldrjs/"
+    },
+    {
+      "library": "ekko-lightbox@5.3.0",
+      "destination": "wwwroot/lib/ekko-lightbox/"
     }
   ]
 }

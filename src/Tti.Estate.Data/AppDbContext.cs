@@ -110,9 +110,9 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Created).ValueGeneratedOnAdd();
             builder.Property(x => x.Modified).ValueGeneratedOnAddOrUpdate();
 
-            builder.HasOne(x => x.User).WithMany().IsRequired();
-            builder.HasOne(x => x.Region).WithMany().IsRequired();
-            builder.HasOne(x => x.Street).WithMany().IsRequired();
+            builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
+            builder.HasOne(x => x.Region).WithMany().HasForeignKey(x => x.RegionId).IsRequired();
+            builder.HasOne(x => x.Street).WithMany().HasForeignKey(x => x.StreetId).IsRequired();
         }
 
         private void ConfigurePropertyPhoto(EntityTypeBuilder<PropertyPhoto> builder)
@@ -122,7 +122,10 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.IsMain).HasDefaultValue(false);
+            builder.Property(x => x.IsDefault).HasDefaultValue(false);
+            builder.Property(x => x.ExternalId);
+
+            builder.HasOne(x => x.Property).WithMany().HasForeignKey(x => x.PropertyId).IsRequired();
         }
 
         private void ConfigureRegion(EntityTypeBuilder<Region> builder)

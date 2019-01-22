@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.WindowsAzure.Storage;
 using System.Globalization;
 using Tti.Estate.Business;
 using Tti.Estate.Data;
@@ -59,6 +60,7 @@ namespace Tti.Estate.Web
                 c.UseInMemoryDatabase("Estate"));
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddSingleton(_ => CloudStorageAccount.Parse(Configuration.GetConnectionString("StorageAccount")));
 
             services.AddRepositories();
             services.AddInfrastructure();

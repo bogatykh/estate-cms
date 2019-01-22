@@ -24,8 +24,10 @@ namespace Tti.Estate.Data.Entities
 
         public PriceType? PriceType { get; set; }
 
+        public long RegionId { get; set; }
         public Region Region { get; set; }
 
+        public long StreetId { get; set; }
         public Street Street { get; set; }
 
         public string HouseNumber { get; set; }

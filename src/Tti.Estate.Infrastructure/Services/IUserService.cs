@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 
-namespace Tti.Estate.Business.Services
+namespace Tti.Estate.Infrastructure.Services
 {
     public interface IUserService
     {

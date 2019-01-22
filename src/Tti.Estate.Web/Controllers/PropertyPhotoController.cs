@@ -2,22 +2,25 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Repositories;
+using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
 {
-    [Route("Property/{propertyId:long}/Photos")]
+    [Route("Property/{propertyId:long}/Photos/[action]")]
     public class PropertyPhotoController : Controller
     {
         private readonly IPropertyRepository _propertyRepository;
-        private readonly IPropertyPhotoRepository _propertyPhotoRepository;
+        private readonly IPropertyPhotoService _propertyPhotoService;
         private readonly IMapper _mapper;
 
-        public PropertyPhotoController(IPropertyRepository propertyRepository, IPropertyPhotoRepository propertyPhotoRepository, IMapper mapper)
+        public PropertyPhotoController(IPropertyRepository propertyRepository, IPropertyPhotoService propertyPhotoService, IMapper mapper)
         {
             _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
-            _propertyPhotoRepository = propertyPhotoRepository ?? throw new ArgumentNullException(nameof(propertyPhotoRepository));
+            _propertyPhotoService = propertyPhotoService ?? throw new ArgumentNullException(nameof(propertyPhotoService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -31,34 +34,45 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            return View();
+            var items = await _propertyPhotoService.ListAsync(propertyId);
+
+            var model = new PropertyPhotoIndexModel()
+            {
+                PropertyId = propertyId,
+                StorageUri = _propertyPhotoService.GetStorageUri(),
+                Photos = _mapper.Map<IEnumerable<PropertyPhotoModel>>(items)
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(long propertyId, IFormFile photo)
         {
-            return View();
+            await _propertyPhotoService.CreateAsync(propertyId, photo.OpenReadStream());
+
+            return RedirectToAction(nameof(Index), new { propertyId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update()
+        public async Task<IActionResult> Update(long propertyId)
         {
-            return View();
+            return RedirectToAction(nameof(Index), new { propertyId });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(long propertyId, long id)
         {
-            var propertyPhoto = await _propertyPhotoRepository.GetAsync(id);
+            //var propertyPhoto = await _propertyPhotoRepository.GetAsync(id);
 
-            if (propertyPhoto == null)
-            {
-                return NotFound();
-            }
+            //if (propertyPhoto == null)
+            //{
+            //    return NotFound();
+            //}
 
-            await _propertyPhotoRepository.DeleteAsync(propertyPhoto);
+            //await _propertyPhotoRepository.DeleteAsync(propertyPhoto);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index), new { propertyId });
         }
     }
 }

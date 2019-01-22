@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Tti.Estate.Business.Services;
+using Tti.Estate.Infrastructure.Services;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers

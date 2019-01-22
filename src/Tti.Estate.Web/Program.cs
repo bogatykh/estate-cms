@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Tti.Estate.Business.Services;
 using Tti.Estate.Data;
+using Tti.Estate.Infrastructure.Services;
 
 namespace Tti.Estate.Web
 {
