@@ -117,17 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Area" xml:space="preserve">
+    <value>Площадь</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
+  <data name="FlatNumber" xml:space="preserve">
+    <value>Квартира</value>
+  </data>
+  <data name="Floor" xml:space="preserve">
+    <value>Этаж</value>
+  </data>
+  <data name="FloorCount" xml:space="preserve">
+    <value>Этажность</value>
+  </data>
+  <data name="HouseNumber" xml:space="preserve">
+    <value>Дом</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>Код</value>
+  </data>
+  <data name="IsVip" xml:space="preserve">
+    <value>VIP</value>
+  </data>
+  <data name="LandArea" xml:space="preserve">
+    <value>Земля</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Цена</value>
   </data>
   <data name="PropertyType" xml:space="preserve">
     <value>Вид</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>Поле "{0}" обязательно для заполнения.</value>
+  </data>
+  <data name="RoomCount" xml:space="preserve">
+    <value>Комнаты</value>
   </data>
   <data name="TransactionType" xml:space="preserve">
     <value>Операция</value>

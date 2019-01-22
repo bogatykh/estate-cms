@@ -40,6 +40,8 @@ namespace Tti.Estate.Data.Entities
 
         public byte? Floor { get; set; }
 
+        public byte? RoomCount { get; set; }
+
         public bool IsVip { get; set; }
 
         public string Description { get; set; }

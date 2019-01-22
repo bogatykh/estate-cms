@@ -1,25 +1,53 @@
 ﻿@model PropertyModel
-<div class="form-group row">
-    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserId)</label>
-    <div class="col-sm-9">
-        <select asp-for="UserId" asp-items="Model.Users" class="form-control"></select>
-        <span asp-validation-for="UserId"></span>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.TransactionType)</label>
+            <div class="col-sm-9">
+                <select asp-for="TransactionType" asp-items="@Html.GetEnumSelectList<TransactionTypeModel>()" class="form-control"></select>
+                <span asp-validation-for="TransactionType"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.PropertyType)</label>
+            <div class="col-sm-9">
+                <select asp-for="PropertyType" asp-items="@Html.GetEnumSelectList<PropertyTypeModel>()" class="form-control">
+                    <option></option>
+                </select>
+                <span asp-validation-for="PropertyType"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Price)</label>
+            <div class="col-sm-9">
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Area)</label>
+            <div class="col-sm-9">
+                <input asp-for="Area" class="form-control" />
+                <span asp-validation-for="Area"></span>
+            </div>
+        </div>
     </div>
-</div>
-<div class="form-group row">
-    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.TransactionType)</label>
-    <div class="col-sm-9">
-        <select asp-for="TransactionType" asp-items="@Html.GetEnumSelectList<TransactionTypeModel>()" class="form-control"></select>
-        <span asp-validation-for="TransactionType"></span>
-    </div>
-</div>
-<div class="form-group row">
-    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.PropertyType)</label>
-    <div class="col-sm-9">
-        <select asp-for="PropertyType" asp-items="@Html.GetEnumSelectList<PropertyTypeModel>()" class="form-control">
-            <option></option>
-        </select>
-        <span asp-validation-for="PropertyType"></span>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label asp-for="UserId" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <select asp-for="UserId" asp-items="Model.Users" class="form-control"></select>
+                <span asp-validation-for="UserId"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-3 col-sm-9">
+                <div class="form-check">
+                    <input asp-for="IsVip" class="form-check-input" />
+                    <label asp-for="IsVip" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <fieldset>
