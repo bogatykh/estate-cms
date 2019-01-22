@@ -1,11 +1,9 @@
-﻿using Tti.Estate.Data.Entities;
-
-namespace Tti.Estate.Data.Specifications
+﻿namespace Tti.Estate.Data.Specifications
 {
-    public class UserFilterPaginatedSpecification : BaseSpecification<User>
+    public class UserFilterPaginatedSpecification : UserFilterSpecification
     {
         public UserFilterPaginatedSpecification(int skip, int take, string userName = null)
-            : base(x =>x.UserName == userName || userName == null)
+            : base(userName: userName)
         {
             ApplyPaging(skip, take);
         }

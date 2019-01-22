@@ -28,11 +28,12 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(PropertyListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
-            var spec = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
+            var filterSpecification = new PropertyFilterSpecification(userId: criteria.UserId);
+            var filterPaginatedSpecification = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
                 userId: criteria.UserId);
 
-            var items = await _propertyRepository.ListAsync(spec);
-            var totalItems = await _propertyRepository.CountAsync(spec);
+            var items = await _propertyRepository.ListAsync(filterPaginatedSpecification);
+            var totalItems = await _propertyRepository.CountAsync(filterSpecification);
 
             var model = new PropertyListModel()
             {

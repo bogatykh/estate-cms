@@ -129,4 +129,7 @@
   <data name="Previous" xml:space="preserve">
     <value>Предыдущая</value>
   </data>
+  <data name="TotalItems" xml:space="preserve">
+    <value>Всего записей</value>
+  </data>
 </root>

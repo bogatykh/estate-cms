@@ -24,10 +24,11 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 20)
         {
-            var spec = new UserFilterPaginatedSpecification(pageIndex * pageSize, pageSize);
+            var filterSpecification = new UserFilterSpecification();
+            var filterPaginatedSpecification = new UserFilterPaginatedSpecification(pageIndex * pageSize, pageSize);
 
-            var items = await _userRepository.ListAsync(spec);
-            var totalItems = await _userRepository.CountAsync(spec);
+            var items = await _userRepository.ListAsync(filterPaginatedSpecification);
+            var totalItems = await _userRepository.CountAsync(filterSpecification);
 
             var model = new UserListModel()
             {

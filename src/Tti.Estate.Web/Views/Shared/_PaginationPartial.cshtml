@@ -9,14 +9,49 @@
         }
     }
 }
+@if (Model != null && Model.TotalItems > 0)
+{
+    <p class="text-right">
+        @Localizer["TotalItems"]: <mark>@Model.TotalItems</mark>
+    </p>
+}
 @if (Model != null && Model.TotalPages > 1)
 {
-    <ul class="pagination">
-        <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
-            <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="@(Model.PageIndex - 1)">@Localizer["Previous"]</a>
-        </li>
-        <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
-            <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="@(Model.PageIndex + 1)">@Localizer["Next"]</a>
-        </li>
-    </ul>
+    <nav>
+        <ul class="pagination justify-content-center">
+            @if (Model.HasPreviousPage && Model.PageIndex > 2)
+            {
+                <li class="page-item" title="@Localizer["First"]">
+                    <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="0">1</a>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
+            @for (int i = Math.Max(1, Model.PageIndex - 1); i <= Math.Min(Model.TotalPages, Model.PageIndex + 3); i++)
+            {
+                if (Model.PageIndex == i - 1)
+                {
+                    <li class="page-item active">
+                        <span class="page-link">@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="@(i - 1)">@i</a>
+                    </li>
+                }
+            }
+            @if (Model.HasNextPage && Model.PageIndex < Model.TotalPages - 3)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item" title="@Localizer["Last"]">
+                    <a class="page-link" asp-all-route-data="routeData" asp-route-pageIndex="@(Model.TotalPages - 1)">@Model.TotalPages</a>
+                </li>
+            }
+        </ul>
+    </nav>
 }
