@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add" xml:space="preserve">
-    <value>Добавить контакт</value>
+    <value>Добавить</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Э-почта</value>
@@ -128,6 +128,9 @@
   </data>
   <data name="LastName" xml:space="preserve">
     <value>Фамилия</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>Контактная информация отсутствует</value>
   </data>
   <data name="Telephone" xml:space="preserve">
     <value>Телефон</value>

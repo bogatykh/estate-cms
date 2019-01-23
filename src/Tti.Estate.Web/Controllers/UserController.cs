@@ -109,7 +109,7 @@ namespace Tti.Estate.Web.Controllers
 
             return View(model);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {

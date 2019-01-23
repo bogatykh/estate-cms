@@ -1,0 +1,9 @@
+﻿@model CommentModel
+<input asp-for="CustomerId" type="hidden" />
+<input asp-for="PropertyId" type="hidden" />
+<input asp-for="TransactionId" type="hidden" />
+<div class="form-group">
+    <label class="col-form-label">@Html.DisplayNameFor(x => x.Text)</label>
+    <textarea asp-for="Text" class="form-control"></textarea>
+    <span asp-validation-for="Text"></span>
+</div>

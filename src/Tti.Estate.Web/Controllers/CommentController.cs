@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
+using Tti.Estate.Infrastructure.Extensions;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -28,11 +29,28 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(long? customerId, long? propertyId, long? transactionId)
         {
-            CommentModel model = new CommentModel();
+            CommentModel model = new CommentModel()
+            {
+                CustomerId = customerId,
+                PropertyId = propertyId,
+                TransactionId = transactionId
+            };
 
-            return View(model);
+            if (!customerId.HasValue && !propertyId.HasValue && !transactionId.HasValue)
+            {
+                return BadRequest();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpPost]
@@ -42,12 +60,32 @@ namespace Tti.Estate.Web.Controllers
             {
                 var comment = _mapper.Map<Comment>(model);
 
+                comment.UserId = User.GetUserId();
+
                 await _commentRepository.CreateAsync(comment);
 
-                return RedirectToAction("Details", new { id = comment.Id });
+                if (model.TransactionId.HasValue)
+                {
+                    return RedirectToAction("Details", "Transaction", new { id = model.TransactionId.Value });
+                }
+                else if (model.PropertyId.HasValue)
+                {
+                    return RedirectToAction("Details", "Property", new { id = model.PropertyId.Value });
+                }
+                else if (model.CustomerId.HasValue)
+                {
+                    return RedirectToAction("Details", "Customer", new { id = model.CustomerId.Value });
+                }
             }
-
-            return View(model);
+            
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpGet]

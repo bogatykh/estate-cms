@@ -2,43 +2,44 @@
 @{
     ViewData["Title"] = Localizer["Title"];
 }
+@Html.DisplayForModel()
+<partial name="_ContactsPartial" model="Model.Contacts" />
+<partial name="_CommentsPartial" model="Model.Comments" />
 <form method="post">
-    @Html.DisplayForModel()
-    <partial name="_ContactsPartial" />
-    <partial name="_CommentsPartial" />
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
         @Localizer["Edit"]
     </a>
     <a asp-controller="PropertyPhoto" asp-action="Index" asp-route-propertyId="@Model.Id" class="btn btn-outline-secondary">
         @Localizer["Photos"]
     </a>
-    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-danger">
+    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
         <i class="fa fa-trash-o"></i>
         @Localizer["Delete"]
     </button>
 </form>
 @section Badge {
-@{ 
-    string badgeClass;
-    switch(Model.Status)
-    {
-        case PropertyStatusModel.Active:
-            badgeClass = "badge-success";
-            break;
-        case PropertyStatusModel.Reserved:
-            badgeClass = "badge-warning";
-            break;
-        case PropertyStatusModel.Realized:
-            badgeClass = "badge-danger";
-            break;
-        default:
-            badgeClass = "badge-secondary";
-            break;
+    @{
+        string badgeClass;
+        switch (Model.Status)
+        {
+            case PropertyStatusModel.Active:
+                badgeClass = "badge-success";
+                break;
+            case PropertyStatusModel.Reserved:
+                badgeClass = "badge-warning";
+                break;
+            case PropertyStatusModel.Realized:
+                badgeClass = "badge-danger";
+                break;
+            default:
+                badgeClass = "badge-secondary";
+                break;
+        }
     }
-}
     <span class="badge @badgeClass">@Html.DisplayFor(x => x.Status)</span>
 }
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <partial name="_ContactsScriptsPartial" model="new ContactListRequestModel() { PropertyId = Model.Id }" />
     <partial name="_CommentsScriptsPartial" model="new CommentListRequestModel() { PropertyId = Model.Id }" />
 }

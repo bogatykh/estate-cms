@@ -1,15 +1,5 @@
 @model ContactListRequestModel
 <script>
-        $(function () {
-            $('#contactsDataTable').dataTable({
-                serverSide: true,
-                ordering: false,
-                paging: false,
-                info: false,
-                ajax: {
-                    url: '@Url.Action("GetData", "Contact", Model)',
-                    dataSrc: ''
-                }
-            });
-        });
+    $(function () {
+    });
 </script>

@@ -22,6 +22,8 @@ namespace Tti.Estate.Web
 
             CreateMap<Customer, CustomerDetailsModel>().
                 IncludeBase<Customer, CustomerEditModel>().
+                ForMember(x => x.Contacts, x => x.Ignore()).
+                ForMember(x => x.Comments, x => x.Ignore()).
                 ReverseMap().
                 IncludeBase<CustomerEditModel, Customer>();
         }

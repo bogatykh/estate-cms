@@ -21,6 +21,8 @@ namespace Tti.Estate.Web.Mapping
 
             CreateMap<Property, PropertyDetailsModel>().
                 IncludeBase<Property, PropertyEditModel>().
+                ForMember(x => x.Contacts, x => x.Ignore()).
+                ForMember(x => x.Comments, x => x.Ignore()).
                 ReverseMap().
                 IncludeBase<PropertyEditModel, Property>();
         }

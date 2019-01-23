@@ -15,12 +15,20 @@ namespace Tti.Estate.Web.Controllers
     public class PropertyController : Controller
     {
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IContactRepository _contactRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public PropertyController(IPropertyRepository propertyRepository, IUserRepository userRepository, IMapper mapper)
+        public PropertyController(IPropertyRepository propertyRepository,
+            IContactRepository contactRepository,
+            ICommentRepository commentRepository,
+            IUserRepository userRepository,
+            IMapper mapper)
         {
             _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
+            _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
+            _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -92,6 +100,9 @@ namespace Tti.Estate.Web.Controllers
             }
 
             var model = _mapper.Map<PropertyDetailsModel>(property);
+
+            model.Contacts = _mapper.Map<List<ContactListItemModel>>(await _contactRepository.ListAsync(new ContactFilterSpecification(propertyId: id)));
+            model.Comments = _mapper.Map<List<CommentListItemModel>>(await _commentRepository.ListAsync(new CommentFilterSpecification(propertyId: id)));
 
             return View(model);
         }
