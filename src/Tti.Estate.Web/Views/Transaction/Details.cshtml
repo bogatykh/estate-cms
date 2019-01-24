@@ -2,16 +2,34 @@
 @{
     ViewData["Title"] = Localizer["Title"];
 }
+@Html.DisplayForModel()
+<partial name="_CommentsPartial" model="Model.Comments" />
 <form method="post">
-    @Html.DisplayForModel()
-    <partial name="_CommentsPartial" />
-    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
-        @Localizer["Edit"]
-    </a>
-    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
-        <i class="fa fa-trash-o"></i>
-        @Localizer["Delete"]
-    </button>
+    @if (Model.Status == TransactionStatusModel.Draft)
+    {
+        <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
+            @Localizer["Edit"]
+        </a>
+        <button asp-action="PassToApprove" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
+            @Localizer["PassToApprove"]
+        </button>
+    }
+    else if (Model.Status == TransactionStatusModel.Approving)
+    {
+        <button asp-action="Approve" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-success">
+            @Localizer["Approve"]
+        </button>
+        <button asp-action="Reject" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-warning">
+            @Localizer["Reject"]
+        </button>
+    }
+    else if (Model.Status != TransactionStatusModel.Approved)
+    {
+        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
+            <i class="fa fa-trash-o"></i>
+            @Localizer["Delete"]
+        </button>
+    }
 </form>
 @section Badge {
     @{
@@ -32,5 +50,6 @@
     <span class="badge @badgeClass">@Html.DisplayFor(x => x.Status)</span>
 }
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <partial name="_CommentsScriptsPartial" model="new CommentListRequestModel() { TransactionId = Model.Id }" />
 }

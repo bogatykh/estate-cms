@@ -1,8 +1,28 @@
 ﻿@model TransactionListItemModel
-<tr>
+@{
+    string statusClass;
+    switch (Model.Status)
+    {
+        case TransactionStatusModel.Approved:
+            statusClass = "table-success";
+            break;
+        case TransactionStatusModel.Approving:
+            statusClass = "table-info";
+            break;
+        default:
+            statusClass = "";
+            break;
+    }
+}
+<tr class="@statusClass">
     <td>
         <a asp-controller="Transaction" asp-action="Details" asp-route-id="@Model.Id">
             @Html.DisplayFor(x => x.Id)
         </a>
     </td>
+    <td>@Html.DisplayFor(x => x.TransactionType)</td>
+    <td>@Html.DisplayFor(x => x.Date)</td>
+    <td>@Html.DisplayFor(x => x.Amount)</td>
+    <td>@Html.DisplayFor(x => x.UserAmount)</td>
+    <td>@Html.DisplayFor(x => x.CompanyAmount)</td>
 </tr>

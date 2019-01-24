@@ -2,25 +2,49 @@
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserId)</label>
     <div class="col-sm-9">
-        <p class="form-control-plaintext">
-            @Html.DisplayFor(x => x.UserId)
-        </p>
+        @Html.DisplayFor(x => x.UserId)
     </div>
 </div>
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.TransactionType)</label>
     <div class="col-sm-9">
-        <p class="form-control-plaintext">
-            @Html.DisplayFor(x => x.TransactionType)
-        </p>
+        @Html.DisplayFor(x => x.TransactionType)
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.PropertyId)</label>
+    <div class="col-sm-9">
+        @Html.DisplayFor(x => x.PropertyId)
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.CustomerId)</label>
+    <div class="col-sm-9">
+        @Html.DisplayFor(x => x.CustomerId)
     </div>
 </div>
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Date)</label>
     <div class="col-sm-9">
-        <p class="form-control-plaintext">
-            @Html.DisplayFor(x => x.Date)
-        </p>
+        @Html.DisplayFor(x => x.Date)
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.Amount)</label>
+    <div class="col-sm-9">
+        @Html.DisplayFor(x => x.Amount) &euro;
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.CompanyPercent)</label>
+    <div class="col-sm-9">
+        @Html.DisplayFor(x => x.CompanyPercent) %
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserPercent)</label>
+    <div class="col-sm-9">
+        @Html.DisplayFor(x => x.UserPercent) %
     </div>
 </div>
 <fieldset>

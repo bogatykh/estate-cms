@@ -20,6 +20,7 @@ namespace Tti.Estate.Web.Mapping
 
             CreateMap<Transaction, TransactionDetailsModel>().
                 IncludeBase<Transaction, TransactionEditModel>().
+                ForMember(x => x.Comments, x => x.Ignore()).
                 ReverseMap().
                 IncludeBase<TransactionEditModel, Transaction>();
         }

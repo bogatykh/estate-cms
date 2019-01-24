@@ -117,37 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Amount" xml:space="preserve">
-    <value>Сумма</value>
-  </data>
-  <data name="CompanyAmount" xml:space="preserve">
-    <value>Компании</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>Создать</value>
-  </data>
-  <data name="Criteria" xml:space="preserve">
-    <value>Поиск</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Дата</value>
-  </data>
-  <data name="Id" xml:space="preserve">
-    <value>Код</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Искать</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Сделки</value>
-  </data>
-  <data name="Totals" xml:space="preserve">
-    <value>Всего</value>
-  </data>
-  <data name="TransactionType" xml:space="preserve">
-    <value>Вид</value>
-  </data>
-  <data name="UserAmount" xml:space="preserve">
-    <value>Сотруднику</value>
+  <data name="UserId" xml:space="preserve">
+    <value>Сотрудник</value>
   </data>
 </root>

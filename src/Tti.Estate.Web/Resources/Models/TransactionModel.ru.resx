@@ -120,6 +120,12 @@
   <data name="Amount" xml:space="preserve">
     <value>Сумма</value>
   </data>
+  <data name="CompanyPercent" xml:space="preserve">
+    <value>Часть компании</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Код клиента</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Дата</value>
   </data>
@@ -129,6 +135,9 @@
   <data name="Id" xml:space="preserve">
     <value>Код</value>
   </data>
+  <data name="Property" xml:space="preserve">
+    <value>Код объекта</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>Поле "{0}" обязательно для заполнения.</value>
   </data>
@@ -137,5 +146,8 @@
   </data>
   <data name="User" xml:space="preserve">
     <value>Сотрудник</value>
+  </data>
+  <data name="UserPercent" xml:space="preserve">
+    <value>Часть сотрудника</value>
   </data>
 </root>

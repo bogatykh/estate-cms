@@ -14,11 +14,33 @@ namespace Tti.Estate.Web.Models
         [Display(Name = "TransactionType")]
         [Required(ErrorMessage = "Required")]
         public TransactionTypeModel? TransactionType { get; set; }
+        
+        [Display(Name = "Property")]
+        [Required(ErrorMessage = "Required")]
+        public long? PropertyId { get; set; }
+
+        [Display(Name = "Customer")]
+        [Required(ErrorMessage = "Required")]
+        public long? CustomerId { get; set; }
 
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Required")]
         public DateTime? Date { get; set; }
+
+        [Display(Name = "Amount")]
+        [Required(ErrorMessage = "Required")]
+        public decimal? Amount { get; set; }
+
+        [Display(Name = "CompanyPercent")]
+        [Required(ErrorMessage = "Required")]
+        [Range(1, 100)]
+        public decimal? CompanyPercent { get; set; }
+
+        [Display(Name = "UserPercent")]
+        [Required(ErrorMessage = "Required")]
+        [Range(1, 100)]
+        public decimal? UserPercent { get; set; }
 
         [Display(Name = "Description")]
         [DataType(DataType.MultilineText)]

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Tti.Estate.Web.Models
 {
@@ -6,5 +7,7 @@ namespace Tti.Estate.Web.Models
     {
         [Display(Name = "Status")]
         public TransactionStatusModel Status { get; set; }
+
+        public List<CommentListItemModel> Comments { get; set; }
     }
 }
