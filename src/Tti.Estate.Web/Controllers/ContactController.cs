@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
@@ -21,11 +22,56 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(long? customerId, long? propertyId)
         {
-            ContactModel model = new ContactModel();
+            ContactModel model = new ContactModel()
+            {
+                CustomerId = customerId,
+                PropertyId = propertyId
+            };
 
-            return View(model);
+            if (customerId.HasValue == propertyId.HasValue)
+            {
+                return BadRequest();
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ContactModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var contact = _mapper.Map<Contact>(model);
+
+                await _contactRepository.CreateAsync(contact);
+                
+                if (model.PropertyId.HasValue)
+                {
+                    return RedirectToAction("Details", "Property", new { id = model.PropertyId.Value });
+                }
+                else if (model.CustomerId.HasValue)
+                {
+                    return RedirectToAction("Details", "Customer", new { id = model.CustomerId.Value });
+                }
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpGet]

@@ -1,5 +1,15 @@
 @model ContactListRequestModel
 <script>
     $(function () {
+        var modal$ = $('#addContactModal');
+
+        $('#addContactButton').click(function () {
+            $.get('@Url.Action("Create", "Contact", Model)', function (data) {
+                $content = $('.modal-content', modal$).html(data);
+
+                $.validator.unobtrusive.parse($content);
+                modal$.modal('show');
+            });
+        });
     });
 </script>
