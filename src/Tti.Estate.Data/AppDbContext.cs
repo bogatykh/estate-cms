@@ -168,8 +168,8 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Description).IsUnicode();
 
             builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
-            builder.HasOne(x => x.Property).WithMany();
-            builder.HasOne(x => x.Customer).WithMany();
+            builder.HasOne(x => x.Property).WithMany().HasForeignKey(x => x.PropertyId).IsRequired();
+            builder.HasOne(x => x.Customer).WithMany().HasForeignKey(x => x.CustomerId).IsRequired();
         }
 
         private void ConfigureUser(EntityTypeBuilder<User> builder)
