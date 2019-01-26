@@ -1,0 +1,20 @@
+﻿@model UserStatusModel
+@{
+    string badgeClass;
+    switch (Model)
+    {
+        case UserStatusModel.Active:
+            badgeClass = "badge-success";
+            break;
+        case UserStatusModel.Blocked:
+            badgeClass = "badge-warning";
+            break;
+        case UserStatusModel.Deleted:
+            badgeClass = "badge-danger";
+            break;
+        default:
+            badgeClass = "badge-secondary";
+            break;
+    }
+}
+<span class="badge @badgeClass">@Html.DisplayForModel()</span>

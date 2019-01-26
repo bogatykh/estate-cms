@@ -5,6 +5,9 @@
             @Html.DisplayFor(x => x.UserName)
         </a>
     </td>
+    <td>
+        <partial name="_StatusPartial" for="Status" />
+    </td>
     <td>@Html.DisplayFor(x => x.FirstName)</td>
     <td>@Html.DisplayFor(x => x.LastName)</td>
     <td>@Html.DisplayFor(x => x.Telephone)</td>

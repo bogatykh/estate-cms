@@ -13,23 +13,5 @@
     </button>
 </form>
 @section Badge {
-    @{
-        string badgeClass;
-        switch (Model.Status)
-        {
-            case UserStatusModel.Active:
-                badgeClass = "badge-success";
-                break;
-            case UserStatusModel.Blocked:
-                badgeClass = "badge-warning";
-                break;
-            case UserStatusModel.Deleted:
-                badgeClass = "badge-danger";
-                break;
-            default:
-                badgeClass = "badge-secondary";
-                break;
-        }
-    }
-    <span class="badge @badgeClass">@Html.DisplayFor(x => x.Status)</span>
+    <partial name="_StatusPartial" for="Status" />
 }

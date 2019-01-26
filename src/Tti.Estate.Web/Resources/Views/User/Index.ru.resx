@@ -126,6 +126,9 @@
   <data name="LastName" xml:space="preserve">
     <value>Фамилия</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
   <data name="Telephone" xml:space="preserve">
     <value>Телефон</value>
   </data>
