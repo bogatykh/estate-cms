@@ -132,6 +132,9 @@
   <data name="Price" xml:space="preserve">
     <value>Цена</value>
   </data>
+  <data name="PropertyType" xml:space="preserve">
+    <value>Вид</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Статус</value>
   </data>

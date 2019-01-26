@@ -36,9 +36,22 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(PropertyListModel listModel, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new PropertyFilterSpecification(userId: listModel.Criteria?.UserId);
+            var filterSpecification = new PropertyFilterSpecification(
+                userId: listModel.Criteria?.UserId,
+                propertyType: (PropertyType?)listModel.Criteria?.PropertyType,
+                status: (PropertyStatus?)listModel.Criteria?.Status,
+                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
+                priceFrom: listModel.Criteria?.PriceFrom,
+                priceTo: listModel.Criteria?.PriceTo
+            );
             var filterPaginatedSpecification = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: listModel.Criteria?.UserId);
+                userId: listModel.Criteria?.UserId,
+                propertyType: (PropertyType?)listModel.Criteria?.PropertyType,
+                status: (PropertyStatus?)listModel.Criteria?.Status,
+                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
+                priceFrom: listModel.Criteria?.PriceFrom,
+                priceTo: listModel.Criteria?.PriceTo
+            );
 
             var items = await _propertyRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _propertyRepository.CountAsync(filterSpecification);

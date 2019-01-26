@@ -4,8 +4,20 @@ namespace Tti.Estate.Data.Specifications
 {
     public class PropertyFilterSpecification : BaseSpecification<Property>
     {
-        public PropertyFilterSpecification(long? id = null, long? userId = null)
-            : base(x => (x.Id == id || id == null) && (x.UserId == userId || userId == null))
+        public PropertyFilterSpecification(long? id = null,
+            long? userId = null,
+            PropertyType? propertyType = null,
+            PropertyStatus? status = null,
+            TransactionType? transactionType = null,
+            long? priceFrom = null,
+            long? priceTo = null)
+            : base(x => (!id.HasValue || x.Id == id) &&
+                (!userId.HasValue || x.UserId == userId) &&
+                (!propertyType.HasValue || x.PropertyType == propertyType) &&
+                (!status.HasValue || x.Status == status) &&
+                (!transactionType.HasValue || x.TransactionType == transactionType) &&
+                (!priceFrom.HasValue || x.Price >= priceFrom) &&
+                (!priceTo.HasValue || x.Price <= priceTo))
         {
             AddInclude(x => x.User);
             ApplyOrderByDescending(x => x.Modified);
