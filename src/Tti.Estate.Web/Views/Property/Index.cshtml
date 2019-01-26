@@ -2,46 +2,26 @@
 @{
     ViewData["Title"] = Localizer["Title"];
 }
-<div class="row">
-    <div class="col-lg-3">
-        <form method="get">
-            <div class="card mb-3">
-                <div class="card-header">
-                    @Localizer["Criteria"]
-                </div>
-                <div class="card-body">
-                    <label asp-for="Criteria.UserId"></label>
-                    <select asp-for="Criteria.UserId" asp-items="Model.Users" class="form-control">
-                        <option></option>
-                    </select>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-secondary">@Localizer["Search"]</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="col-lg-9">
-        <a asp-action="Create" class="btn btn-primary">
-            @Localizer["Create"]
-        </a>
-        <div class="table-responsive">
-            <table class="table table-hover mt-3">
-                <thead>
-                    <tr>
-                        <th>@Localizer["Id"]</th>
-                        <th>@Localizer["Area"]</th>
-                        <th>@Localizer["Price"]</th>
-                        <th>@Localizer["Status"]</th>
-                        <th>@Localizer["Modified"]</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @Html.DisplayFor(x => x.Properties.Items)
-                </tbody>
-            </table>
-        </div>
-        <partial name="_PaginationPartial" model="Model.Properties" />
-        <partial name="_EmptyResultPartial" model="Model.Properties" />
-    </div>
+<partial name="_CriteriaButtonPartial" for="Criteria" />
+<a asp-action="Create" class="btn btn-primary">
+    @Localizer["Create"]
+</a>
+<div class="table-responsive">
+    <table class="table table-hover mt-3">
+        <thead>
+            <tr>
+                <th>@Localizer["Id"]</th>
+                <th>@Localizer["Area"]</th>
+                <th>@Localizer["Price"]</th>
+                <th>@Localizer["Status"]</th>
+                <th>@Localizer["Modified"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @Html.DisplayFor(x => x.Properties.Items)
+        </tbody>
+    </table>
 </div>
+<partial name="_PaginationPartial" model="Model.Properties" />
+<partial name="_EmptyResultPartial" model="Model.Properties" />
+<partial name="_CriteriaModalPartial" />

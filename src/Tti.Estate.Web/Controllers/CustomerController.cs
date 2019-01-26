@@ -34,24 +34,26 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(CustomerListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
+        public async Task<IActionResult> Index(CustomerListModel listModel, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new CustomerFilterSpecification(userId: criteria.UserId);
+            var filterSpecification = new CustomerFilterSpecification(userId: listModel.Criteria?.UserId);
             var filterPaginatedSpecification = new CustomerFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: criteria.UserId);
+                userId: listModel.Criteria?.UserId);
 
             var items = await _customerRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _customerRepository.CountAsync(filterSpecification);
             
             var model = new CustomerListModel()
             {
+                Criteria = listModel.Criteria,
                 Customers = new PagedResultModel<CustomerListItemModel>()
                 {
                     Items = _mapper.Map<IEnumerable<CustomerListItemModel>>(items),
                     PageIndex = pageIndex,
                     TotalItems = totalItems,
                     TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-                }
+                },
+                Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
             };
 
             return View(model);

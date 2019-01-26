@@ -32,11 +32,11 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(TransactionListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
+        public async Task<IActionResult> Index(TransactionListModel listModel, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new TransactionFilterSpecification(userId: criteria.UserId);
+            var filterSpecification = new TransactionFilterSpecification(userId: listModel.Criteria?.UserId);
             var filterPaginatedSpecification = new TransactionFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: criteria.UserId);
+                userId: listModel.Criteria?.UserId);
 
             var items = await _transactionRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _transactionRepository.CountAsync(filterSpecification);
@@ -45,6 +45,7 @@ namespace Tti.Estate.Web.Controllers
 
             var model = new TransactionListModel()
             {
+                Criteria = listModel.Criteria,
                 TotalAmount = modelItems.Any() ? modelItems.Sum(x => x.Amount) : (decimal?)null,
                 TotalUserAmount = modelItems.Any() ? modelItems.Sum(x => x.UserAmount) : (decimal?)null,
                 TotalCompanyAmount = modelItems.Any() ? modelItems.Sum(x => x.CompanyAmount) : (decimal?)null,
