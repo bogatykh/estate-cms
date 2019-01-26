@@ -81,7 +81,7 @@ namespace Tti.Estate.Web
                 app.UseHsts();
             }
 
-            app.UseStatusCodePagesWithRedirects("~/Home/Error");
+            app.UseStatusCodePagesWithRedirects("~/Home/StatusCode");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
