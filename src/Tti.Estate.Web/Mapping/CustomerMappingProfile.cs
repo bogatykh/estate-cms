@@ -1,19 +1,23 @@
 ﻿using AutoMapper;
+using System.Linq;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Web.Models;
 
-namespace Tti.Estate.Web
+namespace Tti.Estate.Web.Mapping
 {
     public class CustomerMappingProfile : Profile
     {
         public CustomerMappingProfile()
         {
             CreateMap<Customer, CustomerListItemModel>().
-                ForMember(x => x.User, x => x.MapFrom(y => y.User.LastName));
+                ForMember(x => x.Contact, x => x.MapFrom(y => y.Contacts.FirstOrDefault()));
 
             CreateMap<Customer, CustomerModel>().
                 ForMember(x => x.Users, x => x.Ignore()).
-                ReverseMap();
+                ReverseMap().
+                ForMember(x => x.User, x => x.Ignore()).
+                ForMember(x => x.Created, x => x.Ignore()).
+                ForMember(x => x.Modified, x => x.Ignore());
 
             CreateMap<Customer, CustomerEditModel>().
                 IncludeBase<Customer, CustomerModel>().

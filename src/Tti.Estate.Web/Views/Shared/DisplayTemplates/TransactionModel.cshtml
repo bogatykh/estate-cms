@@ -1,8 +1,8 @@
 ﻿@model TransactionModel
 <div class="form-group row">
-    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserId)</label>
+    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.User)</label>
     <div class="col-sm-9">
-        @Html.DisplayFor(x => x.UserId)
+        @Html.DisplayFor(x => x.User)
     </div>
 </div>
 <div class="form-group row">
@@ -14,13 +14,17 @@
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.PropertyId)</label>
     <div class="col-sm-9">
-        @Html.DisplayFor(x => x.PropertyId)
+        <a asp-controller="Property" asp-action="Details" asp-route-id="@Model.PropertyId">
+            @Html.DisplayFor(x => x.PropertyId)
+        </a>
     </div>
 </div>
 <div class="form-group row">
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.CustomerId)</label>
     <div class="col-sm-9">
-        @Html.DisplayFor(x => x.CustomerId)
+        <a asp-controller="Property" asp-action="Details" asp-route-id="@Model.CustomerId">
+            @Html.DisplayFor(x => x.CustomerId)
+        </a>
     </div>
 </div>
 <div class="form-group row">
@@ -45,6 +49,22 @@
     <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserPercent)</label>
     <div class="col-sm-9">
         @Html.DisplayFor(x => x.UserPercent) %
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="Created" class="col-sm-3 col-form-label"></label>
+    <div class="col-sm-9">
+        <p class="form-control-plaintext">
+            @Html.DisplayFor(x => x.Created)
+        </p>
+    </div>
+</div>
+<div class="form-group row">
+    <label asp-for="Modified" class="col-sm-3 col-form-label"></label>
+    <div class="col-sm-9">
+        <p class="form-control-plaintext">
+            @Html.DisplayFor(x => x.Modified)
+        </p>
     </div>
 </div>
 <fieldset>

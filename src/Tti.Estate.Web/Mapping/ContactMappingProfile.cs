@@ -14,6 +14,9 @@ namespace Tti.Estate.Web.Mapping
             CreateMap<Contact, ContactModel>().
                 ReverseMap();
 
+            CreateMap<Contact, ContactItemModel>().
+                IncludeAllDerived();
+
             CreateMap<ContactListRequestModel, ContactFilterSpecification>();
         }
     }

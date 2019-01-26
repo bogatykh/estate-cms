@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Tti.Estate.Web.Models
 {
@@ -7,9 +6,9 @@ namespace Tti.Estate.Web.Models
     {
         public long Id { get; set; }
         
-        public string FullName { get; set; }
+        public ContactItemModel Contact { get; set; }
         
-        public string User { get; set; }
+        public UserItemModel User { get; set; }
 
         public DateTime Modified { get; set; }
     }

@@ -6,7 +6,9 @@ namespace Tti.Estate.Web.Models
     {
         public long Id { get; set; }
 
-        public string User { get; set; }
+        public long Price { get; set; }
+
+        public decimal Area { get; set; }
 
         public DateTime Modified { get; set; }
     }

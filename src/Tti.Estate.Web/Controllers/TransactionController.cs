@@ -94,7 +94,9 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var transaction = await _transactionRepository.GetAsync(id);
+            var spec = new TransactionFilterSpecification(id: id);
+
+            var transaction = await _transactionRepository.SingleAsync(spec);
 
             if (transaction == null)
             {

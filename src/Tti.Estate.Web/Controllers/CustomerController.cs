@@ -90,7 +90,9 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var customer = await _customerRepository.GetAsync(id);
+            var spec = new CustomerFilterSpecification(id: id);
+
+            var customer = await _customerRepository.SingleAsync(spec);
 
             if (customer == null)
             {

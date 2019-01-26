@@ -8,11 +8,14 @@ namespace Tti.Estate.Web.Mapping
     {
         public PropertyMappingProfile()
         {
-            CreateMap<Property, PropertyListItemModel>().
-                ForMember(x => x.User, x => x.MapFrom(y => y.User.LastName));
+            CreateMap<Property, PropertyListItemModel>();
 
             CreateMap<Property, PropertyModel>().
-                ReverseMap();
+                ReverseMap().
+                ForMember(x => x.User, x => x.Ignore()).
+                ForMember(x => x.Status, x => x.Ignore()).
+                ForMember(x => x.Created, x => x.Ignore()).
+                ForMember(x => x.Modified, x => x.Ignore());
 
             CreateMap<Property, PropertyEditModel>().
                 IncludeBase<Property, PropertyModel>().

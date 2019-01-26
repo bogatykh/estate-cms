@@ -5,6 +5,11 @@ namespace Tti.Estate.Data.Entities
 {
     public class Transaction : BaseEntity
     {
+        public Transaction()
+        {
+            Created = Modified = DateTime.UtcNow;
+        }
+
         public long UserId { get; set; }
 
         public User User { get; set; }
@@ -28,6 +33,10 @@ namespace Tti.Estate.Data.Entities
         public decimal UserPercent { get; set; }
 
         public string Description { get; set; }
+
+        public DateTime Created { get; set; }
+
+        public DateTime Modified { get; set; }
 
         public List<Comment> Comments { get; set; }
     }

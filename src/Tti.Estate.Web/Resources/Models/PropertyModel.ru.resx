@@ -120,6 +120,9 @@
   <data name="Area" xml:space="preserve">
     <value>Площадь</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Создан</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Описание</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="LandArea" xml:space="preserve">
     <value>Земля</value>
   </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Модифицирован</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Цена</value>
   </data>
@@ -155,6 +161,9 @@
   </data>
   <data name="RoomCount" xml:space="preserve">
     <value>Комнаты</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
   </data>
   <data name="TransactionType" xml:space="preserve">
     <value>Операция</value>

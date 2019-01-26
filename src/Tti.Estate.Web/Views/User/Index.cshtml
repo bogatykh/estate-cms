@@ -2,8 +2,11 @@
 @{
     ViewData["Title"] = Localizer["Title"];
 }
+<a asp-action="Create" class="btn btn-primary">
+    @Localizer["Create"]
+</a>
 <div class="table-responsive">
-    <table class="table table-hover">
+    <table class="table table-hover mt-3">
         <thead>
             <tr>
                 <th>@Localizer["UserName"]</th>
@@ -19,6 +22,3 @@
 </div>
 <partial name="_PaginationPartial" model="Model.Users" />
 <partial name="_EmptyResultPartial" model="Model.Users" />
-<a asp-action="Create" class="btn btn-primary">
-    @Localizer["Create"]
-</a>

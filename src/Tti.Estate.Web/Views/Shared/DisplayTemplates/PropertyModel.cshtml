@@ -36,10 +36,10 @@
     </div>
     <div class="col-md-6">
         <div class="form-group row">
-            <label asp-for="UserId" class="col-sm-3 col-form-label"></label>
+            <label asp-for="User" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
                 <p class="form-control-plaintext">
-                    @Html.DisplayFor(x => x.UserId)
+                    @Html.DisplayFor(x => x.User)
                 </p>
             </div>
         </div>
@@ -48,6 +48,22 @@
             <div class="col-sm-9">
                 <p class="form-control-plaintext">
                     @Html.DisplayFor(x => x.IsVip)
+                </p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Modified" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <p class="form-control-plaintext">
+                    @Html.DisplayFor(x => x.Modified)
+                </p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Created" class="col-sm-3 col-form-label"></label>
+            <div class="col-sm-9">
+                <p class="form-control-plaintext">
+                    @Html.DisplayFor(x => x.Created)
                 </p>
             </div>
         </div>

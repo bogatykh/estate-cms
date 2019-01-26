@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Tti.Estate.Web.Models;
 
-namespace Tti.Estate.Web
+namespace Tti.Estate.Web.Mapping
 {
     public class CommonMappingProfile : Profile
     {

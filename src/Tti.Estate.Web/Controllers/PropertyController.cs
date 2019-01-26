@@ -92,7 +92,9 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var property = await _propertyRepository.GetAsync(id);
+            var spec = new PropertyFilterSpecification(id: id);
+
+            var property = await _propertyRepository.SingleAsync(spec);
 
             if (property == null)
             {

@@ -11,7 +11,11 @@ namespace Tti.Estate.Web.Mapping
             CreateMap<Transaction, TransactionListItemModel>();
 
             CreateMap<Transaction, TransactionModel>().
-                ReverseMap();
+                ReverseMap().
+                ForMember(x => x.User, x => x.Ignore()).
+                ForMember(x => x.Status, x => x.Ignore()).
+                ForMember(x => x.Created, x => x.Ignore()).
+                ForMember(x => x.Modified, x => x.Ignore());
 
             CreateMap<Transaction, TransactionEditModel>().
                 IncludeBase<Transaction, TransactionModel>().
