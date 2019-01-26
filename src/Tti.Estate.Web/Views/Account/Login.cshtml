@@ -24,9 +24,9 @@
 <body class="text-center">
     <form method="post" class="form-signin">
         <h1 class="h3 mb-3 font-weight-normal">@Localizer["FormTitle"]</h1>
-        <label asp-for="UserName" class="sr-only">@Html.DisplayNameFor(x => x.UserName)</label>
+        <label asp-for="UserName" class="sr-only"></label>
         <input asp-for="UserName" class="form-control" placeholder="@Html.DisplayNameFor(x => x.UserName)" autofocus>
-        <label asp-for="Password" class="sr-only">@Html.DisplayNameFor(x => x.Password)</label>
+        <label asp-for="Password" class="sr-only"></label>
         <input asp-for="Password" class="form-control" placeholder="@Html.DisplayNameFor(x => x.Password)">
         <div asp-validation-summary="ModelOnly" class="alert alert-danger text-left"></div>
         <div class="checkbox mb-3">

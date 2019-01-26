@@ -1,6 +1,6 @@
 ﻿@model CustomerModel
 <div class="form-group row">
-    <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(x => x.UserId)</label>
+    <label asp-for="UserId" class="col-sm-3 col-form-label"></label>
     <div class="col-sm-9">
         <select asp-for="UserId" asp-items="Model.Users" class="form-control"></select>
         <span asp-validation-for="UserId"></span>
