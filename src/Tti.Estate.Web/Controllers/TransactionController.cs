@@ -31,12 +31,23 @@ namespace Tti.Estate.Web.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [HttpGet]
+        //[HttpGet]
         public async Task<IActionResult> Index(TransactionListModel listModel, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new TransactionFilterSpecification(userId: listModel.Criteria?.UserId);
+            var filterSpecification = new TransactionFilterSpecification(
+                userId: listModel.Criteria?.UserId,
+                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
+                status: (TransactionStatus?)listModel.Criteria?.Status,
+                dateFrom: listModel.Criteria?.DateFrom,
+                dateTo: listModel.Criteria?.DateTo
+            );
             var filterPaginatedSpecification = new TransactionFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: listModel.Criteria?.UserId);
+                userId: listModel.Criteria?.UserId,
+                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
+                status: (TransactionStatus?)listModel.Criteria?.Status,
+                dateFrom: listModel.Criteria?.DateFrom,
+                dateTo: listModel.Criteria?.DateTo
+            );
 
             var items = await _transactionRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _transactionRepository.CountAsync(filterSpecification);

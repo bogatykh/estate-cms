@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="UserId" xml:space="preserve">
+  <data name="DateFrom" xml:space="preserve">
+    <value>Дата от</value>
+  </data>
+  <data name="DateTo" xml:space="preserve">
+    <value>до</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>Вид</value>
+  </data>
+  <data name="User" xml:space="preserve">
     <value>Сотрудник</value>
   </data>
 </root>
