@@ -8,6 +8,7 @@ namespace Tti.Estate.Data.Specifications
             : base(x => (x.Id == id || id == null) && (x.UserId == userId || userId == null))
         {
             AddInclude(x => x.User);
+            ApplyOrderByDescending(x => x.Modified);
         }
     }
 }

@@ -16,7 +16,11 @@ namespace Tti.Estate.Data.Specifications
         public Expression<Func<TEntity, bool>> Criteria { get; }
 
         public List<Expression<Func<TEntity, object>>> Includes { get; } = new List<Expression<Func<TEntity, object>>>();
-        
+
+        public Expression<Func<TEntity, object>> OrderBy { get; private set; }
+
+        public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+
         public int Skip { get; private set; }
 
         public int Take { get; private set; }
@@ -33,6 +37,15 @@ namespace Tti.Estate.Data.Specifications
             Skip = skip;
             Take = take;
             IsPagingEnabled = true;
+        }
+        protected virtual void ApplyOrderBy(Expression<Func<TEntity, object>> orderByExpression)
+        {
+            OrderBy = orderByExpression;
+        }
+
+        protected virtual void ApplyOrderByDescending(Expression<Func<TEntity, object>> orderByDescendingExpression)
+        {
+            OrderByDescending = orderByDescendingExpression;
         }
     }
 }

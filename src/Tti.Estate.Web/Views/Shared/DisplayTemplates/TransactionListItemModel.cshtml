@@ -1,19 +1,4 @@
 ﻿@model TransactionListItemModel
-@{
-    string statusClass;
-    switch (Model.Status)
-    {
-        case TransactionStatusModel.Approved:
-            statusClass = "badge-success";
-            break;
-        case TransactionStatusModel.Approving:
-            statusClass = "badge-info";
-            break;
-        default:
-            statusClass = "badge-secondary";
-            break;
-    }
-}
 <tr>
     <td>
         <a asp-controller="Transaction" asp-action="Details" asp-route-id="@Model.Id">

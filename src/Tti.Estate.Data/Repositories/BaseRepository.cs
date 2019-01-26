@@ -26,7 +26,7 @@ namespace Tti.Estate.Data.Repositories
 
         public async Task<TEntity> GetAsync(long id)
         {
-            return await DbContext.Set<TEntity>().SingleOrDefaultAsync(x => x.Id == id);
+            return await DbContext.Set<TEntity>().FindAsync(id);
         }
 
         public async Task<TEntity> SingleAsync(ISpecification<TEntity> specification)

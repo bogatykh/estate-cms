@@ -1,22 +1,4 @@
 ﻿@model PropertyListItemModel
-@{
-    string statusClass;
-    switch (Model.Status)
-    {
-        case PropertyStatusModel.Active:
-            statusClass = "badge-success";
-            break;
-        case PropertyStatusModel.Reserved:
-            statusClass = "badge-warning";
-            break;
-        case PropertyStatusModel.Realized:
-            statusClass = "badge-danger";
-            break;
-        default:
-            statusClass = "badge-secondary";
-            break;
-    }
-}
 <tr>
     <td>
         <a asp-controller="Property" asp-action="Details" asp-route-id="@Model.Id">
