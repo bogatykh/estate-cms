@@ -4,13 +4,13 @@
     switch (Model.Status)
     {
         case TransactionStatusModel.Approved:
-            statusClass = "text-success";
+            statusClass = "badge-success";
             break;
         case TransactionStatusModel.Approving:
-            statusClass = "text-info";
+            statusClass = "badge-info";
             break;
         default:
-            statusClass = "text-secondary";
+            statusClass = "badge-secondary";
             break;
     }
 }
@@ -21,8 +21,7 @@
         </a>
     </td>
     <td>
-        <i class="fa fa-circle @statusClass"></i>
-        @Html.DisplayFor(x => x.Status)
+        <partial name="_StatusPartial" for="Status" />
     </td>
     <td>@Html.DisplayFor(x => x.Date)</td>
     <td>@Html.DisplayFor(x => x.Amount)</td>

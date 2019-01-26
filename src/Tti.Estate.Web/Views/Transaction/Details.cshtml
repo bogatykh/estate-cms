@@ -32,22 +32,7 @@
     }
 </form>
 @section Badge {
-    @{
-        string badgeClass;
-        switch (Model.Status)
-        {
-            case TransactionStatusModel.Approved:
-                badgeClass = "badge-success";
-                break;
-            case TransactionStatusModel.Approving:
-                badgeClass = "badge-primary";
-                break;
-            default:
-                badgeClass = "badge-secondary";
-                break;
-        }
-    }
-    <span class="badge @badgeClass">@Html.DisplayFor(x => x.Status)</span>
+    <partial name="_StatusPartial" for="Status" />
 }
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

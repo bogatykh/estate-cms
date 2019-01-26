@@ -18,25 +18,7 @@
     </button>
 </form>
 @section Badge {
-    @{
-        string badgeClass;
-        switch (Model.Status)
-        {
-            case PropertyStatusModel.Active:
-                badgeClass = "badge-success";
-                break;
-            case PropertyStatusModel.Reserved:
-                badgeClass = "badge-warning";
-                break;
-            case PropertyStatusModel.Realized:
-                badgeClass = "badge-danger";
-                break;
-            default:
-                badgeClass = "badge-secondary";
-                break;
-        }
-    }
-    <span class="badge @badgeClass">@Html.DisplayFor(x => x.Status)</span>
+    <partial name="_StatusPartial" for="Status" />
 }
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

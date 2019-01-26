@@ -1,0 +1,17 @@
+﻿@model TransactionStatusModel
+@{
+    string badgeClass;
+    switch (Model)
+    {
+        case TransactionStatusModel.Approved:
+            badgeClass = "badge-success";
+            break;
+        case TransactionStatusModel.Approving:
+            badgeClass = "badge-primary";
+            break;
+        default:
+            badgeClass = "badge-secondary";
+            break;
+    }
+}
+<span class="badge @badgeClass">@Html.DisplayForModel()</span>
