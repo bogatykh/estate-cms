@@ -6,7 +6,6 @@
             : base(userName: userName)
         {
             ApplyPaging(skip, take);
-            ApplyOrderBy(x => x.UserName);
         }
     }
 }

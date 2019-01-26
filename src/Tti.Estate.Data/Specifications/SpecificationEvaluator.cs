@@ -19,6 +19,15 @@ namespace Tti.Estate.Data.Specifications
             query = specification.Includes.
                 Aggregate(query, (src, include) => src.Include(include));
 
+            if (specification.OrderBy != null)
+            {
+                query = query.OrderBy(specification.OrderBy);
+            }
+            else if (specification.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(specification.OrderByDescending);
+            }
+
             if (specification.IsPagingEnabled)
             {
                 query = query.
