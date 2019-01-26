@@ -6,5 +6,11 @@ namespace Tti.Estate.Web.Models
     {
         [Display(Name = "User")]
         public long? UserId { get; set; }
+
+        [Display(Name = "Id")]
+        public long? Id { get; set; }
+
+        [Display(Name = "Term")]
+        public string Term { get; set; }
     }
 }
