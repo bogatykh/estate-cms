@@ -4,23 +4,26 @@
     switch (Model.Status)
     {
         case TransactionStatusModel.Approved:
-            statusClass = "table-success";
+            statusClass = "text-success";
             break;
         case TransactionStatusModel.Approving:
-            statusClass = "table-info";
+            statusClass = "text-info";
             break;
         default:
-            statusClass = "";
+            statusClass = "text-secondary";
             break;
     }
 }
-<tr class="@statusClass">
+<tr>
     <td>
         <a asp-controller="Transaction" asp-action="Details" asp-route-id="@Model.Id">
-            @Html.DisplayFor(x => x.Id)
+            @Html.DisplayFor(x => x.TransactionType)
         </a>
     </td>
-    <td>@Html.DisplayFor(x => x.TransactionType)</td>
+    <td>
+        <i class="fa fa-circle @statusClass"></i>
+        @Html.DisplayFor(x => x.Status)
+    </td>
     <td>@Html.DisplayFor(x => x.Date)</td>
     <td>@Html.DisplayFor(x => x.Amount)</td>
     <td>@Html.DisplayFor(x => x.UserAmount)</td>
