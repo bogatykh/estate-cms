@@ -31,22 +31,22 @@ namespace Tti.Estate.Web.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        //[HttpGet]
-        public async Task<IActionResult> Index(TransactionListModel listModel, int pageIndex = 0, int pageSize = 20)
+        [HttpGet]
+        public async Task<IActionResult> Index(TransactionListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
             var filterSpecification = new TransactionFilterSpecification(
-                userId: listModel.Criteria?.UserId,
-                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
-                status: (TransactionStatus?)listModel.Criteria?.Status,
-                dateFrom: listModel.Criteria?.DateFrom,
-                dateTo: listModel.Criteria?.DateTo
+                userId: criteria.UserId,
+                transactionType: (TransactionType?)criteria.TransactionType,
+                status: (TransactionStatus?)criteria.Status,
+                dateFrom: criteria.DateFrom,
+                dateTo: criteria.DateTo
             );
             var filterPaginatedSpecification = new TransactionFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: listModel.Criteria?.UserId,
-                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
-                status: (TransactionStatus?)listModel.Criteria?.Status,
-                dateFrom: listModel.Criteria?.DateFrom,
-                dateTo: listModel.Criteria?.DateTo
+                userId: criteria.UserId,
+                transactionType: (TransactionType?)criteria.TransactionType,
+                status: (TransactionStatus?)criteria.Status,
+                dateFrom: criteria.DateFrom,
+                dateTo: criteria.DateTo
             );
 
             var items = await _transactionRepository.ListAsync(filterPaginatedSpecification);
@@ -56,7 +56,7 @@ namespace Tti.Estate.Web.Controllers
 
             var model = new TransactionListModel()
             {
-                Criteria = listModel.Criteria,
+                Criteria = (criteria.UserId.HasValue || criteria.TransactionType.HasValue || criteria.Status.HasValue || criteria.DateFrom.HasValue || criteria.DateTo.HasValue) ? criteria : null,
                 TotalAmount = modelItems.Any() ? modelItems.Sum(x => x.Amount) : (decimal?)null,
                 TotalUserAmount = modelItems.Any() ? modelItems.Sum(x => x.UserAmount) : (decimal?)null,
                 TotalCompanyAmount = modelItems.Any() ? modelItems.Sum(x => x.CompanyAmount) : (decimal?)null,
@@ -71,6 +71,12 @@ namespace Tti.Estate.Web.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Index(TransactionListCriteriaModel criteria)
+        {
+            return RedirectToAction(nameof(Index), criteria);
         }
 
         [HttpGet]

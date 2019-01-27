@@ -2,7 +2,7 @@
 <div class="modal" id="criteriaModal" tabindex="-1" role="dialog" aria-labelledby="criteriaModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form asp-action="Index" method="get">
+            <form asp-action="Index" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="criteriaModalLabel">@Localizer["Title"]</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="@Localizer["Close"]">
@@ -56,6 +56,8 @@
                                 </div>
                                 <input asp-for="Criteria.PriceTo" class="form-control" />
                             </div>
+                            <span asp-validation-for="Criteria.PriceFrom"></span>
+                            <span asp-validation-for="Criteria.PriceTo"></span>
                         </div>
                     </div>
                 </div>

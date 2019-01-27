@@ -34,23 +34,23 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(PropertyListModel listModel, int pageIndex = 0, int pageSize = 20)
+        public async Task<IActionResult> Index(PropertyListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
             var filterSpecification = new PropertyFilterSpecification(
-                userId: listModel.Criteria?.UserId,
-                propertyType: (PropertyType?)listModel.Criteria?.PropertyType,
-                status: (PropertyStatus?)listModel.Criteria?.Status,
-                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
-                priceFrom: listModel.Criteria?.PriceFrom,
-                priceTo: listModel.Criteria?.PriceTo
+                userId: criteria.UserId,
+                propertyType: (PropertyType?)criteria.PropertyType,
+                status: (PropertyStatus?)criteria.Status,
+                transactionType: (TransactionType?)criteria.TransactionType,
+                priceFrom: criteria.PriceFrom,
+                priceTo: criteria.PriceTo
             );
             var filterPaginatedSpecification = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: listModel.Criteria?.UserId,
-                propertyType: (PropertyType?)listModel.Criteria?.PropertyType,
-                status: (PropertyStatus?)listModel.Criteria?.Status,
-                transactionType: (TransactionType?)listModel.Criteria?.TransactionType,
-                priceFrom: listModel.Criteria?.PriceFrom,
-                priceTo: listModel.Criteria?.PriceTo
+                userId: criteria.UserId,
+                propertyType: (PropertyType?)criteria.PropertyType,
+                status: (PropertyStatus?)criteria.Status,
+                transactionType: (TransactionType?)criteria.TransactionType,
+                priceFrom: criteria.PriceFrom,
+                priceTo: criteria.PriceTo
             );
 
             var items = await _propertyRepository.ListAsync(filterPaginatedSpecification);
@@ -58,7 +58,7 @@ namespace Tti.Estate.Web.Controllers
 
             var model = new PropertyListModel()
             {
-                Criteria = listModel.Criteria,
+                Criteria = (criteria.UserId.HasValue || criteria.PropertyType.HasValue || criteria.Status.HasValue || criteria.TransactionType.HasValue || criteria.PriceFrom.HasValue || criteria.PriceTo.HasValue) ? criteria : null,
                 Properties = new PagedResultModel<PropertyListItemModel>()
                 {
                     Items = _mapper.Map<IEnumerable<PropertyListItemModel>>(items),
@@ -70,6 +70,12 @@ namespace Tti.Estate.Web.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Index(PropertyListCriteriaModel criteria)
+        {
+            return RedirectToAction(nameof(Index), criteria);
         }
 
         [HttpGet]
