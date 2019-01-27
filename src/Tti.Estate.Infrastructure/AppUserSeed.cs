@@ -13,6 +13,7 @@ namespace Tti.Estate.Web
                 UserName = "manager",
                 FirstName = "John",
                 LastName = "Manager",
+                Telephone = "21234567",
                 Role = UserRole.Manager,
                 Status = UserStatus.Active
             }, "Pa$$word1");
@@ -22,6 +23,7 @@ namespace Tti.Estate.Web
                 UserName = "agent",
                 FirstName = "Michael",
                 LastName = "Agent",
+                Telephone = "29876543",
                 Role = UserRole.Agent,
                 Status = UserStatus.Active
             }, "Pa$$word1");
