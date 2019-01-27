@@ -156,6 +156,9 @@
   <data name="PropertyType" xml:space="preserve">
     <value>Вид</value>
   </data>
+  <data name="Region" xml:space="preserve">
+    <value>Регион</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>Поле "{0}" обязательно для заполнения.</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Статус</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Улица</value>
   </data>
   <data name="TransactionType" xml:space="preserve">
     <value>Операция</value>

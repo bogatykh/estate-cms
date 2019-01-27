@@ -34,6 +34,7 @@ namespace Tti.Estate.Web
 
                 if (dbContext.Database.IsInMemory())
                 {
+                    AppDbContextSeed.SeedAsync(dbContext).Wait();
                     AppDbContextSeed.SeedRandomDataAsync(dbContext).Wait();
                 }
             }

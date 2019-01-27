@@ -18,18 +18,21 @@ namespace Tti.Estate.Web.Controllers
         private readonly IContactRepository _contactRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IRegionRepository _regionRepository;
         private readonly IMapper _mapper;
 
         public PropertyController(IPropertyRepository propertyRepository,
             IContactRepository contactRepository,
             ICommentRepository commentRepository,
             IUserRepository userRepository,
+            IRegionRepository regionRepository,
             IMapper mapper)
         {
             _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _regionRepository = regionRepository ?? throw new ArgumentNullException(nameof(regionRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -185,6 +188,7 @@ namespace Tti.Estate.Web.Controllers
             }
 
             model.Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)));
+            model.Regions = _mapper.Map<IEnumerable<SelectListItem>>(await _regionRepository.ListAsync(new RegionFilterSpecification()));
         }
     }
 }

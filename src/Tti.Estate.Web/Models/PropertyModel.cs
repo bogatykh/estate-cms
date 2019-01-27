@@ -49,6 +49,19 @@ namespace Tti.Estate.Web.Models
         public decimal? Area { get; set; }
 
         /// <summary>
+        /// Region
+        /// </summary>
+        [Display(Name = "Region")]
+        [Required(ErrorMessage = "Required")]
+        public long? RegionId { get; set; }
+
+        /// <summary>
+        /// Street
+        /// </summary>
+        [Display(Name = "Street")]
+        public string Street { get; set; }
+
+        /// <summary>
         /// House number
         /// </summary>
         [Display(Name = "HouseNumber")]
@@ -102,7 +115,12 @@ namespace Tti.Estate.Web.Models
 
         [Display(Name = "Modified")]
         public DateTime Modified { get; set; }
-        
+
+        /// <summary>
+        /// Region collection for drop-down
+        /// </summary>
+        public IEnumerable<SelectListItem> Regions { get; set; }
+
         /// <summary>
         /// User collection for drop-down
         /// </summary>

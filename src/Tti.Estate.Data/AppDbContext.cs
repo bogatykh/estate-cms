@@ -198,6 +198,11 @@ namespace Tti.Estate.Data
             builder.HasKey(x => x.Id).
                 ForSqlServerIsClustered();
 
+            builder.Property(x => x.Code)
+                .IsRequired()
+                .IsFixedLength(true)
+                .HasMaxLength(7);
+
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(50);
