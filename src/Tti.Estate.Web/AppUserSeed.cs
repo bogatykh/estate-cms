@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
-using Tti.Estate.Infrastructure.Services;
 
 namespace Tti.Estate.Web
 {

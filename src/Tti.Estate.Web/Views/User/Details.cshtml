@@ -3,14 +3,33 @@
     ViewData["Title"] = Localizer["Title"];
 }
 <form method="post">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
     @Html.DisplayForModel()
-    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
-        @Localizer["Edit"]
-    </a>
-    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
-        <i class="fa fa-trash-o"></i>
-        @Localizer["Delete"]
-    </button>
+    @if (Model.Status != UserStatusModel.Deleted)
+    {
+        <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
+            @Localizer["Edit"]
+        </a>
+    }
+    @if (Model.Status == UserStatusModel.Active)
+    {
+        <button asp-action="Block" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
+            @Localizer["Block"]
+        </button>
+    }
+    else if (Model.Status == UserStatusModel.Blocked)
+    {
+        <button asp-action="Unblock" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
+            @Localizer["Unblock"]
+        </button>
+    }
+    @if (Model.Status != UserStatusModel.Deleted)
+    {
+        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
+            <i class="fa fa-trash-o"></i>
+            @Localizer["Delete"]
+        </button>
+    }
 </form>
 @section Badge {
     <partial name="_StatusPartial" for="Status" />

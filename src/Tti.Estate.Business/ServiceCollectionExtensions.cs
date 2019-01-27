@@ -16,6 +16,7 @@ namespace Tti.Estate.Business
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IPropertyPhotoService, PropertyPhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

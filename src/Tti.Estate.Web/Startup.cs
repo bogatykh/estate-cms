@@ -71,7 +71,8 @@ namespace Tti.Estate.Web
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddMvcLocalization();
-            
+
+
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddSingleton(_ => CloudStorageAccount.Parse(Configuration.GetConnectionString("StorageAccount")));
 

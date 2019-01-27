@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Tti.Estate.Infrastructure.Services;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
@@ -36,7 +36,7 @@ namespace Tti.Estate.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userService.ValidateUserAsync(userName: model.UserName, password: model.Password);
+                var user = await _userService.ValidateAsync(userName: model.UserName, password: model.Password);
 
                 if (user != null)
                 {
@@ -46,6 +46,7 @@ namespace Tti.Estate.Web.Controllers
                     identity.AddClaim(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));
                     identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));
                     identity.AddClaim(new Claim(ClaimTypes.Surname, user.LastName));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, user.Role.ToString()));
 
                     await HttpContext.SignInAsync(
                       CookieAuthenticationDefaults.AuthenticationScheme,

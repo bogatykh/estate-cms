@@ -1,44 +1,33 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Exceptions;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
-using Tti.Estate.Data.Repositories;
-using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
         public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new UserFilterSpecification();
-            var filterPaginatedSpecification = new UserFilterPaginatedSpecification(pageIndex * pageSize, pageSize);
-
-            var items = await _userRepository.ListAsync(filterPaginatedSpecification);
-            var totalItems = await _userRepository.CountAsync(filterSpecification);
+            var users = await _userService.ListAsync(pageIndex: pageIndex, pageSize: pageSize);
 
             var model = new UserListModel()
             {
-                Users = new PagedResultModel<UserListItemModel>()
-                {
-                    Items = _mapper.Map<IEnumerable<UserListItemModel>>(items),
-                    PageIndex = pageIndex,
-                    TotalItems = totalItems,
-                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-                }
+                Users = _mapper.Map<PagedResultModel<UserListItemModel>>(users)
             };
 
             return View(model);
@@ -55,11 +44,11 @@ namespace Tti.Estate.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customer = _mapper.Map<User>(model);
+                var user = _mapper.Map<User>(model);
 
-                await _userRepository.CreateAsync(customer);
+                await _userService.CreateAsync(user, string.Empty);
 
-                return RedirectToAction("Details", new { id = customer.Id });
+                return RedirectToAction("Details", new { id = user.Id });
             }
 
             return View(model);
@@ -68,14 +57,14 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var customer = await _userRepository.GetAsync(id);
+            var user = await _userService.GetAsync(id);
 
-            if (customer == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            var model = _mapper.Map<UserDetailsModel>(customer);
+            var model = _mapper.Map<UserDetailsModel>(user);
 
             return View(model);
         }
@@ -83,14 +72,14 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(long id)
         {
-            var customer = await _userRepository.GetAsync(id);
+            var user = await _userService.GetAsync(id);
 
-            if (customer == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            var model = _mapper.Map<UserEditModel>(customer);
+            var model = _mapper.Map<UserEditModel>(user);
 
             return View(model);
         }
@@ -100,29 +89,70 @@ namespace Tti.Estate.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var customer = _mapper.Map<User>(model);
+                var user = _mapper.Map<User>(model);
 
-                await _userRepository.UpdateAsync(customer);
+                await _userService.UpdateAsync(user);
 
-                return RedirectToAction("Details", new { id = customer.Id });
+                return RedirectToAction("Details", new { id = user.Id });
             }
 
             return View(model);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            var customer = await _userRepository.GetAsync(id);
+            var user = await _userService.GetAsync(id);
 
-            if (customer == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            await _userRepository.DeleteAsync(customer);
+            try
+            {
+                await _userService.DeleteAsync(user);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch (DomainException e)
+            {
+                ModelState.TryAddModelError("", e.Message);
+            }
+            
+            var model = _mapper.Map<UserDetailsModel>(user);
+
+            return View("Details", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Block(long id)
+        {
+            var user = await _userService.GetAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userService.BlockAsync(user);
+
+            return RedirectToAction("Details", new { id = user.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Unblock(long id)
+        {
+            var user = await _userService.GetAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userService.UnblockAsync(user);
+
+            return RedirectToAction("Details", new { id = user.Id });
         }
     }
 }

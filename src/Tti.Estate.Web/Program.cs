@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data;
-using Tti.Estate.Infrastructure.Services;
 
 namespace Tti.Estate.Web
 {

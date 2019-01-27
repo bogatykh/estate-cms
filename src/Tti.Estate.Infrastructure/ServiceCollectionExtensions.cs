@@ -15,7 +15,6 @@ namespace Tti.Estate.Infrastructure
             
             services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<IImageService, ImageService>();
-            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
