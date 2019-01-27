@@ -16,7 +16,7 @@ namespace Tti.Estate.Web.Models
 
         public decimal Amount { get; set; }
 
-        public decimal CompanyPercent { get; set; }
+        public byte CompanyPercent { get; set; }
 
         public decimal CompanyAmount
         {
@@ -26,7 +26,7 @@ namespace Tti.Estate.Web.Models
             }
         }
 
-        public decimal UserPercent { get; set; }
+        public byte UserPercent { get; set; }
 
         public decimal UserAmount
         {

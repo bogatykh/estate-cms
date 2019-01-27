@@ -9,8 +9,8 @@ namespace Tti.Estate.Data.Specifications
             PropertyType? propertyType = null,
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
-            long? priceFrom = null,
-            long? priceTo = null)
+            decimal? priceFrom = null,
+            decimal? priceTo = null)
             : base(userId: userId, propertyType: propertyType, status: status, transactionType: transactionType, priceFrom: priceFrom, priceTo: priceTo)
         {
             ApplyPaging(skip, take);

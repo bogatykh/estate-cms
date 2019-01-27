@@ -39,7 +39,7 @@ namespace Tti.Estate.Web.Models
         /// </summary>
         [Display(Name = "Price")]
         [Required(ErrorMessage = "Required")]
-        public long? Price { get; set; }
+        public decimal? Price { get; set; }
 
         /// <summary>
         /// Area
@@ -85,10 +85,10 @@ namespace Tti.Estate.Web.Models
         public byte? RoomCount { get; set; }
 
         /// <summary>
-        /// Is VIP
+        /// Is restricted availability
         /// </summary>
-        [Display(Name = "IsVip")]
-        public bool IsVip { get; set; }
+        [Display(Name = "IsRestricted")]
+        public bool IsRestricted { get; set; }
 
         /// <summary>
         /// Description

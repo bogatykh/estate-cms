@@ -9,8 +9,8 @@ namespace Tti.Estate.Data.Specifications
             PropertyType? propertyType = null,
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
-            long? priceFrom = null,
-            long? priceTo = null)
+            decimal? priceFrom = null,
+            decimal? priceTo = null)
             : base(x => (!id.HasValue || x.Id == id) &&
                 (!userId.HasValue || x.UserId == userId) &&
                 (!propertyType.HasValue || x.PropertyType == propertyType) &&

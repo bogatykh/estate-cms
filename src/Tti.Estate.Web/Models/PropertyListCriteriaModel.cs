@@ -17,9 +17,9 @@ namespace Tti.Estate.Web.Models
         public TransactionTypeModel? TransactionType { get; set; }
         
         [Display(Name = "PriceFrom")]
-        public long? PriceFrom { get; set; }
+        public decimal? PriceFrom { get; set; }
         
         [Display(Name = "PriceTo")]
-        public long? PriceTo { get; set; }
+        public decimal? PriceTo { get; set; }
     }
 }

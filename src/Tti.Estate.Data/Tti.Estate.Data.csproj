@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.1" />
+    <Compile Remove="Migrations\20190126180107_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190127082217_Initial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
 

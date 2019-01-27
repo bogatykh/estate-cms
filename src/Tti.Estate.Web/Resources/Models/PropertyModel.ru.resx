@@ -141,8 +141,8 @@
   <data name="Id" xml:space="preserve">
     <value>Код</value>
   </data>
-  <data name="IsVip" xml:space="preserve">
-    <value>VIP</value>
+  <data name="IsRestricted" xml:space="preserve">
+    <value>Ограниченная доступность</value>
   </data>
   <data name="LandArea" xml:space="preserve">
     <value>Земля</value>

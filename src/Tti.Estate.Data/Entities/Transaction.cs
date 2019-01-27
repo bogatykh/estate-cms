@@ -28,9 +28,9 @@ namespace Tti.Estate.Data.Entities
 
         public decimal Amount { get; set; }
 
-        public decimal CompanyPercent { get; set; }
+        public byte CompanyPercent { get; set; }
 
-        public decimal UserPercent { get; set; }
+        public byte UserPercent { get; set; }
 
         public string Description { get; set; }
 

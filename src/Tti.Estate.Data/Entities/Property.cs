@@ -20,15 +20,12 @@ namespace Tti.Estate.Data.Entities
 
         public PropertyStatus Status { get; set; }
 
-        public long Price { get; set; }
-
-        public PriceType? PriceType { get; set; }
+        public decimal Price { get; set; }
 
         public long RegionId { get; set; }
         public Region Region { get; set; }
-
-        public long StreetId { get; set; }
-        public Street Street { get; set; }
+        
+        public string Street { get; set; }
 
         public string HouseNumber { get; set; }
 
@@ -44,7 +41,7 @@ namespace Tti.Estate.Data.Entities
 
         public byte? RoomCount { get; set; }
 
-        public bool IsVip { get; set; }
+        public bool IsRestricted { get; set; }
 
         public string Description { get; set; }
 

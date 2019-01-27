@@ -28,6 +28,22 @@ namespace Tti.Estate.Web
         }
 
         public IConfiguration Configuration { get; }
+        
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<AppDbContext>(c =>
+                c.UseInMemoryDatabase("Estate"));
+
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<AppDbContext>(c =>
+                c.UseSqlServer(Configuration.GetConnectionString("Database")));
+
+            ConfigureServices(services);
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -55,10 +71,7 @@ namespace Tti.Estate.Web
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddMvcLocalization();
-
-            services.AddDbContext<AppDbContext>(c =>
-                c.UseInMemoryDatabase("Estate"));
-
+            
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddSingleton(_ => CloudStorageAccount.Parse(Configuration.GetConnectionString("StorageAccount")));
 

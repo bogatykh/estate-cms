@@ -41,12 +41,12 @@ namespace Tti.Estate.Web.Models
         [Display(Name = "CompanyPercent")]
         [Required(ErrorMessage = "Required")]
         [Range(1, 100)]
-        public decimal? CompanyPercent { get; set; }
+        public byte? CompanyPercent { get; set; }
 
         [Display(Name = "UserPercent")]
         [Required(ErrorMessage = "Required")]
         [Range(1, 100)]
-        public decimal? UserPercent { get; set; }
+        public byte? UserPercent { get; set; }
 
         [Display(Name = "Description")]
         [DataType(DataType.MultilineText)]
