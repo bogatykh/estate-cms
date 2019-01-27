@@ -15,10 +15,6 @@
       "destination": "wwwroot/lib/font-awesome/"
     },
     {
-      "library": "datatables@1.10.19",
-      "destination": "wwwroot/lib/datatables/"
-    },
-    {
       "library": "bootstrap-datepicker@1.8.0",
       "destination": "wwwroot/lib/bootstrap-datepicker/"
     },

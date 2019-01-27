@@ -11,7 +11,6 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/lib/datatables/css/dataTables.bootstrap4.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" href="~/lib/ekko-lightbox/ekko-lightbox.css" />
         <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.css" />
@@ -22,11 +21,6 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha256-azvvU9xKluwHFJ0Cpgtf0CYzK7zgtOznnzxV4924X1w=" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/dataTables.bootstrap4.min.css"
-              asp-fallback-href="~/lib/datatables/css/dataTables.bootstrap4.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha256-F+DaKAClQut87heMIC6oThARMuWne8+WzxIDT7jXuPA=" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
               asp-fallback-href="~/lib/font-awesome/css/font-awesome.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
@@ -104,8 +98,6 @@
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-        <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
-        <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
         <script src="~/lib/ekko-lightbox/ekko-lightbox.js"></script>
         <script src="~/lib/cldrjs/cldr.js"></script>
@@ -128,18 +120,6 @@
                 crossorigin="anonymous"
                 integrity="sha256-63ld7aiYP6UxBifJWEzz87ldJyVnETUABZAYs5Qcsmc=">
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"
-                asp-fallback-src="~/lib/datatables/js/jquery.dataTables.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.dataTable"
-                crossorigin="anonymous"
-                integrity="sha256-t5ZQTZsbQi8NxszC10CseKjJ5QeMw5NINtOXQrESGSU=">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
-                asp-fallback-src="~/lib/datatables/js/dataTables.bootstrap4.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.dataTable && window.jQuery.fn.dataTable.ext.renderer.bootstrap"
-                crossorigin="anonymous"
-                integrity="sha256-hJ44ymhBmRPJKIaKRf3DSX5uiFEZ9xB/qx8cNbJvIMU=">
-        </script>
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
         <script src="~/lib/ekko-lightbox/ekko-lightbox.min.js" asp-append-version="true"></script>
         <script src="~/lib/cldrjs/cldr.min.js" asp-append-version="true"></script>
@@ -155,16 +135,6 @@
     <script>
         $.extend($.fn.datepicker.defaults, {
             language: '@requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName'
-        });
-
-        $.extend($.fn.dataTable.defaults, {
-            processing: true,
-            deferRender: true,
-            searching: false,
-            orderMulti: false,
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json'
-            }
         });
 
         $.when(
