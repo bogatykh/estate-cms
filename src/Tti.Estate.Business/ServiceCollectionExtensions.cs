@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using Tti.Estate.Business.Services;
+using Tti.Estate.Business.Validators;
 
 namespace Tti.Estate.Business
 {
@@ -17,6 +18,8 @@ namespace Tti.Estate.Business
             services.AddScoped<IPropertyPhotoService, PropertyPhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IUserValidator, UserValidator>();
 
             return services;
         }

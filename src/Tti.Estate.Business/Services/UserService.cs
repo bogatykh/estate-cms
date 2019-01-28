@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Data;
 using System.Threading.Tasks;
 using Tti.Estate.Business.Dto;
-using Tti.Estate.Business.Exceptions;
+using Tti.Estate.Business.Validators;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
@@ -14,14 +13,14 @@ namespace Tti.Estate.Business.Services
     internal class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserValidator _userValidator;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly IStringLocalizer _localizer;
 
-        public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, IStringLocalizer<UserService> localizer)
+        public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, IUserValidator userValidator)
         {
             _userRepository = userRepository;
+            _userValidator = userValidator;
             _passwordHasher = passwordHasher;
-            _localizer = localizer;
         }
 
         public async Task<User> GetAsync(long id)
@@ -47,6 +46,8 @@ namespace Tti.Estate.Business.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
+            await _userValidator.ValidateAsync(user, UserAction.Create);
+
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
 
             await _userRepository.CreateAsync(user);
@@ -69,7 +70,7 @@ namespace Tti.Estate.Business.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
-            await ValidateAsync(user);
+            await _userValidator.ValidateAsync(user, UserAction.Delete);
 
             try
             {
@@ -90,6 +91,8 @@ namespace Tti.Estate.Business.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
+            await _userValidator.ValidateAsync(user, UserAction.Block);
+
             user.Status = UserStatus.Blocked;
 
             await _userRepository.UpdateAsync(user);
@@ -105,15 +108,6 @@ namespace Tti.Estate.Business.Services
             user.Status = UserStatus.Active;
 
             await _userRepository.UpdateAsync(user);
-        }
-
-        private async Task ValidateAsync(User user)
-        {
-            // TODO: Refactor to use specifications pattern
-            if (await _userRepository.CountAsync(new UserFilterSpecification(onlyActive: true, role: UserRole.Manager, excludeId: user.Id)) == 0)
-            {
-                throw new DomainException(_localizer.GetString("LastActiveManager"));
-            }
         }
 
         public async Task<User> ValidateAsync(string userName, string password)

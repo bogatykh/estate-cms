@@ -45,10 +45,17 @@ namespace Tti.Estate.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = _mapper.Map<User>(model);
+                
+                try
+                {
+                    await _userService.CreateAsync(user, string.Empty);
 
-                await _userService.CreateAsync(user, string.Empty);
-
-                return RedirectToAction("Details", new { id = user.Id });
+                    return RedirectToAction("Details", new { id = user.Id });
+                }
+                catch (DomainException e)
+                {
+                    ModelState.TryAddModelError("", e.Message);
+                }
             }
 
             return View(model);
@@ -135,9 +142,20 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            await _userService.BlockAsync(user);
+            try
+            {
+                await _userService.BlockAsync(user);
 
-            return RedirectToAction("Details", new { id = user.Id });
+                return RedirectToAction("Details", new { id = user.Id });
+            }
+            catch (DomainException e)
+            {
+                ModelState.TryAddModelError("", e.Message);
+            }
+
+            var model = _mapper.Map<UserDetailsModel>(user);
+
+            return View("Details", model);
         }
 
         [HttpPost]
