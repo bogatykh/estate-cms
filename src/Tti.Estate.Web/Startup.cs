@@ -30,19 +30,36 @@ namespace Tti.Estate.Web
         }
 
         public IConfiguration Configuration { get; }
-        
-        public void ConfigureDevelopmentServices(IServiceCollection services)
+
+        private void ConfigureInMemoryDatabase(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(c =>
                 c.UseInMemoryDatabase("Estate"));
+        }
+
+        private void ConfigureSqlDatabase(IServiceCollection services)
+        {
+            services.AddDbContext<AppDbContext>(c =>
+                c.UseSqlServer(Configuration.GetConnectionString("Database")));
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            ConfigureInMemoryDatabase(services);
+
+            ConfigureServices(services);
+        }
+
+        public void ConfigureStagingServices(IServiceCollection services)
+        {
+            ConfigureSqlDatabase(services);
 
             ConfigureServices(services);
         }
 
         public void ConfigureProductionServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("Database")));
+            ConfigureSqlDatabase(services);
 
             ConfigureServices(services);
         }
@@ -88,7 +105,7 @@ namespace Tti.Estate.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsStaging())
             {
                 app.UseDeveloperExceptionPage();
             }
