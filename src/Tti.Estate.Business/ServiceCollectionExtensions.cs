@@ -15,12 +15,14 @@ namespace Tti.Estate.Business
             }
 
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IContactService, ContactService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IPropertyPhotoService, PropertyPhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<ICommentValidator, CommentValidator>();
+            services.AddScoped<IContactValidator, ContactValidator>();
             services.AddScoped<IUserValidator, UserValidator>();
 
             return services;

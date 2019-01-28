@@ -28,17 +28,17 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public IActionResult Create(long? customerId, long? propertyId, long? transactionId)
         {
+            if (!customerId.HasValue && !propertyId.HasValue && !transactionId.HasValue)
+            {
+                return BadRequest();
+            }
+
             CommentModel model = new CommentModel()
             {
                 CustomerId = customerId,
                 PropertyId = propertyId,
                 TransactionId = transactionId
             };
-
-            if (!customerId.HasValue && !propertyId.HasValue && !transactionId.HasValue)
-            {
-                return BadRequest();
-            }
 
             if (Request.IsAjaxRequest())
             {

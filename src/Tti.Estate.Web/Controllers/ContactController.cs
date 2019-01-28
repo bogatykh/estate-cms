@@ -1,39 +1,37 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
-using Tti.Estate.Data.Repositories;
-using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IContactService _contactService;
         private readonly IMapper _mapper;
 
-        public ContactController(IContactRepository contactRepository, IMapper mapper)
+        public ContactController(IContactService contactService, IMapper mapper)
         {
-            _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
+            _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(long? customerId, long? propertyId)
+        public IActionResult Create(long? customerId, long? propertyId)
         {
+            if (customerId.HasValue == propertyId.HasValue)
+            {
+                return BadRequest();
+            }
+
             ContactModel model = new ContactModel()
             {
                 CustomerId = customerId,
                 PropertyId = propertyId
             };
-
-            if (customerId.HasValue == propertyId.HasValue)
-            {
-                return BadRequest();
-            }
 
             if (Request.IsAjaxRequest())
             {
@@ -52,7 +50,7 @@ namespace Tti.Estate.Web.Controllers
             {
                 var contact = _mapper.Map<Contact>(model);
 
-                await _contactRepository.CreateAsync(contact);
+                await _contactService.CreateAsync(contact);
                 
                 if (model.PropertyId.HasValue)
                 {
@@ -72,16 +70,6 @@ namespace Tti.Estate.Web.Controllers
             {
                 return View(model);
             }
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<ContactListItemModel>> GetData(ContactListRequestModel requestModel)
-        {
-            var spec = _mapper.Map<ContactFilterSpecification>(requestModel);
-
-            var data = await _contactRepository.ListAsync(spec);
-
-            return _mapper.Map<IEnumerable<ContactListItemModel>>(data);
         }
     }
 }
