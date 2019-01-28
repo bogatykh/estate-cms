@@ -14,11 +14,13 @@ namespace Tti.Estate.Business
                 throw new ArgumentNullException(nameof(services));
             }
 
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IPropertyPhotoService, PropertyPhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<ICommentValidator, CommentValidator>();
             services.AddScoped<IUserValidator, UserValidator>();
 
             return services;

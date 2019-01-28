@@ -6,5 +6,8 @@ namespace Tti.Estate.Business.Specifications
     {
         public static IAsyncSpecification<TEntity> And<TEntity>(this IAsyncSpecification<TEntity> @this, IAsyncSpecification<TEntity> other)
             where TEntity : BaseEntity => new AndSpecification<TEntity>(@this, other);
+
+        public static IAsyncSpecification<TEntity> Or<TEntity>(this IAsyncSpecification<TEntity> @this, IAsyncSpecification<TEntity> other)
+            where TEntity : BaseEntity => new OrSpecification<TEntity>(@this, other);
     }
 }

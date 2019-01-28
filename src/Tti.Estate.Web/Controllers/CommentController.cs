@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
-using Tti.Estate.Data.Repositories;
-using Tti.Estate.Data.Specifications;
-using Tti.Estate.Infrastructure.Extensions;
 using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
 {
     public class CommentController : Controller
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly ICommentService _commentService;
         private readonly IMapper _mapper;
 
-        public CommentController(ICommentRepository commentRepository, IMapper mapper)
+        public CommentController(ICommentService commentService, IMapper mapper)
         {
-            _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
+            _commentService = commentService ?? throw new ArgumentNullException(nameof(commentService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -29,7 +26,7 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(long? customerId, long? propertyId, long? transactionId)
+        public IActionResult Create(long? customerId, long? propertyId, long? transactionId)
         {
             CommentModel model = new CommentModel()
             {
@@ -60,9 +57,7 @@ namespace Tti.Estate.Web.Controllers
             {
                 var comment = _mapper.Map<Comment>(model);
 
-                comment.UserId = User.GetUserId();
-
-                await _commentRepository.CreateAsync(comment);
+                await _commentService.CreateAsync(comment);
 
                 if (model.TransactionId.HasValue)
                 {
@@ -86,16 +81,6 @@ namespace Tti.Estate.Web.Controllers
             {
                 return View(model);
             }
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<CommentListItemModel>> GetData(CommentListRequestModel requestModel)
-        {
-            var spec = _mapper.Map<CommentFilterSpecification>(requestModel);
-
-            var data = await _commentRepository.ListAsync(spec);
-
-            return _mapper.Map<IEnumerable<CommentListItemModel>>(data);
         }
     }
 }

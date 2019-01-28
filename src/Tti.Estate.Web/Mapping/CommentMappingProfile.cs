@@ -9,8 +9,7 @@ namespace Tti.Estate.Web.Mapping
     {
         public CommentMappingProfile()
         {
-            CreateMap<Comment, CommentListItemModel>().
-                ForMember(x => x.User, x => x.MapFrom(y => y.User.LastName));
+            CreateMap<Comment, CommentListItemModel>();
 
             CreateMap<Comment, CommentModel>().
                 ReverseMap();

@@ -11,7 +11,7 @@ namespace Tti.Estate.Business.Validators
     internal class UserValidator : IUserValidator
     {
         private readonly IUserRepository _userRepository;
-        private readonly IStringLocalizer<UserValidator> _localizer;
+        private readonly IStringLocalizer _localizer;
 
         public UserValidator(IUserRepository userRepository, IStringLocalizer<UserValidator> localizer)
         {

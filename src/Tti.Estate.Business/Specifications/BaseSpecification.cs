@@ -10,7 +10,7 @@ namespace Tti.Estate.Business.Specifications
         {
         }
 
-        public virtual Task<bool> IsSatisfiedByAsync(TEntity entity)
+        public Task<bool> IsSatisfiedByAsync(TEntity entity)
         {
             return Task.FromResult(IsSatisfiedBy(entity));
         }

@@ -16,7 +16,7 @@ namespace Tti.Estate.Business.Services
         private readonly IUserValidator _userValidator;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(IUserRepository userRepository, IPasswordHasher<User> passwordHasher, IUserValidator userValidator)
+        public UserService(IUserRepository userRepository, IUserValidator userValidator, IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
             _userValidator = userValidator;

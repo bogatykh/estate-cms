@@ -17,6 +17,8 @@ using Tti.Estate.Business;
 using Tti.Estate.Data;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Infrastructure;
+using Tti.Estate.Infrastructure.Services;
+using Tti.Estate.Web.Services;
 
 namespace Tti.Estate.Web
 {
@@ -72,8 +74,10 @@ namespace Tti.Estate.Web
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddMvcLocalization();
 
+            services.AddHttpContextAccessor();
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IIdentityService, IdentityService>();
             services.AddSingleton(_ => CloudStorageAccount.Parse(Configuration.GetConnectionString("StorageAccount")));
 
             services.AddRepositories();
