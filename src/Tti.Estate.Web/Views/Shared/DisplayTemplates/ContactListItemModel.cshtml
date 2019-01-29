@@ -1,5 +1,13 @@
 ﻿@model ContactListItemModel
 <tr>
+    <td class="table-light">
+        <button asp-action="Update"
+                asp-controller="Contact"
+                asp-route-id="@Model.Id"
+                data-trigger="EditContact" class="btn btn-sm btn-outline-secondary" type="button" title="@Localizer["Edit"]">
+            <i class="fa fa-edit"></i>
+        </button>
+    </td>
     <td>@Html.DisplayFor(x => x.FirstName)</td>
     <td>@Html.DisplayFor(x => x.LastName)</td>
     <td>@Html.DisplayFor(x => x.Telephone)</td>

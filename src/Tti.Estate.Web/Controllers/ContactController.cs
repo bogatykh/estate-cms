@@ -71,5 +71,56 @@ namespace Tti.Estate.Web.Controllers
                 return View(model);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(long id)
+        {
+            var contact = await _contactService.GetAsync(id);
+
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            var model = _mapper.Map<ContactEditModel>(contact);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(ContactEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var contact = _mapper.Map<Contact>(model);
+
+                await _contactService.UpdateAsync(contact);
+
+                if (model.PropertyId.HasValue)
+                {
+                    return RedirectToAction("Details", "Property", new { id = model.PropertyId.Value });
+                }
+                else if (model.CustomerId.HasValue)
+                {
+                    return RedirectToAction("Details", "Customer", new { id = model.CustomerId.Value });
+                }
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
     }
 }

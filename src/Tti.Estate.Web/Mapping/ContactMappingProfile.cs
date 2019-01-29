@@ -14,6 +14,11 @@ namespace Tti.Estate.Web.Mapping
             CreateMap<Contact, ContactModel>().
                 ReverseMap();
 
+            CreateMap<Contact, ContactEditModel>().
+                IncludeBase<Contact, ContactModel>().
+                ReverseMap().
+                IncludeBase<ContactModel, Contact>();
+
             CreateMap<Contact, ContactItemModel>().
                 IncludeAllDerived();
 

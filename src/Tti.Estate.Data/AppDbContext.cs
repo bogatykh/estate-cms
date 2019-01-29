@@ -47,12 +47,14 @@ namespace Tti.Estate.Data
                 ForSqlServerIsClustered();
             
             builder.Property(x => x.FirstName)
+                .IsRequired()
                 .HasMaxLength(50);
 
             builder.Property(x => x.LastName)
                 .HasMaxLength(50);
 
             builder.Property(x => x.Telephone)
+                .IsRequired()
                 .HasMaxLength(50);
 
             builder.Property(x => x.Email)

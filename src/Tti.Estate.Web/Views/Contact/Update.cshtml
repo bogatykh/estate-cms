@@ -1,5 +1,5 @@
-﻿@model ContactModel
-<form asp-action="Create" method="post">
+﻿@model ContactEditModel
+<form asp-action="Update" asp-route-id="@Model.Id" method="post">
     <div class="modal-header">
         <h5 class="modal-title">@Localizer["Title"]</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="@Localizer["Close"]">
