@@ -28,19 +28,17 @@ namespace Tti.Estate.Business.Services
 
         public async Task CreateAsync(long propertyId, Stream stream)
         {
-            var externalId = Guid.NewGuid();
-            var blobName = $"{externalId}.jpg";
+            var photo = new PropertyPhoto()
+            {
+                PropertyId = propertyId
+            };
 
-            using (var outputStream = await _photoBlobRepository.OpenWriteAsync(blobName))
+            using (var outputStream = await _photoBlobRepository.OpenWriteAsync(GetBlobName(photo)))
             {
                 _imageService.Resize(stream, outputStream, PhotoResizePixels, PhotoResizeQuality);
             }
 
-            await _propertyPhotoRepository.CreateAsync(new PropertyPhoto()
-            {
-                PropertyId = propertyId,
-                ExternalId = externalId
-            });
+            await _propertyPhotoRepository.CreateAsync(photo);
         }
 
         public async Task<IEnumerable<PropertyPhoto>> ListAsync(long propertyId)
@@ -53,6 +51,20 @@ namespace Tti.Estate.Business.Services
         public Uri GetStorageUri()
         {
             return _photoBlobRepository.GetContainerUri();
+        }
+
+        public async Task DeleteAsync(long id)
+        {
+            var photo = await _propertyPhotoRepository.GetAsync(id);
+
+            await _propertyPhotoRepository.DeleteAsync(photo);
+
+            await _photoBlobRepository.DeleteAsync(GetBlobName(photo));
+        }
+
+        private string GetBlobName(PropertyPhoto photo)
+        {
+            return $"{photo.ExternalId}.jpg";
         }
     }
 }

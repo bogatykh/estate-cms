@@ -55,22 +55,9 @@ namespace Tti.Estate.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(long propertyId)
-        {
-            return RedirectToAction(nameof(Index), new { propertyId });
-        }
-
-        [HttpPost]
         public async Task<IActionResult> Delete(long propertyId, long id)
         {
-            //var propertyPhoto = await _propertyPhotoRepository.GetAsync(id);
-
-            //if (propertyPhoto == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //await _propertyPhotoRepository.DeleteAsync(propertyPhoto);
+            await _propertyPhotoService.DeleteAsync(id);
 
             return RedirectToAction(nameof(Index), new { propertyId });
         }

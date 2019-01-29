@@ -26,11 +26,23 @@ namespace Tti.Estate.Infrastructure.Repositories
 
         public async Task<Stream> OpenWriteAsync(string blobName)
         {
-            var container = _blobClient.GetContainerReference(_containerName);
-
-            var blockBlob = container.GetBlockBlobReference(blobName);
+            var blockBlob = GetBlockBlobReference(blobName);
 
             return await blockBlob.OpenWriteAsync();
+        }
+
+        public async Task DeleteAsync(string blobName)
+        {
+            var blockBlob = GetBlockBlobReference(blobName);
+
+            await blockBlob.DeleteAsync();
+        }
+
+        private CloudBlockBlob GetBlockBlobReference(string blobName)
+        {
+            var container = _blobClient.GetContainerReference(_containerName);
+
+            return container.GetBlockBlobReference(blobName);
         }
     }
 }

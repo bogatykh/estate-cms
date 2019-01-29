@@ -16,35 +16,22 @@
 </form>
 @if (Model.Photos != null && Model.Photos.Any())
 {
-    <div class="card-columns">
+    <div class="row">
         @foreach (var photo in Model.Photos)
         {
-            <div class="card @(photo.IsDefault ? "border-dark" : "")">
-                <div class="card-body">
-                    <a href="@Model.StorageUri/@(photo.ExternalId).jpg" data-toggle="lightbox" data-gallery="photos">
-                        <img class="card-img-top" src="@Model.StorageUri/@(photo.ExternalId).jpg" />
-                    </a>
-                </div>
-                <div class="card-footer text-center">
-                    <div class="btn-group" role="group">
-                        @*<a asp-action="DeletePhoto"
-                               asp-route-id="@Model.PropertyId"
-                               asp-route-photoId="@photo.Id"
-                               class="btn btn-sm btn-danger">
-                                <i class="fa fa-times"></i>
-                            </a>*@
-                        @*@if (!Model.IsMain)
-                            {
-                                <a asp-action="SetMainPhoto"
-                                   asp-route-id="@Model.PropertyId"
-                                   asp-route-photoId="@photo.Id"
-                                   class="btn btn-sm btn-primary">
-                                    <i class="fa fa-star"></i>
-                                </a>
-                            }*@
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-4 col-lg-3 mb-4">
+            <a href="@Model.StorageUri/@(photo.ExternalId).jpg">
+                <img class="img-thumbnail" src="@Model.StorageUri/@(photo.ExternalId).jpg" />
+            </a>
+            <form method="post" class="text-center m-2">
+                <button asp-action="Delete"
+                        asp-route-propertyId="@Model.PropertyId"
+                        asp-route-id="@photo.Id"
+                        class="btn btn-sm btn-danger" title="@Localizer["Delete"]">
+                    <i class="fa fa-times"></i>
+                </button>
+            </form>
+        </div>
         }
     </div>
 }

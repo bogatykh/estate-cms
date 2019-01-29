@@ -181,7 +181,8 @@ namespace Tti.Estate.Data
             builder.Property(x => x.IsDefault).
                 HasDefaultValue(false);
 
-            builder.Property(x => x.ExternalId);
+            builder.Property(x => x.ExternalId)
+                .ValueGeneratedOnAdd();
 
             builder.HasOne(x => x.Property)
                 .WithMany(x => x.Photos)

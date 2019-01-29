@@ -120,6 +120,9 @@
   <data name="Create" xml:space="preserve">
     <value>Добавить</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
   <data name="NoData" xml:space="preserve">
     <value>Ещё нет ни одной фотографии :(</value>
   </data>

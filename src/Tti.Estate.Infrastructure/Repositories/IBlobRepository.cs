@@ -8,5 +8,6 @@ namespace Tti.Estate.Infrastructure.Repositories
     {
         Task<Stream> OpenWriteAsync(string blobName);
         Uri GetContainerUri();
+        Task DeleteAsync(string blobName);
     }
 }

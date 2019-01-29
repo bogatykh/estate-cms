@@ -11,5 +11,6 @@ namespace Tti.Estate.Business.Services
         Task CreateAsync(long propertyId, Stream stream);
         Task<IEnumerable<PropertyPhoto>> ListAsync(long propertyId);
         Uri GetStorageUri();
+        Task DeleteAsync(long id);
     }
 }
