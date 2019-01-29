@@ -12,7 +12,8 @@ namespace Tti.Estate.Web.Mapping
             CreateMap<Comment, CommentListItemModel>();
 
             CreateMap<Comment, CommentModel>().
-                ReverseMap();
+                ReverseMap().
+                IgnoreAllPropertiesWithAnInaccessibleSetter();
 
             CreateMap<CommentListRequestModel, CommentFilterSpecification>();
         }

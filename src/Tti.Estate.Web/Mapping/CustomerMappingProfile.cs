@@ -15,9 +15,8 @@ namespace Tti.Estate.Web.Mapping
             CreateMap<Customer, CustomerModel>().
                 ForMember(x => x.Users, x => x.Ignore()).
                 ReverseMap().
-                ForMember(x => x.User, x => x.Ignore()).
-                ForMember(x => x.Created, x => x.Ignore()).
-                ForMember(x => x.Modified, x => x.Ignore());
+                IgnoreAllPropertiesWithAnInaccessibleSetter().
+                ForMember(x => x.User, x => x.Ignore());
 
             CreateMap<Customer, CustomerEditModel>().
                 IncludeBase<Customer, CustomerModel>().

@@ -23,6 +23,6 @@ namespace Tti.Estate.Data.Entities
 
         public string Text { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime Created { get; private set; }
     }
 }

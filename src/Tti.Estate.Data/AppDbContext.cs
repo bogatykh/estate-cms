@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using System;
 using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data
@@ -109,7 +106,7 @@ namespace Tti.Estate.Data
                 .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Modified)
-                .ValueGeneratedOnAddOrUpdate();
+                .ValueGeneratedOnUpdate();
 
             builder.HasOne(x => x.User)
                 .WithMany()

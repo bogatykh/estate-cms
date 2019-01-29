@@ -36,9 +36,7 @@ namespace Tti.Estate.Data
             for (int i = 0; i < random.Next(1000, 2000); i++)
             {
                 var transactionType = random.GetEnum<TransactionType>();
-
-                DateTime created = DateTime.UtcNow.AddHours(-random.Next(1000));
-
+                
                 dbContext.Properties.Add(new Property()
                 {
                     User = await random.GetEntityAsync(dbContext.Users),
@@ -46,22 +44,16 @@ namespace Tti.Estate.Data
                     TransactionType = transactionType,
                     Status = random.GetEnum<PropertyStatus>(),
                     Price = transactionType == TransactionType.Rent ? random.Next(100, 1500) : random.Next(10000, 200000),
-                    Area = Convert.ToDecimal(random.NextDouble() * random.Next(50, 1000)),
-                    Created = created,
-                    Modified = created
+                    Area = Convert.ToDecimal(random.NextDouble() * random.Next(50, 1000))
                 });
             }
 
             // Create customers
             for (int i = 0; i < random.Next(1000, 2000); i++)
             {
-                DateTime created = DateTime.UtcNow.AddHours(-random.Next(1000));
-
                 dbContext.Customers.Add(new Customer()
                 {
-                    User = await random.GetEntityAsync(dbContext.Users),
-                    Created = created,
-                    Modified = created
+                    User = await random.GetEntityAsync(dbContext.Users)
                 });
             }
 
