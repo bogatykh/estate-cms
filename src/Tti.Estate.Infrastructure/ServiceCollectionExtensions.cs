@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using Tti.Estate.Infrastructure.Repositories;
 using Tti.Estate.Infrastructure.Services;
 
 namespace Tti.Estate.Infrastructure
@@ -13,7 +14,7 @@ namespace Tti.Estate.Infrastructure
                 throw new ArgumentNullException(nameof(services));
             }
             
-            services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<IPhotoBlobRepository, PhotoBlobRepository>();
             services.AddScoped<IImageService, ImageService>();
 
             return services;
