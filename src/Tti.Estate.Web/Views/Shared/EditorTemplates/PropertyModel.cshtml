@@ -12,7 +12,7 @@
             <label asp-for="PropertyType" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
                 <select asp-for="PropertyType" asp-items="@Html.GetEnumSelectList<PropertyTypeModel>()" class="form-control">
-                    <option></option>
+                    <option value=""></option>
                 </select>
                 <span asp-validation-for="PropertyType"></span>
             </div>
@@ -20,24 +20,21 @@
         <div class="form-group row">
             <label asp-for="Price" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <input asp-for="Price" class="form-control" />
+                <div class="input-group">
+                    <input asp-for="Price" class="form-control" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">&euro;</span>
+                    </div>
+                </div>
                 <span asp-validation-for="Price"></span>
             </div>
         </div>
         <div class="form-group row">
-            <label asp-for="Area" class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9">
-                <input asp-for="Area" class="form-control" />
-                <span asp-validation-for="Area"></span>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="RegionId" class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9">
-                <select asp-for="RegionId" asp-items="Model.Regions" class="form-control">
-                    <option></option>
-                </select>
-                <span asp-validation-for="RegionId"></span>
+            <div class="offset-3 col-sm-9">
+                <div class="form-check">
+                    <input asp-for="HasVat" class="form-check-input" />
+                    <label asp-for="HasVat" class="form-check-label"></label>
+                </div>
             </div>
         </div>
     </div>
@@ -45,7 +42,9 @@
         <div class="form-group row">
             <label asp-for="UserId" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <select asp-for="UserId" asp-items="Model.Users" class="form-control"></select>
+                <select asp-for="UserId" asp-items="Model.Users" class="form-control">
+                    <option value=""></option>
+                </select>
                 <span asp-validation-for="UserId"></span>
             </div>
         </div>
@@ -60,9 +59,118 @@
     </div>
 </div>
 <fieldset>
+    <legend>@Localizer["Location"]</legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="CountyId" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <select asp-for="CountyId" asp-items="Model.Counties" class="form-control">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="CountyId"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CityId" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <select asp-for="CityId" asp-items="Model.Cities" class="form-control">
+                        <option value=""></option>
+                    </select>
+                    <span asp-validation-for="CityId"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CadastralNumber" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="CadastralNumber" class="form-control" />
+                    <span asp-validation-for="CadastralNumber"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="Street" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Street" class="form-control" />
+                    <span asp-validation-for="Street"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="HouseNumber" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="HouseNumber" class="form-control" />
+                    <span asp-validation-for="HouseNumber"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="ApartmentNumber" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="ApartmentNumber" class="form-control" />
+                    <span asp-validation-for="ApartmentNumber"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Localizer["Details"]</legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="Area" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <input asp-for="Area" class="form-control" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Area"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Floor" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <input asp-for="Floor" class="form-control" />
+                        <div class="input-group-append">
+                            <label asp-for="FloorCount" class="input-group-text">&sol;</label>
+                        </div>
+                        <input asp-for="FloorCount" class="form-control" placeholder="@Html.DisplayNameFor(x => x.FloorCount)" />
+                    </div>
+                    <span asp-validation-for="Floor"></span>
+                    <span asp-validation-for="FloorCount"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="LandArea" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <div class="input-group">
+                        <input asp-for="LandArea" class="form-control" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="LandArea"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="RoomCount" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="RoomCount" class="form-control" />
+                    <span asp-validation-for="RoomCount"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
     <legend>@Html.DisplayNameFor(x => x.Description)</legend>
     <div class="form-group">
-        <textarea asp-for="Description" class="form-control"></textarea>
+        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
         <span asp-validation-for="Description"></span>
     </div>
 </fieldset>

@@ -4,24 +4,26 @@ using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data
 {
-    public class AppDbContext : DbContext
+    public partial class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<County> Cities { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Contact> Contacts { get; set; }
+
+        public DbSet<County> Counties { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Property> Properties { get; set; }
 
-        public DbSet<PropertyPhoto> PropertyPhotos { get; set; }
-
-        public DbSet<Region> Regions { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
 
@@ -29,14 +31,38 @@ namespace Tti.Estate.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Contact>(ConfigureContact);
+            builder.Entity<City>(ConfigureCity);
             builder.Entity<Comment>(ConfigureComment);
+            builder.Entity<Contact>(ConfigureContact);
+            builder.Entity<County>(ConfigureCounty);
             builder.Entity<Customer>(ConfigureCustomer);
             builder.Entity<Property>(ConfigureProperty);
-            builder.Entity<PropertyPhoto>(ConfigurePropertyPhoto);
-            builder.Entity<Region>(ConfigureRegion);
+            builder.Entity<Photo>(ConfigurePhoto);
             builder.Entity<Transaction>(ConfigureTransaction);
             builder.Entity<User>(ConfigureUser);
+
+            builder.Entity<County>(ConfigureCountyData);
+            builder.Entity<City>(ConfigureCityData);
+        }
+
+        private void ConfigureCity(EntityTypeBuilder<City> builder)
+        {
+            builder.ToTable("City");
+
+            builder.HasKey(x => x.Id).
+                ForSqlServerIsClustered();
+
+            builder.Property(x => x.Code)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.HasOne(x => x.County)
+                .WithMany(x => x.Cities)
+                .HasForeignKey(x => x.CountyId);
         }
 
         private void ConfigureContact(EntityTypeBuilder<Contact> builder)
@@ -107,8 +133,7 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Created)
                 .ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Modified)
-                .ValueGeneratedOnUpdate();
+            builder.Property(x => x.Modified);
 
             builder.HasOne(x => x.User)
                 .WithMany()
@@ -132,14 +157,20 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Price).
                 HasColumnType("decimal(12,2)");
 
+            builder.Property(x => x.HasVat)
+                .HasDefaultValue(false);
+
             builder.Property(x => x.Street)
-                .HasMaxLength(50);
+                .HasMaxLength(64);
 
             builder.Property(x => x.HouseNumber)
-                .HasMaxLength(20);
+                .HasMaxLength(8);
 
-            builder.Property(x => x.FlatNumber)
-                .HasMaxLength(10);
+            builder.Property(x => x.ApartmentNumber)
+                .HasMaxLength(8);
+
+            builder.Property(x => x.CadastralNumber)
+                .HasMaxLength(128);
 
             builder.Property(x => x.Area)
                 .HasColumnType("decimal(5,2)");
@@ -159,23 +190,27 @@ namespace Tti.Estate.Data
             builder.Property(x => x.Created)
                 .ValueGeneratedOnAdd();
 
-            builder.Property(x => x.Modified)
-                .ValueGeneratedOnUpdate();
+            builder.Property(x => x.Modified);
 
             builder.HasOne(x => x.User)
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.Region)
+            builder.HasOne(x => x.County)
                 .WithMany()
-                .HasForeignKey(x => x.RegionId)
+                .HasForeignKey(x => x.CountyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.City)
+                .WithMany()
+                .HasForeignKey(x => x.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
-        private void ConfigurePropertyPhoto(EntityTypeBuilder<PropertyPhoto> builder)
+        private void ConfigurePhoto(EntityTypeBuilder<Photo> builder)
         {
-            builder.ToTable("PropertyPhoto");
+            builder.ToTable("Photo");
 
             builder.HasKey(x => x.Id).
                 ForSqlServerIsClustered();
@@ -191,24 +226,20 @@ namespace Tti.Estate.Data
                 .HasForeignKey(x => x.PropertyId);
         }
 
-        private void ConfigureRegion(EntityTypeBuilder<Region> builder)
+        private void ConfigureCounty(EntityTypeBuilder<County> builder)
         {
-            builder.ToTable("Region");
+            builder.ToTable("County");
 
             builder.HasKey(x => x.Id).
                 ForSqlServerIsClustered();
 
             builder.Property(x => x.Code)
                 .IsRequired()
-                .IsFixedLength(true)
-                .HasMaxLength(7);
+                .HasMaxLength(50);
 
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(50);
-
-            builder.HasOne(x => x.Parent)
-                .WithMany(x => x.Childrens);
         }
 
         private void ConfigureTransaction(EntityTypeBuilder<Transaction> builder)

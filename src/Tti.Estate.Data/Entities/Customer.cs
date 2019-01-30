@@ -18,7 +18,7 @@ namespace Tti.Estate.Data.Entities
 
         public DateTime Created { get; private set; }
 
-        public DateTime Modified { get; private set; }
+        public DateTime Modified { get; set; }
 
         public List<Comment> Comments { get; set; }
 

@@ -25,6 +25,10 @@ namespace Tti.Estate.Web
                 {
                     dbContext.Database.Migrate();
                 }
+                else if (dbContext.Database.IsInMemory())
+                {
+                    dbContext.Database.EnsureCreated();
+                }
 
                 if (!dbContext.Users.Any())
                 {
@@ -34,7 +38,6 @@ namespace Tti.Estate.Web
 
                 if (dbContext.Database.IsInMemory())
                 {
-                    AppDbContextSeed.SeedAsync(dbContext).Wait();
                     AppDbContextSeed.SeedRandomDataAsync(dbContext).Wait();
                 }
             }

@@ -18,21 +18,24 @@ namespace Tti.Estate.Web.Controllers
         private readonly IContactRepository _contactRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IRegionRepository _regionRepository;
+        private readonly ICountyRepository _countyRepository;
+        private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
 
         public PropertyController(IPropertyRepository propertyRepository,
             IContactRepository contactRepository,
             ICommentRepository commentRepository,
             IUserRepository userRepository,
-            IRegionRepository regionRepository,
+            ICountyRepository countyRepository,
+            ICityRepository cityRepository,
             IMapper mapper)
         {
             _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
-            _regionRepository = regionRepository ?? throw new ArgumentNullException(nameof(regionRepository));
+            _countyRepository = countyRepository ?? throw new ArgumentNullException(nameof(countyRepository));
+            _cityRepository = cityRepository ?? throw new ArgumentNullException(nameof(cityRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -151,9 +154,18 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(PropertyEditModel model)
         {
+            var property = await _propertyRepository.GetAsync(model.Id);
+
+            if (property == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                var property = _mapper.Map<Property>(model);
+                _mapper.Map(model, property);
+
+                property.Modified = DateTime.UtcNow;
 
                 await _propertyRepository.UpdateAsync(property);
 
@@ -188,7 +200,12 @@ namespace Tti.Estate.Web.Controllers
             }
 
             model.Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)));
-            model.Regions = _mapper.Map<IEnumerable<SelectListItem>>(await _regionRepository.ListAsync(new RegionFilterSpecification()));
+            model.Counties = _mapper.Map<IEnumerable<SelectListItem>>(await _countyRepository.ListAsync(new CountyFilterSpecification()));
+
+            if (model.CountyId.HasValue)
+            {
+                model.Cities = _mapper.Map<IEnumerable<SelectListItem>>(await _cityRepository.ListAsync(new CityFilterSpecification(model.CountyId.Value)));
+            }
         }
     }
 }

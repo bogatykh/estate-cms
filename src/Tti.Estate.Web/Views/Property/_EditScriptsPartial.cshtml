@@ -1,0 +1,16 @@
+﻿@model PropertyModel
+<script>
+    $(function () {
+        $('#@Html.IdFor(x => x.CountyId)').change(function () {
+            var city$ = $('#@Html.IdFor(x => x.CityId)');
+            $('option[value!=""]', city$).remove();
+            $.get('@Url.RouteUrl("CityApi")', {
+                countyId: $(this).val()
+            }, function (data) {
+                $.each(data, function () {
+                    city$.append($('<option />').val(this.id).text(this.name));
+                });
+            });
+        })
+    });
+</script>

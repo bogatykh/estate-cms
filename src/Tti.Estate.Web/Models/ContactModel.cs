@@ -10,6 +10,7 @@ namespace Tti.Estate.Web.Models
         
         [Display(Name = "FirstName")]
         [StringLength(50)]
+        [Required(ErrorMessage = "Required")]
         public string FirstName { get; set; }
 
         [Display(Name = "LastName")]

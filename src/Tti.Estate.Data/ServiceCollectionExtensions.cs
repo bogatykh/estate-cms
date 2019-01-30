@@ -13,12 +13,13 @@ namespace Tti.Estate.Data
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<ICountyRepository, CountyRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddScoped<IPropertyPhotoRepository, PropertyPhotoRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IPropertyRepository, PropertyRepository>();
-            services.AddScoped<IRegionRepository, RegionRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 

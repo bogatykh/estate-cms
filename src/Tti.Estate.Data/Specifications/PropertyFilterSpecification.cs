@@ -19,6 +19,8 @@ namespace Tti.Estate.Data.Specifications
                 (!priceFrom.HasValue || x.Price >= priceFrom) &&
                 (!priceTo.HasValue || x.Price <= priceTo))
         {
+            AddInclude(x => x.County);
+            AddInclude(x => x.City);
             AddInclude(x => x.User);
             ApplyOrderByDescending(x => x.Modified);
         }

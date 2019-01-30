@@ -13,6 +13,10 @@ namespace Tti.Estate.Data.Specifications
             Criteria = criteria;
         }
 
+        protected BaseSpecification()
+        {
+        }
+
         public Expression<Func<TEntity, bool>> Criteria { get; }
 
         public List<Expression<Func<TEntity, object>>> Includes { get; } = new List<Expression<Func<TEntity, object>>>();

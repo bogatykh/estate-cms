@@ -2,7 +2,7 @@
 
 namespace Tti.Estate.Data.Repositories
 {
-    public interface IPropertyPhotoRepository : IRepository<PropertyPhoto>
+    public interface ICountyRepository : IReadRepository<County>
     {
     }
 }

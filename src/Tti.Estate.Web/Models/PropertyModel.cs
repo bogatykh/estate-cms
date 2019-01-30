@@ -42,6 +42,12 @@ namespace Tti.Estate.Web.Models
         public decimal? Price { get; set; }
 
         /// <summary>
+        /// VAT included in price
+        /// </summary>
+        [Display(Name = "HasVat")]
+        public bool HasVat { get; set; }
+
+        /// <summary>
         /// Area
         /// </summary>
         [Display(Name = "Area")]
@@ -49,29 +55,52 @@ namespace Tti.Estate.Web.Models
         public decimal? Area { get; set; }
 
         /// <summary>
-        /// Region
+        /// County
         /// </summary>
-        [Display(Name = "Region")]
+        [Display(Name = "County")]
         [Required(ErrorMessage = "Required")]
-        public long? RegionId { get; set; }
+        public long? CountyId { get; set; }
+
+        [Display(Name = "County")]
+        public CountyItemModel County { get; set; }
+
+        /// <summary>
+        /// City
+        /// </summary>
+        [Display(Name = "City")]
+        [Required(ErrorMessage = "Required")]
+        public long? CityId { get; set; }
+
+        [Display(Name = "City")]
+        public CityItemModel City { get; set; }
 
         /// <summary>
         /// Street
         /// </summary>
+        [StringLength(64)]
         [Display(Name = "Street")]
         public string Street { get; set; }
 
         /// <summary>
         /// House number
         /// </summary>
+        [StringLength(8)]
         [Display(Name = "HouseNumber")]
         public string HouseNumber { get; set; }
 
         /// <summary>
-        /// Flat number
+        /// Apartment number
         /// </summary>
-        [Display(Name = "FlatNumber")]
-        public string FlatNumber { get; set; }
+        [StringLength(8)]
+        [Display(Name = "ApartmentNumber")]
+        public string ApartmentNumber { get; set; }
+
+        /// <summary>
+        /// Cadastral number
+        /// </summary>
+        [StringLength(128)]
+        [Display(Name = "CadastralNumber")]
+        public string CadastralNumber { get; set; }
 
         /// <summary>
         /// Land area
@@ -117,9 +146,14 @@ namespace Tti.Estate.Web.Models
         public DateTime Modified { get; set; }
 
         /// <summary>
-        /// Region collection for drop-down
+        /// County collection for drop-down
         /// </summary>
-        public IEnumerable<SelectListItem> Regions { get; set; }
+        public IEnumerable<SelectListItem> Counties { get; set; }
+
+        /// <summary>
+        /// City collection for drop-down
+        /// </summary>
+        public IEnumerable<SelectListItem> Cities { get; set; }
 
         /// <summary>
         /// User collection for drop-down

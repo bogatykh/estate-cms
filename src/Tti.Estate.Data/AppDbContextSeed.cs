@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tti.Estate.Data.Entities;
@@ -9,18 +8,6 @@ namespace Tti.Estate.Data
 {
     public static class AppDbContextSeed
     {
-        public static async Task SeedAsync(AppDbContext dbContext)
-        {
-            if (dbContext == null)
-            {
-                throw new ArgumentNullException(nameof(dbContext));
-            }
-
-            dbContext.Regions.AddRange(GetPreconfiguredRegions());
-
-            await dbContext.SaveChangesAsync();
-        }
-
         public static async Task SeedRandomDataAsync(AppDbContext dbContext)
         {
             if (dbContext == null)
@@ -99,13 +86,6 @@ namespace Tti.Estate.Data
                 Skip(skip).
                 Take(1).
                 FirstOrDefaultAsync();
-        }
-        static IEnumerable<Region> GetPreconfiguredRegions()
-        {
-            return new List<Region>()
-            {
-                new Region() { Name = "Rīga", Code = "0010000" }
-            };
         }
     }
 }

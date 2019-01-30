@@ -2,10 +2,10 @@
 
 namespace Tti.Estate.Web.Models
 {
-    public class PropertyPhotoModel
+    public class CityListItemModel
     {
         public long Id { get; set; }
 
-        public Guid ExternalId { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Tti.Estate.Data.Entities
 {
-    public class PropertyPhoto : BaseEntity
+    public class Photo : BaseEntity
     {
-        public PropertyPhoto()
+        public Photo()
         {
             ExternalId = Guid.NewGuid();
         }

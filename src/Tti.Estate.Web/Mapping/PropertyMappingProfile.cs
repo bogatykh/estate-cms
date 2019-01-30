@@ -12,9 +12,12 @@ namespace Tti.Estate.Web.Mapping
 
             CreateMap<Property, PropertyModel>().
                 ReverseMap().
-                IgnoreAllPropertiesWithAnInaccessibleSetter().
+                ForMember(x => x.Status, x => x.Ignore()).
+                ForMember(x => x.Created, x => x.Ignore()).
+                ForMember(x => x.Modified, x => x.Ignore()).
                 ForMember(x => x.User, x => x.Ignore()).
-                ForMember(x => x.Status, x => x.Ignore());
+                ForMember(x => x.County, x => x.Ignore()).
+                ForMember(x => x.City, x => x.Ignore());
 
             CreateMap<Property, PropertyEditModel>().
                 IncludeBase<Property, PropertyModel>().

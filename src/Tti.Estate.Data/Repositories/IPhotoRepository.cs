@@ -2,7 +2,7 @@
 
 namespace Tti.Estate.Data.Repositories
 {
-    public interface IRegionRepository : IReadRepository<Region>
+    public interface IPhotoRepository : IRepository<Photo>
     {
     }
 }

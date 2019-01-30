@@ -22,23 +22,16 @@
             <div class="col-sm-9">
                 <p class="form-control-plaintext">
                     @Html.DisplayFor(x => x.Price)
+                    <span>&euro;</span>
                 </p>
             </div>
         </div>
         <div class="form-group row">
-            <label asp-for="Area" class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9">
-                <p class="form-control-plaintext">
-                    @Html.DisplayFor(x => x.Area)
-                </p>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="RegionId" class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9">
-                <p class="form-control-plaintext">
-                    @Html.DisplayFor(x => x.RegionId)
-                </p>
+            <div class="offset-3 col-sm-9">
+                <div class="form-check">
+                    <input asp-for="HasVat" class="form-check-input" disabled />
+                    <label asp-for="HasVat" class="form-check-label"></label>
+                </div>
             </div>
         </div>
     </div>
@@ -52,31 +45,142 @@
             </div>
         </div>
         <div class="form-group row">
-            <label asp-for="IsRestricted" class="col-sm-3 col-form-label"></label>
+            <div class="offset-3 col-sm-9">
+                <div class="form-check">
+                    <input asp-for="IsRestricted" class="form-check-input" disabled />
+                    <label asp-for="IsRestricted" class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Created" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <p class="form-control-plaintext">
-                    @Html.DisplayFor(x => x.IsRestricted)
+                <p class="form-control-plaintext text-muted">
+                    @Html.DisplayFor(x => x.Created)
                 </p>
             </div>
         </div>
         <div class="form-group row">
             <label asp-for="Modified" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9">
-                <p class="form-control-plaintext">
+                <p class="form-control-plaintext text-muted">
                     @Html.DisplayFor(x => x.Modified)
-                </p>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label asp-for="Created" class="col-sm-3 col-form-label"></label>
-            <div class="col-sm-9">
-                <p class="form-control-plaintext">
-                    @Html.DisplayFor(x => x.Created)
                 </p>
             </div>
         </div>
     </div>
 </div>
+<fieldset>
+    <legend>@Localizer["Location"]</legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="County" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.County)
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="City" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.City)
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CadastralNumber" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.CadastralNumber)
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="Street" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.Street)
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="HouseNumber" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.HouseNumber)
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="ApartmentNumber" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.ApartmentNumber)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>@Localizer["Details"]</legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="Area" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.Area)
+                        @if (Model.Area.HasValue)
+                        {
+                            <span>m<sup>2</sup></span>
+                        }
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Floor" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.Floor)
+                        @if (Model.FloorCount.HasValue)
+                        {
+                            <span>&sol;</span>
+                            @Html.DisplayFor(x => x.FloorCount)
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label asp-for="LandArea" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.LandArea)
+                        @if (Model.LandArea.HasValue)
+                        {
+                            <span>m<sup>2</sup></span>
+                        }
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="RoomCount" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <p class="form-control-plaintext">
+                        @Html.DisplayFor(x => x.RoomCount)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
 <fieldset>
     <legend>@Html.DisplayNameFor(x => x.Description)</legend>
     <div class="form-group">

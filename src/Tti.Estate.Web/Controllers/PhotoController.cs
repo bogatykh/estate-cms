@@ -11,16 +11,16 @@ using Tti.Estate.Web.Models;
 namespace Tti.Estate.Web.Controllers
 {
     [Route("Property/{propertyId:long}/Photos/[action]")]
-    public class PropertyPhotoController : Controller
+    public class PhotoController : Controller
     {
         private readonly IPropertyRepository _propertyRepository;
-        private readonly IPropertyPhotoService _propertyPhotoService;
+        private readonly IPhotoService _photoService;
         private readonly IMapper _mapper;
 
-        public PropertyPhotoController(IPropertyRepository propertyRepository, IPropertyPhotoService propertyPhotoService, IMapper mapper)
+        public PhotoController(IPropertyRepository propertyRepository, IPhotoService photoService, IMapper mapper)
         {
             _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
-            _propertyPhotoService = propertyPhotoService ?? throw new ArgumentNullException(nameof(propertyPhotoService));
+            _photoService = photoService ?? throw new ArgumentNullException(nameof(photoService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -34,13 +34,13 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            var items = await _propertyPhotoService.ListAsync(propertyId);
+            var items = await _photoService.ListAsync(propertyId);
 
-            var model = new PropertyPhotoIndexModel()
+            var model = new PhotoIndexModel()
             {
                 PropertyId = propertyId,
-                StorageUri = _propertyPhotoService.GetStorageUri(),
-                Photos = _mapper.Map<IEnumerable<PropertyPhotoModel>>(items)
+                StorageUri = _photoService.GetStorageUri(),
+                Photos = _mapper.Map<IEnumerable<PhotoModel>>(items)
             };
 
             return View(model);
@@ -49,7 +49,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(long propertyId, IFormFile photo)
         {
-            await _propertyPhotoService.CreateAsync(propertyId, photo.OpenReadStream());
+            await _photoService.CreateAsync(propertyId, photo.OpenReadStream());
 
             return RedirectToAction(nameof(Index), new { propertyId });
         }
@@ -57,7 +57,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long propertyId, long id)
         {
-            await _propertyPhotoService.DeleteAsync(id);
+            await _photoService.DeleteAsync(id);
 
             return RedirectToAction(nameof(Index), new { propertyId });
         }

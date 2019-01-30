@@ -10,25 +10,25 @@ using Tti.Estate.Infrastructure.Services;
 
 namespace Tti.Estate.Business.Services
 {
-    internal class PropertyPhotoService : IPropertyPhotoService
+    internal class PhotoService : IPhotoService
     {
         private readonly IImageService _imageService;
-        private readonly IPropertyPhotoRepository _propertyPhotoRepository;
+        private readonly IPhotoRepository _photoRepository;
         private readonly IPhotoBlobRepository _photoBlobRepository;
 
         private const int PhotoResizePixels = 1024;
         private const int PhotoResizeQuality = 90;
 
-        public PropertyPhotoService(IPropertyPhotoRepository propertyPhotoRepository, IPhotoBlobRepository photoBlobRepository, IImageService imageService)
+        public PhotoService(IPhotoRepository photoRepository, IPhotoBlobRepository photoBlobRepository, IImageService imageService)
         {
-            _propertyPhotoRepository = propertyPhotoRepository;
+            _photoRepository = photoRepository;
             _photoBlobRepository = photoBlobRepository;
             _imageService = imageService;
         }
 
         public async Task CreateAsync(long propertyId, Stream stream)
         {
-            var photo = new PropertyPhoto()
+            var photo = new Photo()
             {
                 PropertyId = propertyId
             };
@@ -38,14 +38,14 @@ namespace Tti.Estate.Business.Services
                 _imageService.Resize(stream, outputStream, PhotoResizePixels, PhotoResizeQuality);
             }
 
-            await _propertyPhotoRepository.CreateAsync(photo);
+            await _photoRepository.CreateAsync(photo);
         }
 
-        public async Task<IEnumerable<PropertyPhoto>> ListAsync(long propertyId)
+        public async Task<IEnumerable<Photo>> ListAsync(long propertyId)
         {
-            var spec = new PropertyPhotoSpecification(propertyId);
+            var spec = new PhotoSpecification(propertyId);
 
-            return await _propertyPhotoRepository.ListAsync(spec);
+            return await _photoRepository.ListAsync(spec);
         }
 
         public Uri GetStorageUri()
@@ -55,14 +55,14 @@ namespace Tti.Estate.Business.Services
 
         public async Task DeleteAsync(long id)
         {
-            var photo = await _propertyPhotoRepository.GetAsync(id);
+            var photo = await _photoRepository.GetAsync(id);
 
-            await _propertyPhotoRepository.DeleteAsync(photo);
+            await _photoRepository.DeleteAsync(photo);
 
             await _photoBlobRepository.DeleteAsync(GetBlobName(photo));
         }
 
-        private string GetBlobName(PropertyPhoto photo)
+        private string GetBlobName(Photo photo)
         {
             return $"{photo.ExternalId}.jpg";
         }

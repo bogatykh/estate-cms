@@ -140,9 +140,18 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CustomerEditModel model)
         {
+            var customer = await _customerRepository.GetAsync(model.Id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                var customer = _mapper.Map<Customer>(model);
+                _mapper.Map(model, customer);
+
+                customer.Modified = DateTime.UtcNow;
 
                 await _customerRepository.UpdateAsync(customer);
 

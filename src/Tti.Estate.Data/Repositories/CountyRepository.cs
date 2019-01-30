@@ -2,9 +2,9 @@
 
 namespace Tti.Estate.Data.Repositories
 {
-    internal class RegionRepository : BaseRepository<Region>, IRegionRepository
+    internal class CountyRepository : BaseRepository<County>, ICountyRepository
     {
-        public RegionRepository(AppDbContext dbContext)
+        public CountyRepository(AppDbContext dbContext)
             : base(dbContext)
         {
         }

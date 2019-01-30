@@ -22,14 +22,21 @@ namespace Tti.Estate.Data.Entities
 
         public decimal Price { get; set; }
 
-        public long RegionId { get; set; }
-        public Region Region { get; set; }
-        
+        public bool HasVat { get; set; }
+
+        public long CountyId { get; set; }
+        public County County { get; set; }
+
+        public long CityId { get; set; }
+        public City City { get; set; }
+
         public string Street { get; set; }
 
         public string HouseNumber { get; set; }
 
-        public string FlatNumber { get; set; }
+        public string ApartmentNumber { get; set; }
+
+        public string CadastralNumber { get; set; }
 
         public decimal Area { get; set; }
 
@@ -47,12 +54,12 @@ namespace Tti.Estate.Data.Entities
 
         public DateTime Created { get; private set; }
 
-        public DateTime Modified { get; private set; }
+        public DateTime Modified { get; set; }
 
         public List<Comment> Comments { get; set; }
 
         public List<Contact> Contacts { get; set; }
 
-        public List<PropertyPhoto> Photos { get; set; }
+        public List<Photo> Photos { get; set; }
     }
 }

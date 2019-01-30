@@ -1,6 +1,6 @@
 ﻿@model PropertyDetailsModel
 @{
-    ViewData["Title"] = Localizer["Title"];
+    ViewData["Title"] = Localizer["Title", Model.Id];
 }
 @Html.DisplayForModel()
 <partial name="_ContactsPartial" model="Model.Contacts" />
@@ -9,7 +9,7 @@
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
         @Localizer["Edit"]
     </a>
-    <a asp-controller="PropertyPhoto" asp-action="Index" asp-route-propertyId="@Model.Id" class="btn btn-outline-secondary">
+    <a asp-controller="Photo" asp-action="Index" asp-route-propertyId="@Model.Id" class="btn btn-outline-secondary">
         @Localizer["Photos"]
     </a>
     <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">

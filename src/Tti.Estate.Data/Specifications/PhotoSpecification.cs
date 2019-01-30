@@ -2,9 +2,9 @@
 
 namespace Tti.Estate.Data.Specifications
 {
-    public class PropertyPhotoSpecification : BaseSpecification<PropertyPhoto>
+    public class PhotoSpecification : BaseSpecification<Photo>
     {
-        public PropertyPhotoSpecification(long propertyId)
+        public PhotoSpecification(long propertyId)
             : base(x => x.PropertyId == propertyId)
         {
         }
