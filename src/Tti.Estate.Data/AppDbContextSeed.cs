@@ -23,7 +23,8 @@ namespace Tti.Estate.Data
             for (int i = 0; i < random.Next(1000, 2000); i++)
             {
                 var transactionType = random.GetEnum<TransactionType>();
-                
+                var county = await random.GetEntityAsync(dbContext.Counties);
+
                 dbContext.Properties.Add(new Property()
                 {
                     User = await random.GetEntityAsync(dbContext.Users),
@@ -31,7 +32,9 @@ namespace Tti.Estate.Data
                     TransactionType = transactionType,
                     Status = random.GetEnum<PropertyStatus>(),
                     Price = transactionType == TransactionType.Rent ? random.Next(100, 1500) : random.Next(10000, 200000),
-                    Area = Convert.ToDecimal(random.NextDouble() * random.Next(50, 1000))
+                    Area = Convert.ToDecimal(random.NextDouble() * random.Next(50, 1000)),
+                    County = county,
+                    City = await random.GetEntityAsync(dbContext.Cities.Where(x => x.CountyId == county.Id))
                 });
             }
 
@@ -76,12 +79,12 @@ namespace Tti.Estate.Data
             return (TEnum)values.GetValue(random.Next(values.Length - 1));
         }
 
-        private static async Task<TEntity> GetEntityAsync<TEntity>(this Random random, DbSet<TEntity> dbSet)
+        private static async Task<TEntity> GetEntityAsync<TEntity>(this Random random, IQueryable<TEntity> query)
             where TEntity : BaseEntity
         {
-            var skip = (int)(random.NextDouble() * await dbSet.CountAsync());
+            var skip = (int)(random.NextDouble() * await query.CountAsync());
 
-            return await dbSet.
+            return await query.
                 OrderBy(o => o.Id).
                 Skip(skip).
                 Take(1).

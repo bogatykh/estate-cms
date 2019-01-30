@@ -11,7 +11,7 @@ namespace Tti.Estate.Data
         {
         }
 
-        public DbSet<County> Cities { get; set; }
+        public DbSet<City> Cities { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
 
