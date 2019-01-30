@@ -23,6 +23,8 @@ namespace Tti.Estate.Business
 
             services.AddScoped<ICommentValidator, CommentValidator>();
             services.AddScoped<IContactValidator, ContactValidator>();
+            services.AddScoped<ICustomerValidator, CustomerValidator>();
+            services.AddScoped<IPropertyValidator, PropertyValidator>();
             services.AddScoped<IUserValidator, UserValidator>();
 
             return services;

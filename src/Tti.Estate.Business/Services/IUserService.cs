@@ -10,9 +10,9 @@ namespace Tti.Estate.Business.Services
         Task<User> GetAsync(long id);
         Task<IPagedResult<User>> ListAsync(int pageIndex, int pageSize);
         Task UpdateAsync(User user);
-        Task DeleteAsync(User user);
-        Task BlockAsync(User user);
-        Task UnblockAsync(User user);
+        Task<OperationResult> DeleteAsync(long id);
+        Task<OperationResult> BlockAsync(long id);
+        Task<OperationResult> UnblockAsync(long id);
         Task<User> ValidateAsync(string userName, string password);
     }
 }

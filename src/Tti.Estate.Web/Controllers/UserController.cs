@@ -109,6 +109,22 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
+            try
+            {
+                var result = await _userService.DeleteAsync(id);
+
+                if (result == Business.Dto.OperationResult.NotFound)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction("Details", new { id });
+            }
+            catch (DomainException e)
+            {
+                ModelState.TryAddModelError("", e.Message);
+            }
+
             var user = await _userService.GetAsync(id);
 
             if (user == null)
@@ -116,17 +132,6 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            try
-            {
-                await _userService.DeleteAsync(user);
-
-                return RedirectToAction("Index");
-            }
-            catch (DomainException e)
-            {
-                ModelState.TryAddModelError("", e.Message);
-            }
-            
             var model = _mapper.Map<UserDetailsModel>(user);
 
             return View("Details", model);
@@ -135,22 +140,27 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Block(long id)
         {
+            try
+            {
+                var result = await _userService.BlockAsync(id);
+
+                if (result == Business.Dto.OperationResult.NotFound)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction("Details", new { id });
+            }
+            catch (DomainException e)
+            {
+                ModelState.TryAddModelError("", e.Message);
+            }
+
             var user = await _userService.GetAsync(id);
 
             if (user == null)
             {
                 return NotFound();
-            }
-
-            try
-            {
-                await _userService.BlockAsync(user);
-
-                return RedirectToAction("Details", new { id = user.Id });
-            }
-            catch (DomainException e)
-            {
-                ModelState.TryAddModelError("", e.Message);
             }
 
             var model = _mapper.Map<UserDetailsModel>(user);
@@ -161,6 +171,22 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Unblock(long id)
         {
+            try
+            {
+                var result = await _userService.UnblockAsync(id);
+
+                if (result == Business.Dto.OperationResult.NotFound)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction("Details", new { id });
+            }
+            catch (DomainException e)
+            {
+                ModelState.TryAddModelError("", e.Message);
+            }
+
             var user = await _userService.GetAsync(id);
 
             if (user == null)
@@ -168,9 +194,9 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            await _userService.UnblockAsync(user);
+            var model = _mapper.Map<UserDetailsModel>(user);
 
-            return RedirectToAction("Details", new { id = user.Id });
+            return View("Details", model);
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
@@ -14,7 +15,7 @@ namespace Tti.Estate.Web.Controllers
 {
     public class PropertyController : Controller
     {
-        private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyService _propertyService;
         private readonly IContactRepository _contactRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
@@ -22,7 +23,7 @@ namespace Tti.Estate.Web.Controllers
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
 
-        public PropertyController(IPropertyRepository propertyRepository,
+        public PropertyController(IPropertyService propertyService,
             IContactRepository contactRepository,
             ICommentRepository commentRepository,
             IUserRepository userRepository,
@@ -30,7 +31,7 @@ namespace Tti.Estate.Web.Controllers
             ICityRepository cityRepository,
             IMapper mapper)
         {
-            _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
+            _propertyService = propertyService ?? throw new ArgumentNullException(nameof(propertyService));
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
@@ -42,7 +43,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(PropertyListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new PropertyFilterSpecification(
+            var properties = await _propertyService.ListAsync(pageIndex: pageIndex, pageSize: pageSize,
                 userId: criteria.UserId,
                 propertyType: (PropertyType?)criteria.PropertyType,
                 status: (PropertyStatus?)criteria.Status,
@@ -50,28 +51,11 @@ namespace Tti.Estate.Web.Controllers
                 priceFrom: criteria.PriceFrom,
                 priceTo: criteria.PriceTo
             );
-            var filterPaginatedSpecification = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: criteria.UserId,
-                propertyType: (PropertyType?)criteria.PropertyType,
-                status: (PropertyStatus?)criteria.Status,
-                transactionType: (TransactionType?)criteria.TransactionType,
-                priceFrom: criteria.PriceFrom,
-                priceTo: criteria.PriceTo
-            );
-
-            var items = await _propertyRepository.ListAsync(filterPaginatedSpecification);
-            var totalItems = await _propertyRepository.CountAsync(filterSpecification);
 
             var model = new PropertyListModel()
             {
                 Criteria = (criteria.UserId.HasValue || criteria.PropertyType.HasValue || criteria.Status.HasValue || criteria.TransactionType.HasValue || criteria.PriceFrom.HasValue || criteria.PriceTo.HasValue) ? criteria : null,
-                Properties = new PagedResultModel<PropertyListItemModel>()
-                {
-                    Items = _mapper.Map<IEnumerable<PropertyListItemModel>>(items),
-                    PageIndex = pageIndex,
-                    TotalItems = totalItems,
-                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-                },
+                Properties = _mapper.Map<PagedResultModel<PropertyListItemModel>>(properties),
                 Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
             };
 
@@ -104,7 +88,7 @@ namespace Tti.Estate.Web.Controllers
             {
                 var property = _mapper.Map<Property>(model);
 
-                await _propertyRepository.CreateAsync(property);
+                await _propertyService.CreateAsync(property);
 
                 return RedirectToAction("Details", new { id = property.Id });
             }
@@ -117,9 +101,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var spec = new PropertyFilterSpecification(id: id);
-
-            var property = await _propertyRepository.SingleAsync(spec);
+            var property = await _propertyService.GetAsync(id);
 
             if (property == null)
             {
@@ -137,7 +119,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(long id)
         {
-            var property = await _propertyRepository.GetAsync(id);
+            var property = await _propertyService.GetAsync(id);
 
             if (property == null)
             {
@@ -154,7 +136,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(PropertyEditModel model)
         {
-            var property = await _propertyRepository.GetAsync(model.Id);
+            var property = await _propertyService.GetAsync(model.Id);
 
             if (property == null)
             {
@@ -167,7 +149,7 @@ namespace Tti.Estate.Web.Controllers
 
                 property.Modified = DateTime.UtcNow;
 
-                await _propertyRepository.UpdateAsync(property);
+                await _propertyService.UpdateAsync(property);
 
                 return RedirectToAction("Details", new { id = property.Id });
             }
@@ -180,14 +162,12 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            var property = await _propertyRepository.GetAsync(id);
+            var result = await _propertyService.DeleteAsync(id);
 
-            if (property == null)
+            if (result == Business.Dto.OperationResult.NotFound)
             {
                 return NotFound();
             }
-
-            await _propertyRepository.DeleteAsync(property);
 
             return RedirectToAction("Index");
         }

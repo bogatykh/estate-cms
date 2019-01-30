@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Data;
 using System.Threading.Tasks;
 using Tti.Estate.Business.Dto;
 using Tti.Estate.Business.Validators;
@@ -63,32 +62,31 @@ namespace Tti.Estate.Business.Services
             await _userRepository.UpdateAsync(user);
         }
 
-        public async Task DeleteAsync(User user)
+        public async Task<OperationResult> DeleteAsync(long id)
         {
+            var user = await _userRepository.GetAsync(id);
+
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                return OperationResult.NotFound;
             }
 
             await _userValidator.ValidateAsync(user, UserAction.Delete);
 
-            try
-            {
-                await _userRepository.DeleteAsync(user);
-            }
-            catch (DBConcurrencyException)
-            {
-                user.Status = UserStatus.Deleted;
+            user.Status = UserStatus.Deleted;
 
-                await _userRepository.UpdateAsync(user);
-            }
+            await _userRepository.UpdateAsync(user);
+
+            return OperationResult.Success;
         }
 
-        public async Task BlockAsync(User user)
+        public async Task<OperationResult> BlockAsync(long id)
         {
+            var user = await _userRepository.GetAsync(id);
+
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                return OperationResult.NotFound;
             }
 
             await _userValidator.ValidateAsync(user, UserAction.Block);
@@ -96,18 +94,24 @@ namespace Tti.Estate.Business.Services
             user.Status = UserStatus.Blocked;
 
             await _userRepository.UpdateAsync(user);
+
+            return OperationResult.Success;
         }
 
-        public async Task UnblockAsync(User user)
+        public async Task<OperationResult> UnblockAsync(long id)
         {
+            var user = await _userRepository.GetAsync(id);
+
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                return OperationResult.NotFound;
             }
 
             user.Status = UserStatus.Active;
 
             await _userRepository.UpdateAsync(user);
+
+            return OperationResult.Success;
         }
 
         public async Task<User> ValidateAsync(string userName, string password)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
@@ -14,19 +15,19 @@ namespace Tti.Estate.Web.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ICustomerRepository _customerRepository;
+        private readonly ICustomerService _customerService;
         private readonly IContactRepository _contactRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerRepository customerRepository,
+        public CustomerController(ICustomerService customerService,
             IContactRepository contactRepository,
             ICommentRepository commentRepository,
             IUserRepository userRepository,
             IMapper mapper)
         {
-            _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
+            _customerService = customerService ?? throw new ArgumentNullException(nameof(customerService));
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
@@ -36,28 +37,15 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(CustomerListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new CustomerFilterSpecification(
+            var customers = await _customerService.ListAsync(pageIndex: pageIndex, pageSize: pageSize,
                 userId: criteria.UserId,
                 term: criteria.Term
             );
-            var filterPaginatedSpecification = new CustomerFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
-                userId: criteria.UserId,
-                term: criteria.Term
-            );
-
-            var items = await _customerRepository.ListAsync(filterPaginatedSpecification);
-            var totalItems = await _customerRepository.CountAsync(filterSpecification);
 
             var model = new CustomerListModel()
             {
                 Criteria = (criteria.UserId.HasValue || !string.IsNullOrEmpty(criteria.Term)) ? criteria : null,
-                Customers = new PagedResultModel<CustomerListItemModel>()
-                {
-                    Items = _mapper.Map<IEnumerable<CustomerListItemModel>>(items),
-                    PageIndex = pageIndex,
-                    TotalItems = totalItems,
-                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-                },
+                Customers = _mapper.Map<PagedResultModel<CustomerListItemModel>>(customers),
                 Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
             };
 
@@ -90,7 +78,7 @@ namespace Tti.Estate.Web.Controllers
             {
                 var customer = _mapper.Map<Customer>(model);
 
-                await _customerRepository.CreateAsync(customer);
+                await _customerService.CreateAsync(customer);
 
                 return RedirectToAction("Details", new { id = customer.Id });
             }
@@ -103,9 +91,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var spec = new CustomerFilterSpecification(id: id);
-
-            var customer = await _customerRepository.SingleAsync(spec);
+            var customer = await _customerService.GetAsync(id);
 
             if (customer == null)
             {
@@ -123,7 +109,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(long id)
         {
-            var customer = await _customerRepository.GetAsync(id);
+            var customer = await _customerService.GetAsync(id);
 
             if (customer == null)
             {
@@ -140,7 +126,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CustomerEditModel model)
         {
-            var customer = await _customerRepository.GetAsync(model.Id);
+            var customer = await _customerService.GetAsync(model.Id);
 
             if (customer == null)
             {
@@ -151,9 +137,7 @@ namespace Tti.Estate.Web.Controllers
             {
                 _mapper.Map(model, customer);
 
-                customer.Modified = DateTime.UtcNow;
-
-                await _customerRepository.UpdateAsync(customer);
+                await _customerService.UpdateAsync(customer);
 
                 return RedirectToAction("Details", new { id = customer.Id });
             }
@@ -166,14 +150,12 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            var customer = await _customerRepository.GetAsync(id);
+            var result = await _customerService.DeleteAsync(id);
 
-            if (customer == null)
+            if (result ==  Business.Dto.OperationResult.NotFound)
             {
                 return NotFound();
             }
-
-            await _customerRepository.DeleteAsync(customer);
 
             return RedirectToAction("Index");
         }

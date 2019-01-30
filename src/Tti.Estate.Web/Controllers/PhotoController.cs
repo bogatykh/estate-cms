@@ -13,14 +13,14 @@ namespace Tti.Estate.Web.Controllers
     [Route("Property/{propertyId:long}/Photos/[action]")]
     public class PhotoController : Controller
     {
-        private readonly IPropertyRepository _propertyRepository;
         private readonly IPhotoService _photoService;
+        private readonly IPropertyRepository _propertyRepository;
         private readonly IMapper _mapper;
 
-        public PhotoController(IPropertyRepository propertyRepository, IPhotoService photoService, IMapper mapper)
+        public PhotoController(IPhotoService photoService, IPropertyRepository propertyRepository, IMapper mapper)
         {
-            _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
             _photoService = photoService ?? throw new ArgumentNullException(nameof(photoService));
+            _propertyRepository = propertyRepository ?? throw new ArgumentNullException(nameof(propertyRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
