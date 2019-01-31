@@ -10,8 +10,8 @@
         <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
             @Localizer["Edit"]
         </a>
-        <button asp-action="PassToApprove" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
-            @Localizer["PassToApprove"]
+        <button asp-action="Submit" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
+            @Localizer["Submit"]
         </button>
     }
     else if (Model.Status == TransactionStatusModel.Approving)
@@ -23,7 +23,7 @@
             @Localizer["Reject"]
         </button>
     }
-    else if (Model.Status != TransactionStatusModel.Approved)
+    @if (Model.Status != TransactionStatusModel.Approved)
     {
         <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
             <i class="fa fa-trash-o"></i>

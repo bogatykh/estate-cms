@@ -19,12 +19,14 @@ namespace Tti.Estate.Business
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<ICommentValidator, CommentValidator>();
             services.AddScoped<IContactValidator, ContactValidator>();
             services.AddScoped<ICustomerValidator, CustomerValidator>();
             services.AddScoped<IPropertyValidator, PropertyValidator>();
+            services.AddScoped<ITransactionValidator, TransactionValidator>();
             services.AddScoped<IUserValidator, UserValidator>();
 
             return services;

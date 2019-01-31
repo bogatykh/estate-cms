@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tti.Estate.Business.Services;
 using Tti.Estate.Data.Entities;
 using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
@@ -15,17 +16,17 @@ namespace Tti.Estate.Web.Controllers
 {
     public class TransactionController : Controller
     {
-        private readonly ITransactionRepository _transactionRepository;
+        private readonly ITransactionService _transactionService;
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public TransactionController(ITransactionRepository transactionRepository,
+        public TransactionController(ITransactionService transactionService,
             ICommentRepository commentRepository,
             IUserRepository userRepository,
             IMapper mapper)
         {
-            _transactionRepository = transactionRepository ?? throw new ArgumentNullException(nameof(transactionRepository));
+            _transactionService = transactionService ?? throw new ArgumentNullException(nameof(transactionService));
             _commentRepository = commentRepository ?? throw new ArgumentNullException(nameof(commentRepository));
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -34,14 +35,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(TransactionListCriteriaModel criteria, int pageIndex = 0, int pageSize = 20)
         {
-            var filterSpecification = new TransactionFilterSpecification(
-                userId: criteria.UserId,
-                transactionType: (TransactionType?)criteria.TransactionType,
-                status: (TransactionStatus?)criteria.Status,
-                dateFrom: criteria.DateFrom,
-                dateTo: criteria.DateTo
-            );
-            var filterPaginatedSpecification = new TransactionFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
+            var transactions = await _transactionService.ListAsync(pageIndex: pageIndex, pageSize: pageSize,
                 userId: criteria.UserId,
                 transactionType: (TransactionType?)criteria.TransactionType,
                 status: (TransactionStatus?)criteria.Status,
@@ -49,24 +43,15 @@ namespace Tti.Estate.Web.Controllers
                 dateTo: criteria.DateTo
             );
 
-            var items = await _transactionRepository.ListAsync(filterPaginatedSpecification);
-            var totalItems = await _transactionRepository.CountAsync(filterSpecification);
-
-            var modelItems = _mapper.Map<IEnumerable<TransactionListItemModel>>(items);
+            var pagedModel = _mapper.Map<PagedResultModel<TransactionListItemModel>>(transactions);
 
             var model = new TransactionListModel()
             {
                 Criteria = (criteria.UserId.HasValue || criteria.TransactionType.HasValue || criteria.Status.HasValue || criteria.DateFrom.HasValue || criteria.DateTo.HasValue) ? criteria : null,
-                TotalAmount = modelItems.Any() ? modelItems.Sum(x => x.Amount) : (decimal?)null,
-                TotalUserAmount = modelItems.Any() ? modelItems.Sum(x => x.UserAmount) : (decimal?)null,
-                TotalCompanyAmount = modelItems.Any() ? modelItems.Sum(x => x.CompanyAmount) : (decimal?)null,
-                Transactions = new PagedResultModel<TransactionListItemModel>()
-                {
-                    Items = modelItems,
-                    PageIndex = pageIndex,
-                    TotalItems = totalItems,
-                    TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
-                },
+                TotalAmount = pagedModel.Items.Any() ? pagedModel.Items.Sum(x => x.Amount) : (decimal?)null,
+                TotalUserAmount = pagedModel.Items.Any() ? pagedModel.Items.Sum(x => x.UserAmount) : (decimal?)null,
+                TotalCompanyAmount = pagedModel.Items.Any() ? pagedModel.Items.Sum(x => x.CompanyAmount) : (decimal?)null,
+                Transactions = pagedModel,
                 Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
             };
 
@@ -99,7 +84,7 @@ namespace Tti.Estate.Web.Controllers
             {
                 var transaction = _mapper.Map<Transaction>(model);
 
-                await _transactionRepository.CreateAsync(transaction);
+                await _transactionService.CreateAsync(transaction);
 
                 return RedirectToAction("Details", new { id = transaction.Id });
             }
@@ -112,9 +97,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(long id)
         {
-            var spec = new TransactionFilterSpecification(id: id);
-
-            var transaction = await _transactionRepository.SingleAsync(spec);
+            var transaction = await _transactionService.GetAsync(id);
 
             if (transaction == null)
             {
@@ -131,7 +114,7 @@ namespace Tti.Estate.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(long id)
         {
-            var transaction = await _transactionRepository.GetAsync(id);
+            var transaction = await _transactionService.GetAsync(id);
 
             if (transaction == null)
             {
@@ -148,11 +131,18 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(TransactionEditModel model)
         {
+            var transaction = await _transactionService.GetAsync(model.Id);
+
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                var transaction = _mapper.Map<Transaction>(model);
+                _mapper.Map(model, transaction);
 
-                await _transactionRepository.UpdateAsync(transaction);
+                await _transactionService.UpdateAsync(transaction);
 
                 return RedirectToAction("Details", new { id = transaction.Id });
             }
@@ -165,31 +155,25 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(long id)
         {
-            var transaction = await _transactionRepository.GetAsync(id);
+            var result = await _transactionService.DeleteAsync(id);
 
-            if (transaction == null)
+            if (result == Business.Dto.OperationResult.NotFound)
             {
                 return NotFound();
             }
-
-            await _transactionRepository.DeleteAsync(transaction);
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> PassToApprove(long id)
+        public async Task<IActionResult> Submit(long id)
         {
-            var transaction = await _transactionRepository.GetAsync(id);
+            var result = await _transactionService.SubmitAsync(id);
 
-            if (transaction == null)
+            if (result == Business.Dto.OperationResult.NotFound)
             {
                 return NotFound();
             }
-
-            transaction.Status = TransactionStatus.Approving;
-
-            await _transactionRepository.UpdateAsync(transaction);
 
             return RedirectToAction(nameof(Details), new { id });
         }
@@ -197,16 +181,12 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Approve(long id)
         {
-            var transaction = await _transactionRepository.GetAsync(id);
+            var result = await _transactionService.ApproveAsync(id);
 
-            if (transaction == null)
+            if (result == Business.Dto.OperationResult.NotFound)
             {
                 return NotFound();
             }
-
-            transaction.Status = TransactionStatus.Approved;
-
-            await _transactionRepository.UpdateAsync(transaction);
 
             return RedirectToAction(nameof(Details), new { id });
         }
@@ -214,16 +194,12 @@ namespace Tti.Estate.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Reject(long id)
         {
-            var transaction = await _transactionRepository.GetAsync(id);
+            var result = await _transactionService.RejectAsync(id);
 
-            if (transaction == null)
+            if (result == Business.Dto.OperationResult.NotFound)
             {
                 return NotFound();
             }
-
-            transaction.Status = TransactionStatus.Draft;
-
-            await _transactionRepository.UpdateAsync(transaction);
 
             return RedirectToAction(nameof(Details), new { id });
         }
