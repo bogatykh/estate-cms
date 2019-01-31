@@ -76,7 +76,7 @@ namespace Tti.Estate.Data
         {
             var values = Enum.GetValues(typeof(TEnum));
 
-            return (TEnum)values.GetValue(random.Next(values.Length - 1));
+            return (TEnum)values.GetValue(random.Next(values.Length));
         }
 
         private static async Task<TEntity> GetEntityAsync<TEntity>(this Random random, IQueryable<TEntity> query)
