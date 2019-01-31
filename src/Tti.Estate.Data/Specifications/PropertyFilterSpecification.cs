@@ -1,4 +1,5 @@
-﻿using Tti.Estate.Data.Entities;
+﻿using System.Linq;
+using Tti.Estate.Data.Entities;
 
 namespace Tti.Estate.Data.Specifications
 {
@@ -10,14 +11,16 @@ namespace Tti.Estate.Data.Specifications
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
             decimal? priceFrom = null,
-            decimal? priceTo = null)
+            decimal? priceTo = null,
+            string telephone = null)
             : base(x => (!id.HasValue || x.Id == id) &&
                 (!userId.HasValue || x.UserId == userId) &&
                 (!propertyType.HasValue || x.PropertyType == propertyType) &&
                 (!status.HasValue || x.Status == status) &&
                 (!transactionType.HasValue || x.TransactionType == transactionType) &&
                 (!priceFrom.HasValue || x.Price >= priceFrom) &&
-                (!priceTo.HasValue || x.Price <= priceTo))
+                (!priceTo.HasValue || x.Price <= priceTo) &&
+                (telephone == null || x.Contacts.Any(c => c.Telephone == telephone)))
         {
             AddInclude(x => x.County);
             AddInclude(x => x.City);

@@ -44,7 +44,9 @@ namespace Tti.Estate.Business.Services
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
             decimal? priceFrom = null,
-            decimal? priceTo = null)
+            decimal? priceTo = null,
+            string telephone = null,
+            long? code = null)
         {
             var filterSpecification = new PropertyFilterSpecification(
                 userId: userId,
@@ -52,7 +54,9 @@ namespace Tti.Estate.Business.Services
                 status: status,
                 transactionType: transactionType,
                 priceFrom: priceFrom,
-                priceTo: priceTo
+                priceTo: priceTo,
+                telephone: telephone,
+                id: code
             );
             var filterPaginatedSpecification = new PropertyFilterPaginatedSpecification(pageIndex * pageSize, pageSize,
                 userId: userId,
@@ -60,7 +64,9 @@ namespace Tti.Estate.Business.Services
                 status: status,
                 transactionType: transactionType,
                 priceFrom: priceFrom,
-                priceTo: priceTo
+                priceTo: priceTo,
+                telephone: telephone,
+                id: code
             );
 
             var items = await _propertyRepository.ListAsync(filterPaginatedSpecification);

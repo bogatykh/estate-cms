@@ -14,7 +14,9 @@ namespace Tti.Estate.Business.Services
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
             decimal? priceFrom = null,
-            decimal? priceTo = null);
+            decimal? priceTo = null,
+            string telephone = null,
+            long? code = null);
         Task UpdateAsync(Property property);
         Task<OperationResult> DeleteAsync(long id);
     }

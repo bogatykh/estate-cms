@@ -1,0 +1,25 @@
+﻿@model PropertyListCriteriaModel
+<form asp-controller="Property" asp-action="Index" method="post">
+    <div class="card">
+        <div class="card-header">
+            @Localizer["Title"]
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label asp-for="Telephone" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Telephone" class="form-control" autofocus />
+                    <span asp-validation-for="Telephone"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Code" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Code" class="form-control" />
+                    <span asp-validation-for="Code"></span>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">@Localizer["Search"]</button>
+        </div>
+    </div>
+</form>

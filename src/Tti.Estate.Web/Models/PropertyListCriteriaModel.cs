@@ -21,5 +21,11 @@ namespace Tti.Estate.Web.Models
         
         [Display(Name = "PriceTo")]
         public decimal? PriceTo { get; set; }
+
+        [Display(Name = "Code")]
+        public long? Code { get; set; }
+
+        [Display(Name = "Telephone")]
+        public string Telephone { get; set; }
     }
 }

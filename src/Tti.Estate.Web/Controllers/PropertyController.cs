@@ -49,12 +49,14 @@ namespace Tti.Estate.Web.Controllers
                 status: (PropertyStatus?)criteria.Status,
                 transactionType: (TransactionType?)criteria.TransactionType,
                 priceFrom: criteria.PriceFrom,
-                priceTo: criteria.PriceTo
+                priceTo: criteria.PriceTo,
+                telephone: criteria.Telephone,
+                code: criteria.Code
             );
 
             var model = new PropertyListModel()
             {
-                Criteria = (criteria.UserId.HasValue || criteria.PropertyType.HasValue || criteria.Status.HasValue || criteria.TransactionType.HasValue || criteria.PriceFrom.HasValue || criteria.PriceTo.HasValue) ? criteria : null,
+                Criteria = (criteria.UserId.HasValue || criteria.PropertyType.HasValue || criteria.Status.HasValue || criteria.TransactionType.HasValue || criteria.PriceFrom.HasValue || criteria.PriceTo.HasValue || !string.IsNullOrEmpty(criteria.Telephone) || criteria.Code.HasValue) ? criteria : null,
                 Properties = _mapper.Map<PagedResultModel<PropertyListItemModel>>(properties),
                 Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
             };

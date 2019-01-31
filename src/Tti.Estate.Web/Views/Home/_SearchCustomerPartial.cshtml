@@ -1,0 +1,18 @@
+﻿@model CustomerListCriteriaModel
+<form asp-controller="Customer" asp-action="Index" method="post">
+    <div class="card">
+        <div class="card-header">
+            @Localizer["Title"]
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label asp-for="Term" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                    <input asp-for="Term" class="form-control" />
+                    <span asp-validation-for="Term"></span>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">@Localizer["Search"]</button>
+        </div>
+    </div>
+</form>
