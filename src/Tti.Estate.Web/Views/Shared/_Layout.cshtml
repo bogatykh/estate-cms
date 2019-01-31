@@ -17,21 +17,17 @@
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha256-azvvU9xKluwHFJ0Cpgtf0CYzK7zgtOznnzxV4924X1w=" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-              asp-fallback-href="~/lib/font-awesome/css/font-awesome.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css"
-              asp-fallback-href="~/lib/ekko-lightbox/ekko-lightbox.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha256-HAaDW5o2+LelybUhfuk0Zh2Vdk8Y2W2UeKmbaXhalfA=" />
-        <link rel="stylesheet" href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css"
+              crossorigin="anonymous"
+              integrity="sha256-JDBcnYeV19J14isGd3EtnsCQK05d8PczJ5+fvEvBJvI=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -99,6 +95,7 @@
         <script src="~/lib/jquery/jquery.js"></script>
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
         <script src="~/lib/ekko-lightbox/ekko-lightbox.js"></script>
         <script src="~/lib/cldrjs/cldr.js"></script>
         <script src="~/lib/cldrjs/cldr/event.js"></script>
@@ -107,25 +104,42 @@
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/jquery.min.js"
-                asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/twitter-bootstrap/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha256-63ld7aiYP6UxBifJWEzz87ldJyVnETUABZAYs5Qcsmc=">
         </script>
-        <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
-        <script src="~/lib/ekko-lightbox/ekko-lightbox.min.js" asp-append-version="true"></script>
-        <script src="~/lib/cldrjs/cldr.min.js" asp-append-version="true"></script>
-        <script src="~/lib/cldrjs/cldr/event.min.js" asp-append-version="true"></script>
-        <script src="~/lib/globalize/globalize.min.js" asp-append-version="true"></script>
-        <script src="~/lib/globalize/globalize/number.min.js" asp-append-version="true"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-tW5LzEC7QjhG0CiAvxlseMTs2qJS7u3DRPauDjFJ3zo=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.ru.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-iGDUwn2IPSzlnLlVeCe3M4ZIxQxjUoDYdEO6oBZw/Go=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-Y1rRlwTzT5K5hhCBfAFWABD4cU13QGuRN6P5apfWzVs=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.5.1/cldr.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-SXZjDQTlUyC6FTzEh5SbWVRnB/6DFG14/XFKGmK0Ois=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cldrjs/0.5.1/cldr/event.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-Cx64vJFoadWck/T8CvIAbqsInHw+iq1+m2QvBvSdYas=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.4.0/globalize.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-UUIfsJOHBgTnnullNHrv4N2udcP+qXa2cH79Za2Lgew=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/globalize/1.4.0/globalize/number.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-aiMKyl/BQnswj3+gasltyjk7aubJmbtM3mbcULxTv7k=">
+        </script>
     </environment>
-    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
