@@ -7,7 +7,7 @@ namespace Tti.Estate.Web.Models
         public long PropertyId { get; set; }
 
         [Display(Name = "Status")]
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "StatusRequired")]
         public PropertyStatusModel? Status { get; set; }
 
         [Display(Name = "Comment")]

@@ -19,5 +19,7 @@ namespace Tti.Estate.Business.Services
             long? code = null);
         Task UpdateAsync(Property property);
         Task<OperationResult> DeleteAsync(long id);
+        Task<OperationResult> ProcessAsync(long id, PropertyStatus status, string comment = null);
+        Task<OperationResult> ActivateAsync(long id);
     }
 }

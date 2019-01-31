@@ -120,10 +120,7 @@
   <data name="Comment" xml:space="preserve">
     <value>Комментарий</value>
   </data>
-  <data name="IsRealized" xml:space="preserve">
-    <value>Реализован</value>
-  </data>
-  <data name="IsReserved" xml:space="preserve">
-    <value>Зарезервирован</value>
+  <data name="StatusRequired" xml:space="preserve">
+    <value>Укажите причину реализации</value>
   </data>
 </root>

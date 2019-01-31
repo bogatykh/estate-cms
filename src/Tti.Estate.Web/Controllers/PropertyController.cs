@@ -92,7 +92,7 @@ namespace Tti.Estate.Web.Controllers
 
                 await _propertyService.CreateAsync(property);
 
-                return RedirectToAction("Details", new { id = property.Id });
+                return RedirectToAction(nameof(Details), new { id = property.Id });
             }
 
             await PrepareModelAsync(model);
@@ -153,7 +153,7 @@ namespace Tti.Estate.Web.Controllers
 
                 await _propertyService.UpdateAsync(property);
 
-                return RedirectToAction("Details", new { id = property.Id });
+                return RedirectToAction(nameof(Details), new { id = property.Id });
             }
 
             await PrepareModelAsync(model);
@@ -171,7 +171,7 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Details", new { id });
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         [HttpGet]
@@ -197,6 +197,48 @@ namespace Tti.Estate.Web.Controllers
             {
                 return View(model);
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Process(PropertyProcessModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _propertyService.ProcessAsync(
+                    id: model.PropertyId,
+                    status: (PropertyStatus)model.Status,
+                    comment: model.Comment
+                );
+
+                if (result == Business.Dto.OperationResult.NotFound)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction(nameof(Details), new { id = model.PropertyId });
+            }
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Activate(long id)
+        {
+            var result = await _propertyService.ActivateAsync(id);
+
+            if (result == Business.Dto.OperationResult.NotFound)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         private async Task PrepareModelAsync(PropertyModel model)

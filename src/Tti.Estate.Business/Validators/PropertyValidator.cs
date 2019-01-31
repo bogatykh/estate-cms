@@ -28,6 +28,10 @@ namespace Tti.Estate.Business.Validators
                     break;
                 case PropertyAction.Delete:
                     break;
+                case PropertyAction.Process:
+                    break;
+                case PropertyAction.Activate:
+                    break;
                 default:
                     throw new NotImplementedException();
             }

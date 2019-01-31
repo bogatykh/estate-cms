@@ -6,7 +6,7 @@
         Get,
         Update,
         Delete,
-        Archive,
+        Process,
         Activate
     }
 }
