@@ -3,7 +3,9 @@
     public enum PropertyStatus
     {
         Active = 0,
-        Archived,
+        Reserved,
+        Realized,
+        Transaction,
         Deleted
     }
 }

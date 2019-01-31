@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Active" xml:space="preserve">
-    <value>Активный</value>
-  </data>
-  <data name="Deleted" xml:space="preserve">
-    <value>Удалён</value>
+  <data name="Comment" xml:space="preserve">
+    <value>Комментарий</value>
   </data>
   <data name="Realized" xml:space="preserve">
     <value>Реализован</value>
   </data>
   <data name="Reserved" xml:space="preserve">
-    <value>Резервация</value>
+    <value>Зарезервирован</value>
   </data>
-  <data name="Transaction" xml:space="preserve">
-    <value>Сделка</value>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Причина</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Реализация объекта</value>
   </data>
 </root>

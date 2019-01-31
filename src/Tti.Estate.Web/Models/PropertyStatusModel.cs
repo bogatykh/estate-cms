@@ -14,6 +14,9 @@ namespace Tti.Estate.Web.Models
         Realized,
 
         [Display(Name = "Transaction")]
-        Transaction
+        Transaction,
+
+        [Display(Name = "Deleted")]
+        Deleted
     }
 }

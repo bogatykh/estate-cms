@@ -171,7 +171,32 @@ namespace Tti.Estate.Web.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Process(long id)
+        {
+            var property = await _propertyService.GetAsync(id);
+
+            if (property == null)
+            {
+                return NotFound();
+            }
+
+            var model = new PropertyProcessModel()
+            {
+                PropertyId = id
+            };
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         private async Task PrepareModelAsync(PropertyModel model)
