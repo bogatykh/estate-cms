@@ -43,7 +43,7 @@ namespace Tti.Estate.Business.Services
 
         public async Task<IEnumerable<Photo>> ListAsync(long propertyId)
         {
-            var spec = new PhotoSpecification(propertyId);
+            var spec = new PhotoFilterSpecification(propertyId);
 
             return await _photoRepository.ListAsync(spec);
         }
