@@ -114,6 +114,22 @@ namespace Tti.Estate.Business.Services
             return OperationResult.Success;
         }
 
+        public async Task<OperationResult> ChangePasswordAsync(long id, string password)
+        {
+            var user = await _userRepository.GetAsync(id);
+
+            if (user == null)
+            {
+                return OperationResult.NotFound;
+            }
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, password);
+
+            await _userRepository.UpdateAsync(user);
+
+            return OperationResult.Success;
+        }
+
         public async Task<User> ValidateAsync(string userName, string password)
         {
             var user = await _userRepository.SingleAsync(new UserFilterSpecification(onlyActive: true, userName: userName));

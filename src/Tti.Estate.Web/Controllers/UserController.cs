@@ -50,7 +50,7 @@ namespace Tti.Estate.Web.Controllers
                 {
                     await _userService.CreateAsync(user, string.Empty);
 
-                    return RedirectToAction("Details", new { id = user.Id });
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
                 }
                 catch (DomainException e)
                 {
@@ -100,7 +100,7 @@ namespace Tti.Estate.Web.Controllers
 
                 await _userService.UpdateAsync(user);
 
-                return RedirectToAction("Details", new { id = user.Id });
+                return RedirectToAction(nameof(Details), new { id = user.Id });
             }
 
             return View(model);
@@ -118,7 +118,7 @@ namespace Tti.Estate.Web.Controllers
                     return NotFound();
                 }
 
-                return RedirectToAction("Details", new { id });
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch (DomainException e)
             {
@@ -134,7 +134,7 @@ namespace Tti.Estate.Web.Controllers
 
             var model = _mapper.Map<UserDetailsModel>(user);
 
-            return View("Details", model);
+            return View(nameof(Details), model);
         }
 
         [HttpPost]
@@ -149,7 +149,7 @@ namespace Tti.Estate.Web.Controllers
                     return NotFound();
                 }
 
-                return RedirectToAction("Details", new { id });
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch (DomainException e)
             {
@@ -165,7 +165,7 @@ namespace Tti.Estate.Web.Controllers
 
             var model = _mapper.Map<UserDetailsModel>(user);
 
-            return View("Details", model);
+            return View(nameof(Details), model);
         }
 
         [HttpPost]
@@ -180,7 +180,7 @@ namespace Tti.Estate.Web.Controllers
                     return NotFound();
                 }
 
-                return RedirectToAction("Details", new { id });
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch (DomainException e)
             {
@@ -196,7 +196,57 @@ namespace Tti.Estate.Web.Controllers
 
             var model = _mapper.Map<UserDetailsModel>(user);
 
-            return View("Details", model);
+            return View(nameof(Details), model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(long id)
+        {
+            var user = await _userService.GetAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ChangePasswordModel()
+            {
+                UserId = id
+            };
+            
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.ChangePasswordAsync(model.UserId, model.Password);
+
+                if (result == Business.Dto.OperationResult.NotFound)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction(nameof(Details), new { id = model.UserId });
+            }
+            
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView(model);
+            }
+            else
+            {
+                return View(model);
+            }
         }
     }
 }

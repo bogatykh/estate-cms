@@ -10,6 +10,9 @@
         <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
             @Localizer["Edit"]
         </a>
+        <a asp-action="ChangePassword" asp-route-id="@Model.Id" data-trigger="ChangePassword" class="btn btn-outline-secondary">
+            @Localizer["ChangePassword"]
+        </a>
     }
     @if (Model.Status == UserStatusModel.Active)
     {
@@ -31,6 +34,30 @@
         </button>
     }
 </form>
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 @section Badge {
     <partial name="_StatusPartial" for="Status" />
+}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(function () {
+            var changePasswordModalModal$ = $('#changePasswordModal');
+
+            $('[data-trigger=ChangePassword]').click(function () {
+                var url = $(this).attr('href');
+                $.get(url, function (data) {
+                    $content = $('.modal-content', changePasswordModalModal$).html(data);
+                    $.validator.unobtrusive.parse($content);
+                    changePasswordModalModal$.modal('show');
+                });
+                return false;
+            });
+        });
+    </script>
 }

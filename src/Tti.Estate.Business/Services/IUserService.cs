@@ -13,6 +13,7 @@ namespace Tti.Estate.Business.Services
         Task<OperationResult> DeleteAsync(long id);
         Task<OperationResult> BlockAsync(long id);
         Task<OperationResult> UnblockAsync(long id);
+        Task<OperationResult> ChangePasswordAsync(long id, string password);
         Task<User> ValidateAsync(string userName, string password);
     }
 }
