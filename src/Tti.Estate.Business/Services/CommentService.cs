@@ -11,12 +11,14 @@ namespace Tti.Estate.Business.Services
     internal class CommentService : ICommentService
     {
         private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ICommentValidator _commentValidator;
         private readonly IIdentityService _identityService;
 
-        public CommentService(ICommentRepository commentRepository, ICommentValidator commentValidator, IIdentityService identityService)
+        public CommentService(ICommentRepository commentRepository, IUnitOfWork unitOfWork, ICommentValidator commentValidator, IIdentityService identityService)
         {
             _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _commentValidator = commentValidator;
             _identityService = identityService;
         }
@@ -27,7 +29,9 @@ namespace Tti.Estate.Business.Services
 
             comment.UserId = _identityService.GetUserId();
 
-            await _commentRepository.CreateAsync(comment);
+            _commentRepository.Create(comment);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<Comment>> ListAsync(long? customerId = null, long? propertyId = null, long? transactionId = null)

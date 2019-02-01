@@ -11,11 +11,15 @@ namespace Tti.Estate.Business.Services
     internal class TransactionService : ITransactionService
     {
         private readonly ITransactionRepository _transactionRepository;
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITransactionValidator _transactionValidator;
 
-        public TransactionService(ITransactionRepository transactionRepository, ITransactionValidator transactionValidator)
+        public TransactionService(ITransactionRepository transactionRepository, IPropertyRepository propertyRepository, IUnitOfWork unitOfWork, ITransactionValidator transactionValidator)
         {
             _transactionRepository = transactionRepository;
+            _propertyRepository = propertyRepository;
+            _unitOfWork = unitOfWork;
             _transactionValidator = transactionValidator;
         }
 
@@ -23,7 +27,9 @@ namespace Tti.Estate.Business.Services
         {
             await _transactionValidator.ValidateAsync(transaction, TransactionAction.Create);
 
-            await _transactionRepository.CreateAsync(transaction);
+            _transactionRepository.Create(transaction);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<Transaction> GetAsync(long id)
@@ -67,7 +73,9 @@ namespace Tti.Estate.Business.Services
 
             transaction.Modified = DateTime.UtcNow;
 
-            await _transactionRepository.UpdateAsync(transaction);
+            _transactionRepository.Update(transaction);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<OperationResult> DeleteAsync(long id)
@@ -81,7 +89,9 @@ namespace Tti.Estate.Business.Services
 
             await _transactionValidator.ValidateAsync(transaction, TransactionAction.Delete);
 
-            await _transactionRepository.DeleteAsync(transaction);
+            _transactionRepository.Delete(transaction);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -99,7 +109,9 @@ namespace Tti.Estate.Business.Services
             
             transaction.Status = TransactionStatus.Approving;
 
-            await _transactionRepository.UpdateAsync(transaction);
+            _transactionRepository.Update(transaction);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -117,7 +129,15 @@ namespace Tti.Estate.Business.Services
 
             transaction.Status = TransactionStatus.Approved;
 
-            await _transactionRepository.UpdateAsync(transaction);
+            _transactionRepository.Update(transaction);
+
+            var property = await _propertyRepository.GetAsync(transaction.PropertyId);
+
+            property.Status = PropertyStatus.Transaction;
+
+            _propertyRepository.Update(property);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -135,7 +155,9 @@ namespace Tti.Estate.Business.Services
 
             transaction.Status = TransactionStatus.Draft;
 
-            await _transactionRepository.UpdateAsync(transaction);
+            _transactionRepository.Update(transaction);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }

@@ -3,6 +3,7 @@
     public enum OperationResult
     {
         Success = 0,
-        NotFound
+        NotFound,
+        BadRequest
     }
 }

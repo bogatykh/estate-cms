@@ -11,11 +11,13 @@ namespace Tti.Estate.Business.Services
     internal class CustomerService : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ICustomerValidator _customerValidator;
 
-        public CustomerService(ICustomerRepository customerRepository, ICustomerValidator customerValidator)
+        public CustomerService(ICustomerRepository customerRepository, IUnitOfWork unitOfWork, ICustomerValidator customerValidator)
         {
             _customerRepository = customerRepository;
+            _unitOfWork = unitOfWork;
             _customerValidator = customerValidator;
         }
 
@@ -23,7 +25,9 @@ namespace Tti.Estate.Business.Services
         {
             await _customerValidator.ValidateAsync(customer, CustomerAction.Create);
 
-            await _customerRepository.CreateAsync(customer);
+            _customerRepository.Create(customer);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<Customer> GetAsync(long id)
@@ -58,7 +62,9 @@ namespace Tti.Estate.Business.Services
 
             customer.Modified = DateTime.UtcNow;
 
-            await _customerRepository.UpdateAsync(customer);
+            _customerRepository.Update(customer);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<OperationResult> DeleteAsync(long id)
@@ -72,7 +78,9 @@ namespace Tti.Estate.Business.Services
 
             await _customerValidator.ValidateAsync(customer, CustomerAction.Delete);
 
-            await _customerRepository.DeleteAsync(customer);
+            _customerRepository.Delete(customer);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }

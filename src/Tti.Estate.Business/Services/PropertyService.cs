@@ -13,13 +13,15 @@ namespace Tti.Estate.Business.Services
     {
         private readonly IPropertyRepository _propertyRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IPropertyValidator _propertyValidator;
         private readonly IIdentityService _identityService;
 
-        public PropertyService(IPropertyRepository propertyRepository, ICommentRepository commentRepository, IPropertyValidator propertyValidator, IIdentityService identityService)
+        public PropertyService(IPropertyRepository propertyRepository, ICommentRepository commentRepository, IUnitOfWork unitOfWork, IPropertyValidator propertyValidator, IIdentityService identityService)
         {
             _propertyRepository = propertyRepository;
             _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _propertyValidator = propertyValidator;
             _identityService = identityService;
         }
@@ -33,7 +35,9 @@ namespace Tti.Estate.Business.Services
 
             await _propertyValidator.ValidateAsync(property, PropertyAction.Create);
 
-            await _propertyRepository.CreateAsync(property);
+            _propertyRepository.Create(property);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<Property> GetAsync(long id)
@@ -91,7 +95,9 @@ namespace Tti.Estate.Business.Services
 
             property.Modified = DateTime.UtcNow;
 
-            await _propertyRepository.UpdateAsync(property);
+            _propertyRepository.Update(property);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<OperationResult> DeleteAsync(long id)
@@ -107,13 +113,20 @@ namespace Tti.Estate.Business.Services
 
             property.Status = PropertyStatus.Deleted;
 
-            await _propertyRepository.UpdateAsync(property);
+            _propertyRepository.Update(property);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
 
         public async Task<OperationResult> ProcessAsync(long id, PropertyStatus status, string comment = null)
         {
+            if (status != PropertyStatus.Realized && status != PropertyStatus.Reserved)
+            {
+                return OperationResult.BadRequest;
+            }
+
             var property = await _propertyRepository.GetAsync(id);
 
             if (property == null)
@@ -125,19 +138,20 @@ namespace Tti.Estate.Business.Services
 
             property.Status = status;
 
-            await _propertyRepository.UpdateAsync(property);
-
-            // TODO: Use Unit of Work
+            _propertyRepository.Update(property);
+            
             if (!string.IsNullOrEmpty(comment))
             {
                 // TODO: May be call service?
-                await _commentRepository.CreateAsync(new Comment()
+                _commentRepository.Create(new Comment()
                 {
                     UserId = _identityService.GetUserId(),
                     PropertyId = id,
                     Text = comment
                 });
             }
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -155,7 +169,9 @@ namespace Tti.Estate.Business.Services
 
             property.Status = PropertyStatus.Active;
 
-            await _propertyRepository.UpdateAsync(property);
+            _propertyRepository.Update(property);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }

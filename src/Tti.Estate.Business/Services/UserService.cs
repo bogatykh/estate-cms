@@ -12,12 +12,14 @@ namespace Tti.Estate.Business.Services
     internal class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserValidator _userValidator;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public UserService(IUserRepository userRepository, IUserValidator userValidator, IPasswordHasher<User> passwordHasher)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IUserValidator userValidator, IPasswordHasher<User> passwordHasher)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _userValidator = userValidator;
             _passwordHasher = passwordHasher;
         }
@@ -49,7 +51,9 @@ namespace Tti.Estate.Business.Services
 
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
 
-            await _userRepository.CreateAsync(user);
+            _userRepository.Create(user);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task UpdateAsync(User user)
@@ -59,7 +63,9 @@ namespace Tti.Estate.Business.Services
                 throw new ArgumentNullException(nameof(user));
             }
 
-            await _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<OperationResult> DeleteAsync(long id)
@@ -75,7 +81,9 @@ namespace Tti.Estate.Business.Services
 
             user.Status = UserStatus.Deleted;
 
-            await _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -93,7 +101,9 @@ namespace Tti.Estate.Business.Services
 
             user.Status = UserStatus.Blocked;
 
-            await _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -109,7 +119,9 @@ namespace Tti.Estate.Business.Services
 
             user.Status = UserStatus.Active;
 
-            await _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }
@@ -125,7 +137,9 @@ namespace Tti.Estate.Business.Services
 
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
 
-            await _userRepository.UpdateAsync(user);
+            _userRepository.Update(user);
+
+            await _unitOfWork.SaveAsync();
 
             return OperationResult.Success;
         }

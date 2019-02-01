@@ -18,10 +18,9 @@ namespace Tti.Estate.Data.Repositories
             DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task CreateAsync(TEntity entity)
+        public void Create(TEntity entity)
         {
             DbContext.Set<TEntity>().Add(entity);
-            await DbContext.SaveChangesAsync();
         }
 
         public async Task<TEntity> GetAsync(long id)
@@ -39,16 +38,14 @@ namespace Tti.Estate.Data.Repositories
             return await ApplySpecification(specification).SingleOrDefaultAsync();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public void Update(TEntity entity)
         {
             DbContext.Set<TEntity>().Update(entity);
-            await DbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public void Delete(TEntity entity)
         {
             DbContext.Set<TEntity>().Remove(entity);
-            await DbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<TEntity>> ListAsync()

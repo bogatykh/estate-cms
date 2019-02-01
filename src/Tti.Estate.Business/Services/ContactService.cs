@@ -10,11 +10,13 @@ namespace Tti.Estate.Business.Services
     internal class ContactService : IContactService
     {
         private readonly IContactRepository _contactRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IContactValidator _contactValidator;
 
-        public ContactService(IContactRepository contactRepository, IContactValidator contactValidator)
+        public ContactService(IContactRepository contactRepository, IUnitOfWork unitOfWork, IContactValidator contactValidator)
         {
             _contactRepository = contactRepository;
+            _unitOfWork = unitOfWork;
             _contactValidator = contactValidator;
         }
 
@@ -22,7 +24,9 @@ namespace Tti.Estate.Business.Services
         {
             await _contactValidator.ValidateAsync(contact, ContactAction.Create);
 
-            await _contactRepository.CreateAsync(contact);
+            _contactRepository.Create(contact);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<Contact> GetAsync(long id)
@@ -42,12 +46,16 @@ namespace Tti.Estate.Business.Services
 
         public async Task UpdateAsync(Contact contact)
         {
-            await _contactRepository.UpdateAsync(contact);
+            _contactRepository.Update(contact);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task DeleteAsync(Contact contact)
         {
-            await _contactRepository.DeleteAsync(contact);
+            _contactRepository.Delete(contact);
+
+            await _unitOfWork.SaveAsync();
         }
     }
 }

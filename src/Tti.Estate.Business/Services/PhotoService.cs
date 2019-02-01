@@ -14,14 +14,16 @@ namespace Tti.Estate.Business.Services
     {
         private readonly IImageService _imageService;
         private readonly IPhotoRepository _photoRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IPhotoBlobRepository _photoBlobRepository;
 
         private const int PhotoResizePixels = 1024;
         private const int PhotoResizeQuality = 90;
 
-        public PhotoService(IPhotoRepository photoRepository, IPhotoBlobRepository photoBlobRepository, IImageService imageService)
+        public PhotoService(IPhotoRepository photoRepository, IUnitOfWork unitOfWork, IPhotoBlobRepository photoBlobRepository, IImageService imageService)
         {
             _photoRepository = photoRepository;
+            _unitOfWork = unitOfWork;
             _photoBlobRepository = photoBlobRepository;
             _imageService = imageService;
         }
@@ -38,7 +40,9 @@ namespace Tti.Estate.Business.Services
                 _imageService.Resize(stream, outputStream, PhotoResizePixels, PhotoResizeQuality);
             }
 
-            await _photoRepository.CreateAsync(photo);
+            _photoRepository.Create(photo);
+
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<Photo>> ListAsync(long propertyId)
@@ -57,9 +61,11 @@ namespace Tti.Estate.Business.Services
         {
             var photo = await _photoRepository.GetAsync(id);
 
-            await _photoRepository.DeleteAsync(photo);
+            _photoRepository.Delete(photo);
 
             await _photoBlobRepository.DeleteAsync(GetBlobName(photo));
+
+            await _unitOfWork.SaveAsync();
         }
 
         private string GetBlobName(Photo photo)

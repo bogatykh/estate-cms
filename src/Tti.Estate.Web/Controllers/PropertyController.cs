@@ -214,6 +214,10 @@ namespace Tti.Estate.Web.Controllers
                 {
                     return NotFound();
                 }
+                else if (result == Business.Dto.OperationResult.BadRequest)
+                {
+                    return BadRequest();
+                }
 
                 return RedirectToAction(nameof(Details), new { id = model.PropertyId });
             }

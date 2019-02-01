@@ -23,6 +23,8 @@ namespace Tti.Estate.Data
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             return services;
         }
     }
