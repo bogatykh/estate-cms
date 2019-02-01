@@ -13,6 +13,9 @@ namespace Tti.Estate.Data
                 throw new ArgumentNullException(nameof(services));
             }
 
+            services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddScoped(typeof(IReadRepository<>), typeof(DbRepository<>));
+
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();

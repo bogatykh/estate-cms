@@ -20,7 +20,7 @@ namespace Tti.Estate.Web.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICountyRepository _countyRepository;
-        private readonly ICityRepository _cityRepository;
+        private readonly IReadRepository<City> _cityRepository;
         private readonly IMapper _mapper;
 
         public PropertyController(IPropertyService propertyService,
@@ -28,7 +28,7 @@ namespace Tti.Estate.Web.Controllers
             ICommentRepository commentRepository,
             IUserRepository userRepository,
             ICountyRepository countyRepository,
-            ICityRepository cityRepository,
+            IReadRepository<City> cityRepository,
             IMapper mapper)
         {
             _propertyService = propertyService ?? throw new ArgumentNullException(nameof(propertyService));
