@@ -48,6 +48,8 @@ namespace Tti.Estate.Web.Controllers
                 propertyType: (PropertyType?)criteria.PropertyType,
                 status: (PropertyStatus?)criteria.Status,
                 transactionType: (TransactionType?)criteria.TransactionType,
+                countyId: criteria.CountyId,
+                cityId: criteria.CityId,
                 priceFrom: criteria.PriceFrom,
                 priceTo: criteria.PriceTo,
                 telephone: criteria.Telephone,
@@ -56,9 +58,11 @@ namespace Tti.Estate.Web.Controllers
 
             var model = new PropertyListModel()
             {
-                Criteria = (criteria.UserId.HasValue || criteria.PropertyType.HasValue || criteria.Status.HasValue || criteria.TransactionType.HasValue || criteria.PriceFrom.HasValue || criteria.PriceTo.HasValue || !string.IsNullOrEmpty(criteria.Telephone) || criteria.Code.HasValue) ? criteria : null,
+                Criteria = (criteria.UserId.HasValue || criteria.PropertyType.HasValue || criteria.Status.HasValue || criteria.TransactionType.HasValue || criteria.CountyId.HasValue || criteria.CityId.HasValue || criteria.PriceFrom.HasValue || criteria.PriceTo.HasValue || !string.IsNullOrEmpty(criteria.Telephone) || criteria.Code.HasValue) ? criteria : null,
                 Properties = _mapper.Map<PagedResultModel<PropertyListItemModel>>(properties),
-                Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true)))
+                Users = _mapper.Map<IEnumerable<SelectListItem>>(await _userRepository.ListAsync(new UserFilterSpecification(onlyActive: true))),
+                Counties = _mapper.Map<IEnumerable<SelectListItem>>(await _countyRepository.ListAsync(new CountyFilterSpecification())),
+                Cities = criteria.CountyId.HasValue ? _mapper.Map<IEnumerable<SelectListItem>>(await _cityRepository.ListAsync(new CityFilterSpecification(criteria.CountyId.Value))) : null
             };
 
             return View(model);

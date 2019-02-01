@@ -9,6 +9,16 @@ namespace Tti.Estate.Web.Models
 
         public IEnumerable<SelectListItem> Users { get; set; }
 
+        /// <summary>
+        /// County collection for drop-down
+        /// </summary>
+        public IEnumerable<SelectListItem> Counties { get; set; }
+
+        /// <summary>
+        /// City collection for drop-down
+        /// </summary>
+        public IEnumerable<SelectListItem> Cities { get; set; }
+
         public PagedResultModel<PropertyListItemModel> Properties { get; set; }
     }
 }

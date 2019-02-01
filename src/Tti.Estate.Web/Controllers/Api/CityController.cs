@@ -7,7 +7,7 @@ using Tti.Estate.Data.Repositories;
 using Tti.Estate.Data.Specifications;
 using Tti.Estate.Web.Models;
 
-namespace Tti.Estate.Web.Controllers
+namespace Tti.Estate.Web.Controllers.Api
 {
     [Route("api/[controller]", Name = "CityApi")]
     [ApiController]

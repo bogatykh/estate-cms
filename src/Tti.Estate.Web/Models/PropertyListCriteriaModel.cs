@@ -15,7 +15,19 @@ namespace Tti.Estate.Web.Models
 
         [Display(Name = "TransactionType")]
         public TransactionTypeModel? TransactionType { get; set; }
-        
+
+        /// <summary>
+        /// County
+        /// </summary>
+        [Display(Name = "County")]
+        public long? CountyId { get; set; }
+
+        /// <summary>
+        /// City
+        /// </summary>
+        [Display(Name = "City")]
+        public long? CityId { get; set; }
+
         [Display(Name = "PriceFrom")]
         public decimal? PriceFrom { get; set; }
         

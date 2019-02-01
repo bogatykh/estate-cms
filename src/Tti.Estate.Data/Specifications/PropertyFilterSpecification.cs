@@ -10,6 +10,8 @@ namespace Tti.Estate.Data.Specifications
             PropertyType? propertyType = null,
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
+            long? countyId = null,
+            long? cityId = null,
             decimal? priceFrom = null,
             decimal? priceTo = null,
             string telephone = null)
@@ -18,6 +20,8 @@ namespace Tti.Estate.Data.Specifications
                 (!propertyType.HasValue || x.PropertyType == propertyType) &&
                 (!status.HasValue || x.Status == status) &&
                 (!transactionType.HasValue || x.TransactionType == transactionType) &&
+                (!countyId.HasValue || x.CountyId == countyId) &&
+                (!cityId.HasValue || x.CityId == cityId) &&
                 (!priceFrom.HasValue || x.Price >= priceFrom) &&
                 (!priceTo.HasValue || x.Price <= priceTo) &&
                 (telephone == null || x.Contacts.Any(c => c.Telephone == telephone)))

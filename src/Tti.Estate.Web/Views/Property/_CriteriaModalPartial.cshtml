@@ -38,12 +38,21 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label asp-for="Criteria.Status" class="col-sm-3 col-form-label"></label>
+                        <label asp-for="Criteria.CountyId" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <select asp-for="Criteria.Status" asp-items="@Html.GetEnumSelectList<PropertyStatusModel>()" class="form-control">
-                                <option></option>
+                            <select asp-for="Criteria.CountyId" asp-items="Model.Counties" class="form-control">
+                                <option value=""></option>
                             </select>
-                            <span asp-validation-for="Criteria.Status"></span>
+                            <span asp-validation-for="Criteria.CountyId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Criteria.CityId" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="Criteria.CityId" asp-items="Model.Cities" class="form-control">
+                                <option value=""></option>
+                            </select>
+                            <span asp-validation-for="Criteria.CityId"></span>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -58,6 +67,15 @@
                             </div>
                             <span asp-validation-for="Criteria.PriceFrom"></span>
                             <span asp-validation-for="Criteria.PriceTo"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Criteria.Status" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="Criteria.Status" asp-items="@Html.GetEnumSelectList<PropertyStatusModel>()" class="form-control">
+                                <option></option>
+                            </select>
+                            <span asp-validation-for="Criteria.Status"></span>
                         </div>
                     </div>
                     <div class="form-group row">

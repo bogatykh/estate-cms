@@ -13,6 +13,8 @@ namespace Tti.Estate.Business.Services
             PropertyType? propertyType = null,
             PropertyStatus? status = null,
             TransactionType? transactionType = null,
+            long? countyId = null,
+            long? cityId = null,
             decimal? priceFrom = null,
             decimal? priceTo = null,
             string telephone = null,
