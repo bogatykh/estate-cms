@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Tti.Estate.Web.Models;
 
 namespace Tti.Estate.Web.Controllers
 {
+    [Authorize(Policy = PolicyConstants.UserManagement)]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

@@ -77,6 +77,8 @@ namespace Tti.Estate.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
 
+            services.AddAuthorization(ConfigureAuthorization);
+
             services.AddAutoMapper();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -141,6 +143,15 @@ namespace Tti.Estate.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+
+        private void ConfigureAuthorization(AuthorizationOptions options)
+        {
+            options.AddPolicy(PolicyConstants.UserManagement, policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireRole(UserRole.Manager.ToString());
             });
         }
     }
