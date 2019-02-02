@@ -1,4 +1,10 @@
-﻿@using Microsoft.AspNetCore.Localization
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Extensions
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
 }
@@ -87,7 +93,22 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - TTI
+            <div class="row">
+                <div class="col-sm-6">
+                    &copy; 2019 - Dmitry Bogatykh
+                </div>
+                <div class="col-sm-6 text-right">
+                    @foreach (var culture in LocOptions.Value.SupportedUICultures)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="SetCulture"
+                           asp-route-culture="@culture.TwoLetterISOLanguageName"
+                           asp-route-returnUrl="@(Context.Request.GetEncodedPathAndQuery())"
+                           title="@culture.NativeName"
+                           class="text-uppercase badge @(requestCulture.RequestCulture.UICulture == culture ? "badge-info" : "badge-dark")">@culture.TwoLetterISOLanguageName</a>
+                    }
+                </div>
+            </div>
         </div>
     </footer>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Tti.Estate.Data;
@@ -16,7 +17,24 @@ namespace Tti.Estate.Web.Controllers
 
         public IActionResult Index()
         {
+
             return View();
+        }
+
+        public IActionResult SetCulture(string culture, string returnUrl)
+        {
+            string cookieVal = CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture));
+
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName, cookieVal);
+
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [AllowAnonymous]
