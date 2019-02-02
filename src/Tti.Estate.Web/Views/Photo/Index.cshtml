@@ -27,7 +27,7 @@
                 <button asp-action="Delete"
                         asp-route-propertyId="@Model.PropertyId"
                         asp-route-id="@photo.Id"
-                        class="btn btn-sm btn-danger" title="@Localizer["Delete"]">
+                        class="btn btn-sm btn-danger" title="@Localizer["Delete"]" data-confirm="@Localizer["ConfirmDelete"]">
                     <i class="fa fa-times"></i>
                 </button>
             </form>

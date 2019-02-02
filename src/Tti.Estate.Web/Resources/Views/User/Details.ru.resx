@@ -123,6 +123,15 @@
   <data name="ChangePassword" xml:space="preserve">
     <value>Сменить пароль</value>
   </data>
+  <data name="ConfirmBlock" xml:space="preserve">
+    <value>Вы действительно хотите заблокировать пользователя?</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Вы действительно хотите удалить пользователя?</value>
+  </data>
+  <data name="ConfirmUnblock" xml:space="preserve">
+    <value>Вы действительно хотите разблокировать пользователя?</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>

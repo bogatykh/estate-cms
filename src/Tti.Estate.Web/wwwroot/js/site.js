@@ -1,4 +1,12 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿$(function () {
+    $(document).on('click', 'button[data-confirm]', function () {
+        var that$ = $(this);
+        bootbox.confirm(that$.data('confirm'), function (result) {
+            if (result) {
+                that$.removeAttr('data-confirm');
+                that$.click();
+            }
+        });
+        return false;
+    });
+});

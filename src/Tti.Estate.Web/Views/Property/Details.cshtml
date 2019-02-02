@@ -22,17 +22,17 @@
         }
         else
         {
-            <button asp-action="Activate" asp-route-id="@Model.Id" class="btn btn-outline-primary">
+            <button asp-action="Activate" asp-route-id="@Model.Id" class="btn btn-outline-primary" data-confirm="@Localizer["ConfirmActivate"]">
                 @Localizer["Activate"]
             </button>
         }
-        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
+        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger" data-confirm="@Localizer["ConfirmDelete"]">
             <i class="fa fa-trash-o"></i>
             @Localizer["Delete"]
         </button>
     </form>
 }
-<div class="modal fade" id="processModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div  class="modal fade" id="processModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         </div>

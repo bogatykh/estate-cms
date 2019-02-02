@@ -9,7 +9,7 @@
     <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-secondary">
         @Localizer["Edit"]
     </a>
-    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
+    <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger" data-confirm="@Localizer["ConfirmDelete"]">
         <i class="fa fa-trash-o"></i>
         @Localizer["Delete"]
     </button>

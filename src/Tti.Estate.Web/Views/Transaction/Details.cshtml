@@ -16,7 +16,7 @@
     }
     else if (Model.Status == TransactionStatusModel.Approving)
     {
-        <button asp-action="Approve" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-success">
+        <button asp-action="Approve" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-success" data-confirm="@Localizer["ConfirmApprove"]">
             @Localizer["Approve"]
         </button>
         <button asp-action="Reject" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-warning">
@@ -25,7 +25,7 @@
     }
     @if (Model.Status != TransactionStatusModel.Approved)
     {
-        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
+        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger" data-confirm="@Localizer["ConfirmDelete"]">
             <i class="fa fa-trash-o"></i>
             @Localizer["Delete"]
         </button>

@@ -96,6 +96,7 @@
         <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
         <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
         <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.ru.min.js"></script>
+        <script src="~/lib/bootbox.js/bootbox.js"></script>
         <script src="~/lib/ekko-lightbox/ekko-lightbox.js"></script>
         <script src="~/lib/cldrjs/cldr.js"></script>
         <script src="~/lib/cldrjs/cldr/event.js"></script>
@@ -119,6 +120,10 @@
                 crossorigin="anonymous"
                 integrity="sha256-iGDUwn2IPSzlnLlVeCe3M4ZIxQxjUoDYdEO6oBZw/Go=">
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"
+                crossorigin="anonymous"
+                integrity="sha256-4F7e4JsAJyLUdpP7Q8Sah866jCOhv72zU5E8lIRER4w=">
+        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"
                 crossorigin="anonymous"
                 integrity="sha256-Y1rRlwTzT5K5hhCBfAFWABD4cU13QGuRN6P5apfWzVs=">
@@ -140,13 +145,16 @@
                 integrity="sha256-aiMKyl/BQnswj3+gasltyjk7aubJmbtM3mbcULxTv7k=">
         </script>
     </environment>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
         $.extend($.fn.datepicker.defaults, {
             language: '@requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName'
         });
-
+        bootbox.setDefaults({
+            locale: '@requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName'
+        });
         $.when(
             $.get('@Url.Content("~/cldr-data/supplemental/likelySubtags.json")'),
             $.get('@Url.Content($"~/cldr-data/main/{requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName}/numbers.json")')

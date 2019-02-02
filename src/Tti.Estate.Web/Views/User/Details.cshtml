@@ -16,19 +16,19 @@
     }
     @if (Model.Status == UserStatusModel.Active)
     {
-        <button asp-action="Block" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
+        <button asp-action="Block" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary" data-confirm="@Localizer["ConfirmBlock"]">
             @Localizer["Block"]
         </button>
     }
     else if (Model.Status == UserStatusModel.Blocked)
     {
-        <button asp-action="Unblock" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary">
+        <button asp-action="Unblock" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-secondary" data-confirm="@Localizer["ConfirmUnblock"]">
             @Localizer["Unblock"]
         </button>
     }
     @if (Model.Status != UserStatusModel.Deleted)
     {
-        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger">
+        <button asp-action="Delete" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-danger" data-confirm="@Localizer["ConfirmDelete"]">
             <i class="fa fa-trash-o"></i>
             @Localizer["Delete"]
         </button>

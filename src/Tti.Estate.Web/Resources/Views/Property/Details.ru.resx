@@ -120,6 +120,12 @@
   <data name="Activate" xml:space="preserve">
     <value>Активировать</value>
   </data>
+  <data name="ConfirmActivate" xml:space="preserve">
+    <value>Вы действительно хотите сделать объект активным?</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Вы действительно хотите удалить объект?</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>

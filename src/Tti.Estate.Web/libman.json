@@ -27,6 +27,10 @@
       "destination": "wwwroot/lib/bootstrap-datepicker/"
     },
     {
+      "library": "bootbox.js@4.4.0",
+      "destination": "wwwroot/lib/bootbox.js/"
+    },
+    {
       "library": "globalize@1.4.0",
       "destination": "wwwroot/lib/globalize/"
     },
