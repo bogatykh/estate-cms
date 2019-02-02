@@ -22,7 +22,7 @@ namespace Tti.Estate.Web.Models
         {
             get
             {
-                return Amount * (CompanyPercent / 100);
+                return Math.Round(Amount * CompanyPercent * 0.01m, 2);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Tti.Estate.Web.Models
         {
             get
             {
-                return Amount * (UserPercent / 100);
+                return Math.Round(Amount * UserPercent * 0.01m, 2);
             }
         }
     }
