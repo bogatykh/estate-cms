@@ -52,7 +52,7 @@ namespace Tti.Estate.Data.Entities
 
         public string Description { get; set; }
 
-        public DateTime Created { get; private set; }
+        public DateTime Created { get; internal set; }
 
         public DateTime Modified { get; set; }
 

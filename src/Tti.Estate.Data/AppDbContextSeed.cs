@@ -25,6 +25,8 @@ namespace Tti.Estate.Data
                 var transactionType = random.GetEnum<TransactionType>();
                 var county = await random.GetEntityAsync(dbContext.Counties);
 
+                DateTime created = DateTime.UtcNow.AddHours(-random.Next(1000));
+
                 dbContext.Properties.Add(new Property()
                 {
                     User = await random.GetEntityAsync(dbContext.Users),
@@ -34,39 +36,47 @@ namespace Tti.Estate.Data
                     Price = transactionType == TransactionType.Rent ? random.Next(100, 1500) : random.Next(10000, 200000),
                     Area = Convert.ToDecimal(random.NextDouble() * random.Next(50, 1000)),
                     County = county,
-                    City = await random.GetEntityAsync(dbContext.Cities.Where(x => x.CountyId == county.Id))
+                    City = await random.GetEntityAsync(dbContext.Cities.Where(x => x.CountyId == county.Id)),
+                    Created = created,
+                    Modified = created
                 });
             }
 
             // Create customers
             for (int i = 0; i < random.Next(1000, 2000); i++)
             {
+                DateTime created = DateTime.UtcNow.AddHours(-random.Next(1000));
+
                 dbContext.Customers.Add(new Customer()
                 {
-                    User = await random.GetEntityAsync(dbContext.Users)
+                    User = await random.GetEntityAsync(dbContext.Users),
+                    Created = created,
+                    Modified = created
                 });
             }
 
             // Create transactions
-            //for (int i = 0; i < random.Next(200, 500); i++)
-            //{
-            //    var companyPercent = Convert.ToDecimal(random.NextDouble() * 100);
+            for (int i = 0; i < random.Next(200, 500); i++)
+            {
+                var companyPercent = Convert.ToByte(random.NextDouble() * 100);
 
-            //    var property = await random.GetEntityAsync(dbContext.Properties);
+                var property = dbContext.Properties.Local.OrderBy(x => Guid.NewGuid()).First();
 
-            //    dbContext.Transactions.Add(new Transaction()
-            //    {
-            //        User = await random.GetEntityAsync(dbContext.Users),
-            //        TransactionType = property.TransactionType,
-            //        Status = random.GetEnum<TransactionStatus>(),
-            //        Property = property,
-            //        Customer = await random.GetEntityAsync(dbContext.Customers),
-            //        Date = property.Created.Date,
-            //        Amount = property.Price,
-            //        CompanyPercent = companyPercent,
-            //        UserPercent = 100 - companyPercent
-            //    });
-            //}
+                dbContext.Transactions.Add(new Transaction()
+                {
+                    User = await random.GetEntityAsync(dbContext.Users),
+                    TransactionType = property.TransactionType,
+                    Status = random.GetEnum<TransactionStatus>(),
+                    Property = property,
+                    Customer = await random.GetEntityAsync(dbContext.Customers),
+                    Date = property.Created.Date,
+                    Amount = property.Price,
+                    CompanyPercent = companyPercent,
+                    UserPercent = Convert.ToByte(100 - companyPercent),
+                    Created = property.Created,
+                    Modified = property.Modified
+                });
+            }
 
             await dbContext.SaveChangesAsync();
         }
