@@ -39,15 +39,14 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Title"]</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse">
-                    <partial name="_LoginPartial" />
+                <div class="navbar-collapse collapse d-lg-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-active-class="active" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
@@ -77,6 +76,7 @@
                             </a>
                         </li>
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
@@ -91,13 +91,13 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="bg-light footer text-muted">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6">
-                    &copy; 2019 - Dmitry Bogatykh
+                <div class="col-7">
+                    &copy; 2019 - TTI Estate
                 </div>
-                <div class="col-sm-6 text-right">
+                <div class="col-5 text-right">
                     @foreach (var culture in LocOptions.Value.SupportedUICultures)
                     {
                         <a asp-controller="Home"
