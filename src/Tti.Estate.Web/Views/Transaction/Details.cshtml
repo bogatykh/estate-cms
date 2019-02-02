@@ -1,6 +1,7 @@
 ﻿@model TransactionDetailsModel
 @{
     ViewData["Title"] = Localizer["Title"];
+    bool hasApprovalPermission = (await Authorization.AuthorizeAsync(User, PolicyConstants.TransactionApproval)).Succeeded;
 }
 @Html.DisplayForModel()
 <partial name="_CommentsPartial" model="Model.Comments" />
@@ -14,7 +15,7 @@
             @Localizer["Submit"]
         </button>
     }
-    else if (Model.Status == TransactionStatusModel.Approving)
+    @if (Model.Status == TransactionStatusModel.Approving && hasApprovalPermission)
     {
         <button asp-action="Approve" asp-route-id="@Model.Id" formmethod="post" class="btn btn-outline-success" data-confirm="@Localizer["ConfirmApprove"]">
             @Localizer["Approve"]

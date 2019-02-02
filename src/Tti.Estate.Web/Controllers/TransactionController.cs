@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -178,6 +179,7 @@ namespace Tti.Estate.Web.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
+        [Authorize(Policy = PolicyConstants.TransactionApproval)]
         [HttpPost]
         public async Task<IActionResult> Approve(long id)
         {
@@ -191,6 +193,7 @@ namespace Tti.Estate.Web.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
 
+        [Authorize(Policy = PolicyConstants.TransactionApproval)]
         [HttpPost]
         public async Task<IActionResult> Reject(long id)
         {

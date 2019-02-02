@@ -153,6 +153,11 @@ namespace Tti.Estate.Web
                 policy.RequireAuthenticatedUser();
                 policy.RequireRole(UserRole.Manager.ToString());
             });
+            options.AddPolicy(PolicyConstants.TransactionApproval, policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireRole(UserRole.Manager.ToString());
+            });
         }
     }
 }
